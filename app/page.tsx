@@ -1,23 +1,27 @@
 import { createClient } from '@supabase/supabase-js'
 
 async function checkSupabase() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) return { ok: false, msg: 'env vars missing' }
+
+  const supabase = createClient(url, key)
   const { error } = await supabase.from('_test_nonexistent').select('*').limit(1)
-  // PGRST116 = table not found = connection works
-  return !error || error.code === 'PGRST116' || error.message.includes('not exist')
+  if (!error) return { ok: true, msg: 'connected' }
+  // PGRST116 = relation not found = DB is reachable
+  if (error.code === 'PGRST116' || error.message.toLowerCase().includes('not exist') || error.message.toLowerCase().includes('relation')) {
+    return { ok: true, msg: 'connected' }
+  }
+  return { ok: false, msg: `${error.code}: ${error.message}` }
 }
 
 export default async function Home() {
-  const connected = await checkSupabase()
+  const { ok, msg } = await checkSupabase()
 
   return (
     <main style={{ padding: 40, fontFamily: 'monospace', background: 'black', color: 'lime', minHeight: '100vh' }}>
       <h1>🔥 FLARE v0.1</h1>
-      <p>Supabase: {connected ? '✓ connected' : '✗ error'}</p>
-      <p style={{ fontSize: 12, color: 'gray' }}>build: {new Date().toISOString()}</p>
+      <p>Supabase: {ok ? `✓ ${msg}` : `✗ ${msg}`}</p>
     </main>
   )
 }
