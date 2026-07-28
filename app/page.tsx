@@ -9,7 +9,8 @@ async function checkSupabase() {
   const { error } = await supabase.from('_test_nonexistent').select('*').limit(1)
   if (!error) return { ok: true, msg: 'connected' }
   // PGRST116 = relation not found = DB is reachable
-  if (error.code === 'PGRST116' || error.message.toLowerCase().includes('not exist') || error.message.toLowerCase().includes('relation')) {
+  // Any PGRST* error = PostgREST responded = connection works
+  if (error.code?.startsWith('PGRST')) {
     return { ok: true, msg: 'connected' }
   }
   return { ok: false, msg: `${error.code}: ${error.message}` }
