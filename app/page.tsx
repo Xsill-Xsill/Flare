@@ -14,9 +14,10 @@ export default async function Home() {
   const connected = await checkSupabase()
 
   return (
-    <main style={{ padding: 40, fontFamily: 'monospace' }}>
-      <h1>Flare</h1>
+    <main style={{ padding: 40, fontFamily: 'monospace', background: 'black', color: 'lime', minHeight: '100vh' }}>
+      <h1>🔥 FLARE v0.1</h1>
       <p>Supabase: {connected ? '✓ connected' : '✗ error'}</p>
+      <p style={{ fontSize: 12, color: 'gray' }}>build: {new Date().toISOString()}</p>
     </main>
   )
 }
