@@ -1,6 +1,7 @@
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function Home() {
+  const supabase = await createClient()
   const { data: tasks, error } = await supabase
     .from('tasks')
     .select('id, title, created_at')
