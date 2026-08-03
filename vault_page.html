@@ -1,0 +1,1196 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flare - Vault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#e9fff2",
+                      "surface-container-highest": "#d2e8dc",
+                      "on-secondary-fixed": "#121e18",
+                      "tertiary": "#3f6353",
+                      "on-background": "#0d1f18",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#e9fff2",
+                      "surface-dim": "#cadfd3",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d2e8dc",
+                      "surface-tint": "#006c49",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#d8ede1",
+                      "on-primary-container": "#f5fff6",
+                      "tertiary-container": "#577c6b",
+                      "tertiary-fixed-dim": "#a8cfbc",
+                      "on-secondary-container": "#5a6760",
+                      "secondary-fixed-dim": "#bccac1",
+                      "outline": "#6d7a71",
+                      "on-secondary-fixed-variant": "#3d4a43",
+                      "on-tertiary-fixed-variant": "#294e3f",
+                      "inverse-on-surface": "#e0f6ea",
+                      "outline-variant": "#bccac0",
+                      "primary-fixed": "#80f9c1",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#005236",
+                      "secondary-container": "#d8e6dc",
+                      "surface-container-low": "#e3f9ec",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "surface": "#e9fff2",
+                      "on-surface-variant": "#3d4a42",
+                      "primary-fixed-dim": "#63dca6",
+                      "inverse-surface": "#22342c",
+                      "secondary-fixed": "#d8e6dc",
+                      "tertiary-fixed": "#c3ecd7",
+                      "inverse-primary": "#63dca6",
+                      "surface-container": "#ddf3e7",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#f5fff7",
+                      "on-surface": "#0d1f18",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#00855b",
+                      "primary": "#006947",
+                      "on-tertiary-fixed": "#002115",
+                      "secondary": "#54615a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "lg": "40px",
+                      "gutter": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "margin-desktop": "48px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "DM Sans"
+                      ],
+                      "body-md": [
+                              "DM Sans"
+                      ],
+                      "display-sm": [
+                              "DM Sans"
+                      ],
+                      "headline-lg": [
+                              "DM Sans"
+                      ],
+                      "metadata-mono": [
+                              "Geist Mono"
+                      ],
+                      "body-lg": [
+                              "DM Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "DM Sans"
+                      ],
+                      "ui-semibold": [
+                              "DM Sans"
+                      ],
+                      "label-caps": [
+                              "DM Sans"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-sm": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metadata-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "ui-semibold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: #ffffff;
+            border: 1.5px solid var(--tw-colors-outline-variant);
+            box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+        }
+
+        .insight-card-glass {
+            background-color: #E3F9EC;
+            border: 1px solid rgba(13, 159, 110, 0.15);
+            box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+            position: relative;
+        }
+
+        .ambient-shadow {
+            box-shadow: 0 8px 32px 0 rgba(26, 38, 32, 0.04);
+        }
+
+        body {
+            background-color: #F7F9F8;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
+<div>
+<!-- Brand -->
+<div class="px-md mb-lg flex items-center gap-sm">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150" href="home_page.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtR07-UXVoG9XFRRZDVwR96-ZaXfPmF4CH_UwwmSbcDDGdKzcX7gHL0YigVhkuipJwlleFJ280yfD1ILoYMz2661h1PQ_iGvuKAu2C98Zpx_adpw5hv-G-DscoXkp8jHhNPgDvAr-_QyU_9NuR4lCQf0dGff3c9nzbinBrL5-T-XyeVBBPqV4uxkjfwuQoavlK5m5YNNVt-QwKHaEYq0KEYzqakpTL8ElYN4Sp_oRT1hu1kxnhLvXDQxcUUTbL3UhhofoduC6jLEP5VnA">
+</a>
+<div>
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider">Project Name</p>
+</div>
+</div>
+<!-- Links -->
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold">
+<li class="">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="home_page.html">
+<img alt="Home" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLu2PfTGCDf-vudvatfWcikMBqZ_JcbFJMiDN0TkE8qGJZUMLYHmY4stmqW4Zi123QCnehK7HTbShgqqDngZ6zDH03jSufZuW2RN0VQ0Rsp7yc5wgagsZJUuJBF3645dwx2btGi-CMlAco-K1eCk36stFKCOAbFjsXSXSqZ29BcuWd5hN8ThF4vrRCI_QFvpDmKzjClxDh8mxq3b9Kt8lzkeETSRm0kW6fVaNO__VWgsn93wIDoBJwCg1wI">
+<span class="group-hover:text-on-surface transition-colors">Home</span>
+</a>
+</li>
+<li class="relative">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-primary font-bold hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
+<img alt="Vault" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLspbag76u5uflSun7Syh6vhFSH5VLA3rju-djixO_9RI5jsNItN9BHKg35PbvNIG_s0U7eDFUYkHSPyftY07rXF5Ujao-L3YIiTk16L3Qo4CbHB6Pq7WRf9wlND69Pw1j1LIk-fhs9dIOMDcqyI7I9Li3uJ6ktpVtdOTPUP9cKlC-FYhsPBiOsB9cG3a18_cQezxNgCFonIGMC0qkBSNFZ3LDZ4zEGZJwzyg0xQQbS0Ta4_PrcrELJ5MLCi">
+<span class="">Vault</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
+<img alt="Insights" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLugd6_srI55YrUY6SlFJO_W8h9ax8mj81JcCCUnTbcNIBmbl0TObN0eNnfhU1pCZyYQgR3veVzdCRN151UxiwIwZqA5pSWqWGHtei-JiuNku9pcsz6YOAoz44HgGP8Ws96VmUl3WJrOPJ2iB4CghWTqWkp95HK5Hqtoevagq_RjgL5liDrbomq6RvouLvqzZoUYJd9gplDA3BClLnyASLDIYmaFoNgVk6TpeaM2H9AQYyOCrcUM_5Bf0R_b">
+<span class="group-hover:text-on-surface transition-colors">Insights</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
+<img alt="Settings" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLsB25NTbWXGWmR2B-r5bkzwIiI_-fFTPiRU9S8dGnr1zpxpnMt557ccP5WPXItj5pYzewRDKqxdoqKQrdB3gZoqUVHdy7pi2GJ6H8NEN-bD7ZjDltqSi9T-eZCY5VEgYbeW5y86QAJvt5SWGAOsAI7iFtyQGEmMw_4FLzGCEIqpU3CHszA7NurVweH_ONIskyPgA2kCGlxlo_V3Ng1iw6kdJ0ZeVHqGnUTd5yDf7YskiQbevpAjByHyrQ0">
+<span class="group-hover:text-on-surface transition-colors">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Profile -->
+<div class="px-sm">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface" href="#">
+<span class="material-symbols-outlined text-[28px] text-primary" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col">
+<span class="font-ui-semibold text-ui-semibold">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant">Founder Tier</span>
+</div>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-y-auto relative scroll-smooth flex flex-col transition-[margin] duration-200 ease-in-out" id="main-content">
+<div class="p-lg max-w-[1280px] mx-auto w-full flex-1 flex flex-col gap-lg">
+<!-- 0. UTILITY ROW (search + day/time, borderless) -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1">
+<button aria-label="Toggle sidebar" class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" id="sidebar-toggle">
+<span class="material-symbols-outlined text-[20px]" id="sidebar-toggle-icon">left_panel_close</span>
+</button>
+<div class="relative flex items-center gap-2 text-on-surface-variant w-full max-w-xs pl-1">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none p-0 text-sm placeholder:text-on-surface-variant" id="global-search-input" placeholder="Search your brain..." type="text">
+<div class="hidden absolute left-0 top-[calc(100%+8px)] w-full max-w-md bg-white border border-outline-variant/60 rounded-lg shadow-lg px-3 py-2 z-50 max-h-80 overflow-y-auto" id="global-search-result">
+<span class="text-sm text-on-surface-variant">Not Found</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-md shrink-0">
+<span class="font-metadata-mono text-metadata-mono text-on-surface-variant">Monday, August 3 · 09:41</span>
+<button class="text-on-surface-variant hover:text-primary transition-all active:opacity-80 p-sm rounded-full hover:bg-surface-container-highest">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+<!-- 0.5 INBOX + NEW NOTE ACTION ROW -->
+<div class="flex items-center justify-between pb-md border-b border-outline-variant/40">
+<button class="flex items-center gap-2 text-on-surface font-ui-semibold text-ui-semibold hover:text-primary transition-colors group" data-folder="inbox" type="button">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">inbox</span>
+Inbox
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold">4</span>
+</button>
+<button class="bg-[#0D9F6E] hover:bg-primary text-white font-ui-semibold text-sm px-4 py-2 rounded-lg shadow-sm transition-colors flex items-center gap-1 active:scale-95" id="new-note-trigger" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+New Note
+                </button>
+</div>
+<!-- 1. PAGE HEADER -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h1 class="font-display-sm text-display-sm text-on-surface" style="font-weight: 800;">Vault</h1>
+</div>
+</div>
+<!-- 2. FILTER BAR -->
+<div class="flex flex-col md:flex-row gap-3 items-center">
+<div class="relative flex-1 w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-white border border-outline-variant/60 rounded-lg text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-[#0D9F6E] transition-all font-body-md text-sm" id="vault-filter-input" placeholder="Filter folders..." type="text">
+</div>
+<div class="flex overflow-x-auto pb-2 md:pb-0 w-full md:w-auto hide-scrollbar gap-2" id="vault-type-chips">
+<button class="px-4 py-1.5 rounded-full bg-[#0D9F6E] text-white font-ui-semibold text-sm whitespace-nowrap shadow-sm transition-colors" data-chip="all">All</button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-outline-variant/60 text-on-surface-variant hover:bg-surface-container-highest font-ui-semibold text-sm whitespace-nowrap transition-colors" data-chip="folders">Folders</button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-outline-variant/60 text-on-surface-variant hover:bg-surface-container-highest font-ui-semibold text-sm whitespace-nowrap transition-colors" data-chip="notes">Notes</button>
+</div>
+</div>
+<!-- 3. FOLDER GRID -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="vault-folder-grid">
+<!-- Folder: Ideas -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="ideas">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">Ideas</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">34 items</span>
+</div>
+</div>
+<!-- Folder: Research -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="research">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">Research</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">19 items</span>
+</div>
+</div>
+<!-- Folder: Sources -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="sources">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">Sources</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">8 items</span>
+</div>
+</div>
+<!-- Folder: People & Customers -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="people">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">People &amp; Customers</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">12 items</span>
+</div>
+</div>
+<!-- Folder: Journal -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="journal">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">Journal</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">5 items</span>
+</div>
+</div>
+<!-- Folder: Tasks -->
+<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="tasks">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="relative folder-menu">
+<button class="text-outline hover:text-on-surface folder-menu-trigger" onclick="event.stopPropagation()" type="button"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+<div class="hidden absolute right-0 top-[calc(100%+4px)] w-36 bg-white border border-outline-variant/60 rounded-lg shadow-lg overflow-hidden z-10 folder-menu-dropdown">
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors folder-menu-rename" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit</span>Rename
+</button>
+<button class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-surface-container-highest transition-colors folder-menu-delete border-t border-outline-variant/30" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[16px]" style="color:#ba1a1a;">delete</span>Delete
+</button>
+</div>
+</div>
+</div>
+<h3 class="font-ui-semibold text-ui-semibold text-on-surface mb-1 truncate">Tasks</h3>
+<div class="mt-auto">
+<span class="text-on-surface-variant text-xs font-metadata-mono">11 items</span>
+</div>
+</div>
+</div>
+<p class="hidden text-center text-sm py-lg" id="vault-folder-empty" style="color:#6B7F75;">No folders match "<span id="vault-folder-empty-query"></span>"</p>
+<!-- 4. RECENTLY ADDED -->
+<section class="mt-md">
+<div class="flex justify-between items-center mb-md px-xs">
+<span class="font-label-caps text-label-caps text-outline">RECENTLY ADDED</span>
+</div>
+<div class="flex flex-col gap-xs">
+<!-- Item 1 -->
+<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="audio">
+<div class="flex items-center gap-md overflow-hidden">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col min-w-0">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors truncate">Q3 Strategy Meeting Transcript</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px] truncate">Added to Customer Interviews • 2h ago</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="url">
+<div class="flex items-center gap-md overflow-hidden">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col min-w-0">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors truncate">Stripe API Documentation Updates</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px] truncate">Added to Product Ideas • 5h ago</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="note">
+<div class="flex items-center gap-md overflow-hidden">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col min-w-0">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors truncate">Competitor Pricing Analysis 2024</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px] truncate">Added to Competitor Research • Yesterday</span>
+</div>
+</div>
+</div>
+<p class="hidden text-center text-sm py-md" id="vault-recent-empty" style="color:#6B7F75;">No items match this filter.</p>
+</div>
+</section>
+</div>
+</main>
+<!-- FOLDER OVERLAY -->
+<div class="hidden fixed inset-0 z-[60]" id="folder-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out" id="folder-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="absolute right-0 top-0 h-full w-full sm:w-[640px] bg-white flex flex-col translate-x-full transition-transform duration-300 ease-out" id="folder-panel" style="box-shadow: -8px 0 32px rgba(26,38,32,0.14);">
+<!-- Header -->
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
+<div class="flex items-center gap-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" id="folder-panel-icon" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="min-w-0">
+<h2 class="font-ui-semibold truncate" id="folder-panel-name" style="color:#1A2620; font-size:16px;">Ideas</h2>
+<p class="text-xs truncate" id="folder-panel-meta" style="color:#6B7F75;">34 notes · Updated today</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="text-white font-ui-semibold text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1 active:scale-95" id="folder-panel-add-note" onmouseover="this.style.background='#0b8a5f'" onmouseout="this.style.background='#0D9F6E'" style="background:#0D9F6E;" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+Add note
+                </button>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="folder-panel-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#6B7F75;">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- Search -->
+<div class="px-lg py-sm" style="border-bottom: 1px solid #D8E2DC;">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px]" style="color:#6B7F75;">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="folder-panel-search" placeholder="Search in this folder..." style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text">
+</div>
+</div>
+<!-- Note List -->
+<div class="flex-1 overflow-y-auto" id="folder-panel-list"></div>
+</div>
+</div>
+<!-- NOTE EDITOR OVERLAY -->
+<div class="hidden fixed inset-0 z-[70]" id="note-editor-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out" id="note-editor-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="absolute right-0 top-0 h-full w-full sm:w-[640px] bg-white flex flex-col translate-x-full transition-transform duration-300 ease-out" id="note-editor-panel" style="box-shadow: -8px 0 32px rgba(26,38,32,0.14);">
+<!-- Header -->
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
+<input class="flex-1 min-w-0 bg-transparent border-none focus:outline-none focus:ring-0 p-0 font-ui-semibold" id="note-editor-title" placeholder="Untitled note" style="color:#1A2620; font-size:16px;" type="text">
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 shrink-0" id="note-editor-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#6B7F75;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Meta -->
+<div class="px-lg pt-sm" id="note-editor-meta-wrap" style="display:none;">
+<span class="text-xs font-metadata-mono" id="note-editor-meta" style="color:#6B7F75;"></span>
+</div>
+<!-- Toolbar -->
+<div class="flex items-center gap-1 px-lg py-sm" style="border-bottom: 1px solid #D8E2DC;">
+<input class="hidden" id="note-editor-file-input" multiple type="file">
+<button aria-label="Add file" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors" id="note-editor-attach-btn" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#1A2620;" type="button"><span class="material-symbols-outlined text-[18px]">attach_file</span></button>
+<button aria-label="Voice" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors" id="note-editor-mic-btn" onmouseover="if(!this.classList.contains('is-recording'))this.style.background='#EEF2F0'" onmouseout="if(!this.classList.contains('is-recording'))this.style.background='transparent'" style="color:#1A2620;" type="button"><span class="material-symbols-outlined text-[18px]">mic</span></button>
+<span class="hidden items-center gap-1 pl-1" id="note-editor-recording-indicator">
+<span class="w-2 h-2 rounded-full animate-pulse" style="background:#ba1a1a;"></span>
+<span class="text-xs font-metadata-mono" id="note-editor-recording-timer" style="color:#ba1a1a;">0:00</span>
+</span>
+<button aria-pressed="false" class="ml-auto flex items-center gap-2" id="note-editor-hide-ai" type="button">
+<span class="material-symbols-outlined text-[16px]" id="note-editor-hide-ai-icon" style="color:#6B7F75;">visibility_off</span>
+<span class="text-xs font-ui-semibold" style="color:#1A2620;">Hide from AI</span>
+<span class="relative inline-block rounded-full transition-colors" id="note-editor-hide-ai-track" style="width:36px; height:20px; background:#D8E2DC;">
+<span class="absolute top-[2px] left-[2px] w-4 h-4 rounded-full bg-white transition-transform" id="note-editor-hide-ai-knob" style="box-shadow:0 1px 2px rgba(0,0,0,0.25);"></span>
+</span>
+</button>
+</div>
+<!-- Attachments -->
+<div class="hidden flex-wrap gap-2 px-lg pt-sm" id="note-editor-attachments"></div>
+<!-- Blank note body -->
+<div class="flex-1 overflow-y-auto px-lg py-md">
+<textarea class="w-full h-full resize-none focus:outline-none focus:ring-0 border-none text-sm bg-transparent" id="note-editor-textarea" placeholder="Start writing..." style="color:#1A2620; box-shadow:none;"></textarea>
+</div>
+<!-- Footer actions -->
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-top: 1px solid #D8E2DC;">
+<button class="hidden items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="note-editor-delete" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#ba1a1a;" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+Delete
+                </button>
+<div class="flex items-center gap-2 ml-auto">
+<button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors" id="note-editor-cancel" onmouseover="this.style.background='#1A2620'; this.style.color='#ffffff';" onmouseout="this.style.background='#ffffff'; this.style.color='#1A2620';" style="background:#ffffff; border:1.5px solid #1A2620; color:#1A2620;" type="button">Cancel</button>
+<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors" id="note-editor-save" onmouseover="this.style.background='#0b8a5f'" onmouseout="this.style.background='#0D9F6E'" style="background:#0D9F6E;" type="button">Save</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function () {
+        var sidebar = document.getElementById('sidebar');
+        var mainEl = document.getElementById('main-content');
+        var toggleBtn = document.getElementById('sidebar-toggle');
+        var toggleIcon = document.getElementById('sidebar-toggle-icon');
+        var STORAGE_KEY = 'flare-sidebar-collapsed';
+
+        function setCollapsed(collapsed) {
+            sidebar.classList.toggle('w-[200px]', !collapsed);
+            sidebar.classList.toggle('w-0', collapsed);
+            sidebar.classList.toggle('opacity-0', collapsed);
+            sidebar.classList.toggle('border-r-0', collapsed);
+            mainEl.classList.toggle('md:ml-[200px]', !collapsed);
+            mainEl.classList.toggle('md:ml-0', collapsed);
+            toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
+            localStorage.setItem(STORAGE_KEY, collapsed ? '1' : '0');
+        }
+
+        toggleBtn.addEventListener('click', function () {
+            setCollapsed(!sidebar.classList.contains('w-0'));
+        });
+
+        setCollapsed(localStorage.getItem(STORAGE_KEY) === '1');
+    })();
+
+    (function () {
+        var trigger = document.getElementById('new-note-trigger');
+        var overlay = document.getElementById('note-editor-overlay');
+        var backdrop = document.getElementById('note-editor-backdrop');
+        var panel = document.getElementById('note-editor-panel');
+        var closeBtn = document.getElementById('note-editor-close');
+        var titleInput = document.getElementById('note-editor-title');
+        var textarea = document.getElementById('note-editor-textarea');
+        var metaWrap = document.getElementById('note-editor-meta-wrap');
+        var meta = document.getElementById('note-editor-meta');
+        var deleteBtn = document.getElementById('note-editor-delete');
+        var cancelBtn = document.getElementById('note-editor-cancel');
+        var saveBtn = document.getElementById('note-editor-save');
+        var hideAiBtn = document.getElementById('note-editor-hide-ai');
+        var hideAiTrack = document.getElementById('note-editor-hide-ai-track');
+        var hideAiKnob = document.getElementById('note-editor-hide-ai-knob');
+        var hideAiIcon = document.getElementById('note-editor-hide-ai-icon');
+
+        var snapshot = { title: '', body: '', hideFromAI: false };
+        var currentSourceRow = null;
+        var hideFromAI = false;
+
+        function setHideFromAI(state) {
+            hideFromAI = state;
+            hideAiBtn.setAttribute('aria-pressed', state ? 'true' : 'false');
+            hideAiTrack.style.background = state ? '#0D9F6E' : '#D8E2DC';
+            hideAiKnob.style.transform = state ? 'translateX(16px)' : '';
+            hideAiIcon.style.color = state ? '#0D9F6E' : '#6B7F75';
+        }
+
+        hideAiBtn.addEventListener('click', function () { setHideFromAI(!hideFromAI); });
+
+        function openNoteEditor(data) {
+            data = data || {};
+            resetAttachments();
+            titleInput.value = data.title || '';
+            textarea.value = data.body || '';
+            snapshot.title = data.title || '';
+            snapshot.body = data.body || '';
+            snapshot.hideFromAI = !!data.hideFromAI;
+            setHideFromAI(snapshot.hideFromAI);
+            currentSourceRow = data.sourceRow || null;
+            deleteBtn.style.display = currentSourceRow ? 'flex' : 'none';
+
+            if (data.meta) {
+                meta.textContent = data.meta;
+                metaWrap.style.display = '';
+            } else {
+                metaWrap.style.display = 'none';
+            }
+
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.transform = 'translateX(0)';
+            });
+            setTimeout(function () {
+                if (data.title) textarea.focus(); else titleInput.focus();
+            }, 300);
+        }
+
+        function closeNoteEditor() {
+            backdrop.style.opacity = '0';
+            panel.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+            setTimeout(function () {
+                overlay.classList.add('hidden');
+                titleInput.value = '';
+                textarea.value = '';
+                currentSourceRow = null;
+            }, 300);
+        }
+
+        window.openNoteEditor = openNoteEditor;
+
+        trigger.addEventListener('click', function () { openNoteEditor(); });
+        closeBtn.addEventListener('click', closeNoteEditor);
+        backdrop.addEventListener('click', closeNoteEditor);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeNoteEditor();
+        });
+
+        saveBtn.addEventListener('click', function () {
+            if (currentSourceRow) {
+                var titleEl = currentSourceRow.querySelector('.font-ui-semibold');
+                if (titleEl) titleEl.textContent = titleInput.value || 'Untitled note';
+
+                var existingBadge = currentSourceRow.querySelector('.hide-ai-badge');
+                if (existingBadge) existingBadge.remove();
+
+                if (hideFromAI && titleEl) {
+                    var badge = document.createElement('span');
+                    badge.className = 'material-symbols-outlined hide-ai-badge shrink-0';
+                    badge.style.cssText = 'font-size:14px; color:#0D9F6E;';
+                    badge.title = 'Hidden from AI';
+                    badge.textContent = 'visibility_off';
+                    titleEl.insertAdjacentElement('afterend', badge);
+                }
+            }
+            closeNoteEditor();
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            titleInput.value = snapshot.title;
+            textarea.value = snapshot.body;
+            setHideFromAI(snapshot.hideFromAI);
+            closeNoteEditor();
+        });
+
+        deleteBtn.addEventListener('click', function () {
+            if (currentSourceRow) {
+                var row = currentSourceRow;
+                row.style.transition = 'opacity 150ms ease-out';
+                row.style.opacity = '0';
+                setTimeout(function () { row.remove(); }, 150);
+            }
+            closeNoteEditor();
+        });
+
+        // --- Mock attachments & voice recording ---
+        var fileInput = document.getElementById('note-editor-file-input');
+        var attachBtn = document.getElementById('note-editor-attach-btn');
+        var micBtn = document.getElementById('note-editor-mic-btn');
+        var recordingIndicator = document.getElementById('note-editor-recording-indicator');
+        var recordingTimer = document.getElementById('note-editor-recording-timer');
+        var attachmentsBox = document.getElementById('note-editor-attachments');
+        var recordingInterval = null;
+        var recordingSeconds = 0;
+
+        function formatTime(totalSeconds) {
+            var m = Math.floor(totalSeconds / 60);
+            var s = totalSeconds % 60;
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function addAttachmentChip(iconName, label) {
+            var chip = document.createElement('span');
+            chip.className = 'inline-flex items-center gap-1 pl-2 pr-1 py-1 rounded-md text-xs';
+            chip.style.background = '#EEF2F0';
+            chip.style.color = '#1A2620';
+            chip.innerHTML =
+                '<span class="material-symbols-outlined text-[14px]" style="color:#6B7F75;">' + iconName + '</span>' +
+                '<span class="max-w-[160px] truncate">' + label + '</span>' +
+                '<button aria-label="Remove" class="material-symbols-outlined text-[14px] rounded-full flex items-center justify-center" style="color:#6B7F75; width:16px; height:16px;" type="button">close</button>';
+            chip.querySelector('button').addEventListener('click', function () {
+                chip.remove();
+                if (!attachmentsBox.children.length) attachmentsBox.style.display = 'none';
+            });
+            attachmentsBox.appendChild(chip);
+            attachmentsBox.style.display = 'flex';
+        }
+
+        function stopRecordingUI() {
+            if (recordingInterval) {
+                clearInterval(recordingInterval);
+                recordingInterval = null;
+            }
+            recordingSeconds = 0;
+            recordingIndicator.style.display = 'none';
+            micBtn.classList.remove('is-recording');
+            micBtn.style.background = 'transparent';
+            micBtn.style.color = '#1A2620';
+        }
+
+        function resetAttachments() {
+            attachmentsBox.innerHTML = '';
+            attachmentsBox.style.display = 'none';
+            stopRecordingUI();
+        }
+
+        attachBtn.addEventListener('click', function () { fileInput.click(); });
+
+        fileInput.addEventListener('change', function () {
+            Array.prototype.forEach.call(fileInput.files, function (file) {
+                addAttachmentChip('attach_file', file.name);
+            });
+            fileInput.value = '';
+        });
+
+        micBtn.addEventListener('click', function () {
+            if (micBtn.classList.contains('is-recording')) {
+                var finalSeconds = recordingSeconds;
+                stopRecordingUI();
+                addAttachmentChip('mic', 'Voice note (' + formatTime(finalSeconds) + ')');
+            } else {
+                recordingSeconds = 0;
+                recordingTimer.textContent = '0:00';
+                recordingIndicator.style.display = 'flex';
+                micBtn.classList.add('is-recording');
+                micBtn.style.background = '#ba1a1a';
+                micBtn.style.color = '#ffffff';
+                recordingInterval = setInterval(function () {
+                    recordingSeconds++;
+                    recordingTimer.textContent = formatTime(recordingSeconds);
+                }, 1000);
+            }
+        });
+    })();
+
+    (function () {
+        var NOTE_ICON = 'description';
+
+        var FOLDERS = {
+            inbox: {
+                name: 'Inbox',
+                meta: '4 items · Needs sorting',
+                icon: 'inbox',
+                notes: [
+                    { type: 'NOTE', title: 'Q3 Marketing Strategy notes...', date: '2h ago', preview: 'Captured, not yet filed into a folder' },
+                    { type: 'URL', title: 'Competitor pricing model', date: 'Yesterday', preview: 'Captured, not yet filed into a folder' },
+                    { type: 'AUDIO', title: 'Customer call recording', date: 'Oct 22', preview: 'Captured, not yet filed into a folder' },
+                    { type: 'NOTE', title: 'Pricing page redesign notes', date: 'Oct 21', preview: 'Captured, not yet filed into a folder' }
+                ]
+            },
+            ideas: {
+                name: 'Ideas',
+                meta: '34 notes · Updated today',
+                notes: [
+                    { type: 'NOTE', title: 'Flare weekly digest — email format idea', date: '2h ago', preview: 'Send top 3 insights every Monday morning with evidence links' },
+                    { type: 'NOTE', title: 'Chrome extension one-click capture', date: 'Yesterday', preview: 'Highlight any text → save to Flare instantly, no context switch' },
+                    { type: 'NOTE', title: 'Onboarding flow — show first insight in 48h', date: 'Oct 31', preview: 'Hook moment: user sees their own pattern before they expect it' },
+                    { type: 'URL', title: 'How Superhuman built a referral engine — First Round', date: 'Oct 29', preview: 'firstround.com' },
+                    { type: 'NOTE', title: 'Paid tier idea: daily digest vs weekly', date: 'Oct 28', preview: 'Pro users want signal every day, not once a week' },
+                    { type: 'NOTE', title: 'Vault folders with AI instructions', date: 'Oct 25', preview: 'Each folder gets a prompt — AI routes and summarizes by context' }
+                ]
+            },
+            research: {
+                name: 'Research',
+                meta: '19 notes · Updated yesterday',
+                notes: [
+                    { type: 'NOTE', title: 'Competitor matrix — Mem, Notion AI, Rewind', date: 'Oct 31', preview: 'None of them proactively surface insights — they wait for queries' },
+                    { type: 'URL', title: 'The Second Brain methodology — Forte Labs', date: 'Oct 30', preview: 'fortelabs.com' },
+                    { type: 'NOTE', title: 'TAM estimate — solo founders globally ~4M', date: 'Oct 28', preview: 'Addressable if even 1% pay $15/mo = $7.2M ARR ceiling for MVP' },
+                    { type: 'URL', title: 'Why knowledge tools fail — every.to', date: 'Oct 27', preview: 'every.to' },
+                    { type: 'NOTE', title: 'Retention benchmark SaaS tools — 40% D30', date: 'Oct 25', preview: 'Best-in-class productivity: 55%+ at D30' },
+                    { type: 'NOTE', title: 'Pricing research — $12–19/mo sweet spot for indie tools', date: 'Oct 22', preview: 'Notion $8, Mem $14.99, Roam $15' }
+                ]
+            },
+            sources: {
+                name: 'Sources',
+                meta: '8 notes · Updated 3 days ago',
+                notes: [
+                    { type: 'URL', title: 'Paul Graham — Keeping it small', date: 'Oct 30', preview: 'paulgraham.com' },
+                    { type: 'URL', title: "Lenny's Newsletter — onboarding that works", date: 'Oct 28', preview: 'lennysnewsletter.com' },
+                    { type: 'URL', title: 'a16z Future — the future of productivity', date: 'Oct 26', preview: 'a16z.com' },
+                    { type: 'URL', title: 'Thread: founders on their note-taking systems (Twitter)', date: 'Oct 24', preview: 'twitter.com' },
+                    { type: 'URL', title: 'Intercom — activation and onboarding study 2023', date: 'Oct 22', preview: 'intercom.com' },
+                    { type: 'NOTE', title: 'Book notes — The Mom Test, Rob Fitzpatrick', date: 'Oct 18', preview: 'Never ask if they’d buy. Ask about their life.' }
+                ]
+            },
+            people: {
+                name: 'People & Customers',
+                meta: '12 notes · Updated 2 days ago',
+                notes: [
+                    { type: 'NOTE', title: 'Interview — Sarah M., founder @ Droply', date: 'Oct 22', preview: 'Pain: loses track of customer quotes across Notion, Slack, email' },
+                    { type: 'AUDIO', title: 'Call with David Chen — 28 min', date: 'Oct 20', preview: "Transcript: David mentioned 'I have 3 different systems and none of them work'" },
+                    { type: 'NOTE', title: 'Investor meeting — Artem @ Flint Capital', date: 'Oct 18', preview: 'Liked proactive angle, concerned about LLM cost at scale' },
+                    { type: 'AUDIO', title: 'User interview — Alex K., solo founder', date: 'Oct 15', preview: 'Transcript: uses voice memos but never reviews them' },
+                    { type: 'NOTE', title: 'Advisor intro — Maya R., ex-Notion PM', date: 'Oct 12', preview: 'Offered to review onboarding flow, follow up in 2 weeks' },
+                    { type: 'NOTE', title: 'YC alumni Slack — 6 replies to my question about PKM tools', date: 'Oct 10', preview: 'Common theme: everyone captures, nobody reviews' }
+                ]
+            },
+            journal: {
+                name: 'Journal',
+                meta: '5 notes · Updated today',
+                notes: [
+                    { type: 'NOTE', title: 'Weekly retro — Aug 3', date: 'Today', preview: 'Shipped vault design. Still no paying users. Need to talk to 3 more founders this week' },
+                    { type: 'NOTE', title: 'Decision: drop Telegram bot from MVP', date: 'Oct 30', preview: "US audience doesn't use Telegram. Scope creep risk. Cutting." },
+                    { type: 'NOTE', title: 'Feeling stuck on onboarding — Oct 28', date: 'Oct 28', preview: 'Spent 3h on copy. Need to talk to users instead of guessing.' },
+                    { type: 'NOTE', title: 'Why I’m building Flare', date: 'Oct 20', preview: 'I lost a key customer insight because it was buried in 4 different apps' },
+                    { type: 'NOTE', title: 'Monthly reflection — October', date: 'Oct 1', preview: 'Validated the problem with 8 founders. Now need to validate the solution.' }
+                ]
+            },
+            tasks: {
+                name: 'Tasks',
+                meta: '11 notes · Updated today',
+                notes: [
+                    { type: 'NOTE', title: 'Talk to 3 founders this week about capture habits', date: 'Today', preview: 'Priority: find pattern in how they currently save things' },
+                    { type: 'NOTE', title: 'Set up Resend for weekly digest email', date: 'Yesterday', preview: 'Block: need to finalize digest template first' },
+                    { type: 'NOTE', title: 'Write landing page copy — hero section', date: 'Oct 31', preview: 'Focus on the insight moment, not the note-taking' },
+                    { type: 'NOTE', title: 'Apply to YC W25', date: 'Oct 30', preview: 'Deadline: Nov 12. Need 2-min demo video.' },
+                    { type: 'NOTE', title: 'Define eval corpus for insight engine', date: 'Oct 28', preview: 'Need 50 real notes to test detector accuracy' },
+                    { type: 'NOTE', title: 'Book intro call with Maya R.', date: 'Oct 25', preview: "She offered to review onboarding — don't let this slip" }
+                ]
+            }
+        };
+
+        var overlay = document.getElementById('folder-overlay');
+        var backdrop = document.getElementById('folder-backdrop');
+        var panel = document.getElementById('folder-panel');
+        var panelIcon = document.getElementById('folder-panel-icon');
+        var panelName = document.getElementById('folder-panel-name');
+        var panelMeta = document.getElementById('folder-panel-meta');
+        var panelList = document.getElementById('folder-panel-list');
+        var closeBtn = document.getElementById('folder-panel-close');
+
+        function renderRow(note, isLast, folderName) {
+            var row = document.createElement('div');
+            row.className = 'flex items-center gap-3 px-lg cursor-pointer transition-colors';
+            row.style.height = '64px';
+            row.style.borderBottom = isLast ? 'none' : '1px solid #D8E2DC';
+            row.onmouseover = function () { row.style.background = '#EEF2F0'; };
+            row.onmouseout = function () { row.style.background = 'transparent'; };
+
+            row.innerHTML =
+                '<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">' +
+                    '<span class="material-symbols-outlined text-[18px] text-on-surface-variant">' + NOTE_ICON + '</span>' +
+                '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                    '<div class="flex items-center justify-between gap-2">' +
+                        '<span class="flex items-center gap-1 min-w-0">' +
+                            '<span class="font-ui-semibold text-sm truncate" style="color:#1A2620;">' + note.title + '</span>' +
+                        '</span>' +
+                        '<span class="font-metadata-mono text-metadata-mono text-[11px] shrink-0" style="color:#6B7F75;">' + note.date + '</span>' +
+                    '</div>' +
+                    '<div class="mt-[2px]">' +
+                        '<span class="text-xs truncate block" style="color:#6B7F75;">' + note.preview + '</span>' +
+                    '</div>' +
+                '</div>';
+
+            row.addEventListener('click', function () {
+                window.openNoteEditor({
+                    title: note.title,
+                    body: note.preview,
+                    meta: folderName + ' · ' + note.date,
+                    hideFromAI: !!row.querySelector('.hide-ai-badge'),
+                    sourceRow: row
+                });
+            });
+
+            return row;
+        }
+
+        function openFolder(key) {
+            var folder = FOLDERS[key];
+            if (!folder) return;
+
+            panelIcon.textContent = folder.icon || 'folder';
+            panelName.textContent = folder.name;
+            panelMeta.textContent = folder.meta;
+            panelList.innerHTML = '';
+            folder.notes.forEach(function (note, i) {
+                panelList.appendChild(renderRow(note, i === folder.notes.length - 1, folder.name));
+            });
+
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.transform = 'translateX(0)';
+            });
+        }
+
+        function closeFolder() {
+            backdrop.style.opacity = '0';
+            panel.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 300);
+        }
+
+        document.querySelectorAll('[data-folder]').forEach(function (card) {
+            card.addEventListener('click', function () {
+                openFolder(card.getAttribute('data-folder'));
+            });
+        });
+
+        closeBtn.addEventListener('click', closeFolder);
+        backdrop.addEventListener('click', closeFolder);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeFolder();
+        });
+
+        var addNoteBtn = document.getElementById('folder-panel-add-note');
+        addNoteBtn.addEventListener('click', function () {
+            window.openNoteEditor({ meta: panelName.textContent });
+        });
+
+        // --- Folder name filter ---
+        var filterInput = document.getElementById('vault-filter-input');
+        var folderGrid = document.getElementById('vault-folder-grid');
+        var folderEmpty = document.getElementById('vault-folder-empty');
+        var folderEmptyQuery = document.getElementById('vault-folder-empty-query');
+        var folderCards = Array.prototype.slice.call(folderGrid.querySelectorAll('[data-folder]'));
+
+        function folderNameMatches(name, q) {
+            return name.indexOf(q) !== -1;
+        }
+
+        function folderNotesMatch(key, q) {
+            var folder = FOLDERS[key];
+            if (!folder) return false;
+            return folder.notes.some(function (note) {
+                return note.title.toLowerCase().indexOf(q) !== -1 ||
+                    note.preview.toLowerCase().indexOf(q) !== -1;
+            });
+        }
+
+        // scope: 'all' | 'folders' | 'notes'
+        var activeScope = 'all';
+
+        function folderMatchesQuery(key, name, q) {
+            if (q === '') return true;
+            if (activeScope === 'folders') return folderNameMatches(name, q);
+            if (activeScope === 'notes') return folderNotesMatch(key, q);
+            return folderNameMatches(name, q) || folderNotesMatch(key, q);
+        }
+
+        function applyFolderFilter() {
+            var q = filterInput.value.trim().toLowerCase();
+            var anyVisible = false;
+            folderCards.forEach(function (card) {
+                var key = card.getAttribute('data-folder');
+                var name = card.querySelector('h3').textContent.toLowerCase();
+                var match = folderMatchesQuery(key, name, q);
+                card.style.display = match ? '' : 'none';
+                if (match) anyVisible = true;
+            });
+            folderEmptyQuery.textContent = filterInput.value.trim();
+            folderEmpty.classList.toggle('hidden', anyVisible || q === '');
+        }
+
+        filterInput.addEventListener('input', applyFolderFilter);
+
+        // --- Scope chips: All / Folders / Notes ---
+        var chips = document.querySelectorAll('[data-chip]');
+
+        function setActiveChip(activeChip) {
+            chips.forEach(function (chip) {
+                var isActive = chip === activeChip;
+                chip.classList.toggle('bg-[#0D9F6E]', isActive);
+                chip.classList.toggle('text-white', isActive);
+                chip.classList.toggle('shadow-sm', isActive);
+                chip.classList.toggle('bg-white', !isActive);
+                chip.classList.toggle('border', !isActive);
+                chip.classList.toggle('border-outline-variant/60', !isActive);
+                chip.classList.toggle('text-on-surface-variant', !isActive);
+            });
+        }
+
+        chips.forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                setActiveChip(chip);
+                activeScope = chip.getAttribute('data-chip');
+                applyFolderFilter();
+            });
+        });
+
+        // --- Search inside folder panel ---
+        var folderPanelSearch = document.getElementById('folder-panel-search');
+        folderPanelSearch.addEventListener('input', function () {
+            var q = folderPanelSearch.value.trim().toLowerCase();
+            Array.prototype.forEach.call(panelList.children, function (row) {
+                var match = row.textContent.toLowerCase().indexOf(q) !== -1;
+                row.style.display = match ? '' : 'none';
+            });
+        });
+        closeBtn.addEventListener('click', function () { folderPanelSearch.value = ''; });
+
+        // --- Folder card menu (rename / delete) ---
+        function closeAllFolderMenus(except) {
+            document.querySelectorAll('.folder-menu-dropdown').forEach(function (dd) {
+                if (dd !== except) dd.classList.add('hidden');
+            });
+        }
+
+        document.querySelectorAll('.folder-menu-trigger').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var dropdown = trigger.nextElementSibling;
+                var isOpen = !dropdown.classList.contains('hidden');
+                closeAllFolderMenus();
+                dropdown.classList.toggle('hidden', isOpen);
+            });
+        });
+
+        document.querySelectorAll('.folder-menu-rename').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                closeAllFolderMenus();
+                var card = btn.closest('[data-folder]');
+                var title = card.querySelector('h3');
+                title.setAttribute('contenteditable', 'true');
+                title.focus();
+                var range = document.createRange();
+                range.selectNodeContents(title);
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                function finishRename() {
+                    title.removeAttribute('contenteditable');
+                    title.removeEventListener('blur', finishRename);
+                    title.removeEventListener('keydown', onKeydown);
+                }
+                function onKeydown(ev) {
+                    if (ev.key === 'Enter') { ev.preventDefault(); title.blur(); }
+                }
+                title.addEventListener('blur', finishRename);
+                title.addEventListener('keydown', onKeydown);
+            });
+        });
+
+        document.querySelectorAll('.folder-menu-delete').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                closeAllFolderMenus();
+                var card = btn.closest('[data-folder]');
+                card.style.transition = 'opacity 150ms ease-out';
+                card.style.opacity = '0';
+                setTimeout(function () { card.remove(); }, 150);
+            });
+        });
+
+        document.addEventListener('click', function () { closeAllFolderMenus(); });
+
+        // --- Recently Added rows open the note editor ---
+        document.querySelectorAll('#vault-folder-grid ~ section [data-type]').forEach(function (row) {
+            row.addEventListener('click', function () {
+                var title = row.querySelector('.truncate').textContent;
+                var subtitle = row.querySelectorAll('.truncate')[1] ? row.querySelectorAll('.truncate')[1].textContent : '';
+                window.openNoteEditor({ title: title, meta: subtitle, sourceRow: row });
+            });
+        });
+
+        // --- Global search across every folder + inbox ---
+        var globalInput = document.getElementById('global-search-input');
+        var globalResult = document.getElementById('global-search-result');
+
+        function renderGlobalResults(q) {
+            var matches = [];
+            Object.keys(FOLDERS).forEach(function (key) {
+                var folder = FOLDERS[key];
+                folder.notes.forEach(function (note) {
+                    if (note.title.toLowerCase().indexOf(q) !== -1 ||
+                        note.preview.toLowerCase().indexOf(q) !== -1) {
+                        matches.push({ key: key, folderName: folder.name, note: note });
+                    }
+                });
+            });
+
+            if (matches.length === 0) {
+                globalResult.innerHTML = '<span class="text-sm text-on-surface-variant">Not Found</span>';
+                return;
+            }
+
+            globalResult.innerHTML = '';
+            matches.slice(0, 8).forEach(function (m) {
+                var row = document.createElement('div');
+                row.className = 'flex items-center gap-3 py-2 px-1 cursor-pointer rounded-md hover:bg-surface-container-highest transition-colors';
+                row.innerHTML =
+                    '<span class="material-symbols-outlined text-[18px] text-on-surface-variant shrink-0">' + NOTE_ICON + '</span>' +
+                    '<div class="min-w-0 flex-1">' +
+                        '<div class="text-sm text-on-surface truncate">' + m.note.title + '</div>' +
+                        '<div class="text-xs text-outline truncate">' + m.folderName + '</div>' +
+                    '</div>';
+                row.addEventListener('click', function () {
+                    globalInput.value = '';
+                    globalResult.classList.add('hidden');
+                    openFolder(m.key);
+                });
+                globalResult.appendChild(row);
+            });
+        }
+
+        globalInput.addEventListener('input', function () {
+            var q = globalInput.value.trim().toLowerCase();
+            globalResult.classList.toggle('hidden', q === '');
+            if (q !== '') renderGlobalResults(q);
+        });
+        document.addEventListener('click', function (e) {
+            if (e.target !== globalInput) globalResult.classList.add('hidden');
+        });
+    })();
+</script>
+
+</body></html>
