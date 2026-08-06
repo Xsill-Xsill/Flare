@@ -152,12 +152,10 @@ export function InboxClient() {
       const { error: uploadError } = await supabase.storage.from('uploads').upload(path, file)
       if (uploadError) throw uploadError
 
-      const { data: publicUrl } = supabase.storage.from('uploads').getPublicUrl(path)
-
       const res = await fetch('/api/v1/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId, type: 'file', sourceUrl: publicUrl.publicUrl }),
+        body: JSON.stringify({ workspaceId, type: 'file', sourceUrl: path }),
       })
       if (!res.ok) throw new Error((await res.json()).error ?? 'Не удалось сохранить файл')
       setFile(null)
