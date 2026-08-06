@@ -34,7 +34,7 @@ export const chunks = pgTable('chunks', {
   itemId: uuid('item_id').references(() => items.id).notNull(),
   content: text('content').notNull(),
   tokenCount: integer('token_count'),
-  embedding: vector('embedding', { dimensions: 1536 }),
+  embedding: vector('embedding', { dimensions: 1024 }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
