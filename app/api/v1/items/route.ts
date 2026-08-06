@@ -59,7 +59,11 @@ export async function POST(req: NextRequest) {
     })
     .returning()
 
-  await inngest.send({ name: 'item/created', data: { itemId: item.id } })
+  try {
+    await inngest.send({ name: 'item/created', data: { itemId: item.id } })
+  } catch (err) {
+    console.error('inngest.send failed for item', item.id, err)
+  }
 
   return NextResponse.json(item, { status: 201 })
 }
