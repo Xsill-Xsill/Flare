@@ -68,5 +68,9 @@ export const ingestItem = inngest.createFunction(
     await step.run('mark-done', async () => {
       await db.update(items).set({ status: 'done' }).where(eq(items.id, itemId))
     })
+
+    await step.run('trigger-detectors', async () => {
+      await inngest.send({ name: 'detectors/run', data: { workspaceId: item.workspaceId } })
+    })
   }
 )

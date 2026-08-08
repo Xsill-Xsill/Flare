@@ -1,0 +1,1294 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flare - AI Second Brain Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Material Symbols Outlined';
+            font-style: normal;
+            font-weight: 100 700;
+            font-display: block;
+            src: url('assets/fonts/material-symbols-outlined.woff2') format('woff2');
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#e9fff2",
+                      "surface-container-highest": "#d2e8dc",
+                      "on-secondary-fixed": "#121e18",
+                      "tertiary": "#3f6353",
+                      "on-background": "#0d1f18",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#e9fff2",
+                      "surface-dim": "#cadfd3",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d2e8dc",
+                      "surface-tint": "#006c49",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#d8ede1",
+                      "on-primary-container": "#f5fff6",
+                      "tertiary-container": "#577c6b",
+                      "tertiary-fixed-dim": "#a8cfbc",
+                      "on-secondary-container": "#5a6760",
+                      "secondary-fixed-dim": "#bccac1",
+                      "outline": "#6d7a71",
+                      "on-secondary-fixed-variant": "#3d4a43",
+                      "on-tertiary-fixed-variant": "#294e3f",
+                      "inverse-on-surface": "#e0f6ea",
+                      "outline-variant": "#bccac0",
+                      "primary-fixed": "#80f9c1",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#005236",
+                      "secondary-container": "#d8e6dc",
+                      "surface-container-low": "#e3f9ec",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "surface": "#e9fff2",
+                      "on-surface-variant": "#3d4a42",
+                      "primary-fixed-dim": "#63dca6",
+                      "inverse-surface": "#22342c",
+                      "secondary-fixed": "#d8e6dc",
+                      "tertiary-fixed": "#c3ecd7",
+                      "inverse-primary": "#63dca6",
+                      "surface-container": "#ddf3e7",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#f5fff7",
+                      "on-surface": "#0d1f18",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#00855b",
+                      "primary": "#0D9F6E",
+                      "on-tertiary-fixed": "#002115",
+                      "secondary": "#54615a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "lg": "40px",
+                      "gutter": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "margin-desktop": "48px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "DM Sans"
+                      ],
+                      "body-md": [
+                              "DM Sans"
+                      ],
+                      "display-sm": [
+                              "DM Sans"
+                      ],
+                      "headline-lg": [
+                              "DM Sans"
+                      ],
+                      "metadata-mono": [
+                              "Geist Mono"
+                      ],
+                      "body-lg": [
+                              "DM Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "DM Sans"
+                      ],
+                      "ui-semibold": [
+                              "DM Sans"
+                      ],
+                      "label-caps": [
+                              "DM Sans"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-sm": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metadata-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "ui-semibold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .card-flat {
+            background-color: #ffffff;
+            border: 1.5px solid #D8E2DC;
+            box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+        }
+
+        .insight-card-accent {
+            background-color: #E3F9EC;
+            border: 1px solid rgba(13, 159, 110, 0.15);
+            box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+            position: relative;
+        }
+
+        .insight-card-accent::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        body {
+            background-color: #F7F9F8;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex" data-page="home">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
+<div>
+<!-- Brand -->
+<div class="px-md mb-lg flex items-center gap-sm sidebar-brand-row">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 shrink-0" href="../workspace_select.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain sidebar-logo-img" src="assets/images/logo.png">
+</a>
+<div class="min-w-0 sidebar-brand-label">
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider" style="white-space:nowrap;">Project Name</p>
+</div>
+</div>
+<!-- Links -->
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold sidebar-nav-list">
+<li class="relative" data-nav="home">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="home_page.html" title="Home">
+<img alt="Home" class="w-5 h-5 shrink-0" src="assets/images/nav-home.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Home</span>
+</a>
+</li>
+<li class="relative" data-nav="vault">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="vault_page.html" title="Vault">
+<img alt="Vault" class="w-5 h-5 shrink-0" src="assets/images/nav-vault.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Vault</span>
+</a>
+</li>
+<li class="relative" data-nav="insights">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="insights_page.html" title="Insights">
+<img alt="Insights" class="w-5 h-5 shrink-0" src="assets/images/nav-insights.svg">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Insights</span>
+</a>
+</li>
+<li class="relative" data-nav="settings">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="settings_page.html" title="Settings">
+<img alt="Settings" class="w-5 h-5 shrink-0" src="assets/images/nav-settings.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Profile -->
+<div class="px-sm sidebar-footer-wrap">
+<button class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface w-full" id="account-menu-trigger" title="Account" type="button">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col items-start min-w-0">
+<span class="font-ui-semibold text-ui-semibold sidebar-profile-label" style="white-space:nowrap;">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant sidebar-profile-label" id="account-plan-label" style="white-space:nowrap;">Founder Tier</span>
+</div>
+</button>
+</div>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="sidebar-resize-handle" style="width:6px; cursor:col-resize; z-index:60;"></div>
+</nav>
+<!-- Mobile bottom tab bar (hidden on md+, sidebar takes over there) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around bg-white" id="mobile-nav" style="border-top: 1.5px solid #D8E2DC; height:64px; padding-bottom: env(safe-area-inset-bottom, 0px);">
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="home" href="home_page.html">
+<img alt="Home" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-home.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Home</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="vault" href="vault_page.html">
+<img alt="Vault" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-vault.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Vault</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="insights" href="insights_page.html">
+<img alt="Insights" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-insights.svg">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Insights</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="settings" href="settings_page.html">
+<img alt="Settings" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-settings.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Settings</span>
+</a>
+<button class="flex-1 flex flex-col items-center justify-center gap-[2px]" id="mobile-nav-account" type="button">
+<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">account_circle</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px]" style="color:#5C6F65;">Account</span>
+</button>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-y-auto relative scroll-smooth flex flex-col transition-[margin] duration-200 ease-in-out pb-16 md:pb-0" id="main-content">
+<!-- TopAppBar (Shared Component styling applied locally) -->
+<div class="p-lg max-w-[1280px] mx-auto w-full flex-1 flex flex-col gap-lg">
+<!-- 0. UTILITY ROW (search + day/time, borderless) -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1">
+<a class="md:hidden flex items-center justify-center w-11 h-11 rounded-lg overflow-hidden active:scale-95 transition-transform" href="../workspace_select.html">
+<img alt="Flare" class="w-full h-full object-contain" src="assets/images/logo.png">
+</a>
+<button aria-label="Toggle sidebar" class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" id="sidebar-toggle">
+<span class="material-symbols-outlined text-[20px]" id="sidebar-toggle-icon">left_panel_close</span>
+</button>
+<div class="relative flex items-center gap-2 text-on-surface-variant w-full max-w-xs min-w-0 pl-1">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none p-0 text-sm placeholder:text-on-surface-variant" id="global-search-input" placeholder="Search your brain..." type="text">
+<div class="hidden absolute left-0 top-[calc(100%+8px)] w-full max-w-md bg-white border border-outline-variant/60 rounded-lg shadow-lg px-3 py-2 z-50 max-h-80 overflow-y-auto" id="global-search-result">
+<span class="text-sm text-on-surface-variant">Not Found</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-md shrink-0">
+<span class="hidden sm:inline font-metadata-mono text-metadata-mono text-on-surface-variant">Monday, August 3 · 09:41</span>
+<button class="text-on-surface-variant hover:text-primary transition-all active:opacity-80 p-sm rounded-full hover:bg-surface-container-highest">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+<!-- 1. QUICK CAPTURE BAR -->
+<section class="w-full">
+<span class="font-label-caps text-label-caps text-outline mb-sm block">QUICK CAPTURE</span>
+<div class="rounded-xl flex flex-col p-sm group bg-white border border-outline-variant/60 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-[#0D9F6E] transition-colors">
+<div class="flex items-start gap-sm">
+<div class="text-outline flex items-center pt-1">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</div>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none resize-none font-body-md text-on-surface placeholder:text-outline py-1" id="quick-capture-textarea" placeholder="Capture a thought, URL, or idea..." rows="1" style="box-shadow:none;"></textarea>
+</div>
+<div class="hidden flex-wrap gap-2 pl-lg pt-sm" id="quick-capture-attachments"></div>
+<div class="flex items-center justify-between pl-lg pt-sm">
+<div class="flex items-center gap-1">
+<input class="hidden" id="quick-capture-file-input" multiple type="file">
+<button aria-label="Add file" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors" id="quick-capture-attach-btn" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#3d4a42;" type="button"><span class="material-symbols-outlined text-[18px]">attach_file</span></button>
+<button aria-label="Voice" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors" id="quick-capture-mic-btn" onmouseover="if(!this.classList.contains('is-recording'))this.style.background='#EEF2F0'" onmouseout="if(!this.classList.contains('is-recording'))this.style.background='transparent'" style="color:#3d4a42;" type="button"><span class="material-symbols-outlined text-[18px]">mic</span></button>
+<span class="hidden items-center gap-1 pl-1" id="quick-capture-recording-indicator">
+<span class="w-2 h-2 rounded-full animate-pulse" style="background:#ba1a1a;"></span>
+<span class="text-xs font-metadata-mono" id="quick-capture-recording-timer" style="color:#ba1a1a;">0:00</span>
+</span>
+</div>
+<button class="bg-[#0D9F6E] hover:bg-primary text-white font-ui-semibold text-xs px-4 py-2 rounded-lg shadow-sm transition-colors flex items-center gap-1 active:scale-95" id="quick-capture-add-btn" type="button">
+<span class="">Add</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. TWO-COLUMN GRID -->
+<!-- Skeleton shown while the latest insight + inbox are "loading" -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter" id="home-loading-skeleton">
+<div class="lg:col-span-8">
+<div class="rounded-xl p-md h-full" style="background:#EEF2F0; min-height:220px;">
+<div class="h-3 w-28 rounded-full animate-pulse" style="background:#D8E2DC;"></div>
+<div class="h-6 w-full max-w-md rounded-lg animate-pulse mt-md" style="background:#D8E2DC;"></div>
+<div class="h-6 w-3/4 rounded-lg animate-pulse mt-2" style="background:#D8E2DC;"></div>
+<div class="h-9 w-32 rounded-lg animate-pulse mt-xl" style="background:#D8E2DC;"></div>
+</div>
+</div>
+<div class="lg:col-span-4">
+<div class="rounded-xl p-md h-full" style="background:#EEF2F0; min-height:220px;">
+<div class="h-3 w-16 rounded-full animate-pulse" style="background:#D8E2DC;"></div>
+<div class="h-9 w-20 rounded-lg animate-pulse mt-md" style="background:#D8E2DC;"></div>
+<div class="h-10 w-full rounded-lg animate-pulse mt-lg" style="background:#D8E2DC;"></div>
+<div class="h-10 w-full rounded-lg animate-pulse mt-2" style="background:#D8E2DC;"></div>
+<div class="h-10 w-full rounded-lg animate-pulse mt-2" style="background:#D8E2DC;"></div>
+</div>
+</div>
+</section>
+<section class="hidden grid grid-cols-1 lg:grid-cols-12 gap-gutter transition-opacity duration-300 ease-out" id="home-insight-inbox-section" style="opacity:0;">
+<!-- Left: INSIGHT CARD (Hero) -->
+<div class="lg:col-span-8 flex flex-col h-full">
+<div class="insight-card-accent rounded-xl p-md flex flex-col h-full justify-between group hover:shadow-lg transition-all duration-300">
+<div>
+<div class="flex items-center gap-2 mb-md">
+<span class="w-2 h-2 rounded-full bg-[#0D9F6E] animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-[#0D9F6E]">LATEST INSIGHT</span>
+</div>
+<h3 class="font-display-sm text-display-sm text-on-surface leading-tight pr-lg">
+                                You've mentioned <span class="bg-surface-tint/10 px-2 rounded-md italic">retention problems</span> 3 times this week — it's your biggest risk right now
+                            </h3>
+<div class="flex items-end gap-md mt-md">
+<svg height="36" viewbox="0 0 120 36" width="120">
+<polyline fill="none" points="0,30 20,28 40,26 60,18 80,20 100,6 120,4" stroke="#0D9F6E" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+<circle cx="120" cy="4" fill="#0D9F6E" r="3"></circle>
+</svg>
+<span class="font-metadata-mono text-metadata-mono text-[11px] text-on-surface-variant mb-1">Mentions trending up this week</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-xl pt-md border-t border-white/40">
+<div class="flex gap-sm">
+<span class="bg-surface-bright/80 px-3 py-1 rounded-full text-xs font-ui-semibold text-on-surface-variant border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span> 3 sources
+                                </span>
+<span class="bg-surface-bright/80 px-3 py-1 rounded-full text-xs font-ui-semibold text-on-surface-variant border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> last week
+                                </span>
+</div>
+<a class="font-ui-semibold text-sm text-[#0D9F6E] hover:text-primary transition-colors flex items-center gap-1 group-hover:translate-x-1 duration-200" href="#">
+                                View <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Right: INBOX CARD -->
+<div class="lg:col-span-4 flex flex-col h-full">
+<div class="card-flat rounded-xl p-md flex flex-col h-full">
+<div class="flex justify-between items-center mb-md">
+<span class="font-label-caps text-label-caps text-outline">INBOX</span>
+<button class="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1" id="inbox-open-trigger" type="button">
+                                Open <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="flex items-baseline gap-2 mb-lg">
+<span class="font-display-lg text-display-lg text-on-surface" id="inbox-count" style="font-size: 40px; font-weight: 800; line-height: 1;">4</span>
+<span class="font-ui-semibold text-on-surface-variant text-sm">items to sort</span>
+</div>
+<div class="flex flex-col gap-sm flex-1 justify-end" id="inbox-item-list">
+<!-- Inbox Item -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-lowest/50 hover:bg-surface-container-lowest border border-transparent hover:border-outline-variant/50 transition-all cursor-pointer group" data-inbox-item>
+<div class="flex items-center gap-sm overflow-hidden">
+<span class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-highest shrink-0"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span></span>
+<span class="font-ui-semibold text-sm text-on-surface truncate">Q3 Marketing Strategy notes...</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Inbox Item -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-lowest/50 hover:bg-surface-container-lowest border border-transparent hover:border-outline-variant/50 transition-all cursor-pointer group" data-inbox-item>
+<div class="flex items-center gap-sm overflow-hidden">
+<span class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-highest shrink-0"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span></span>
+<span class="font-ui-semibold text-sm text-on-surface truncate">Competitor pricing model</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Inbox Item -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-lowest/50 hover:bg-surface-container-lowest border border-transparent hover:border-outline-variant/50 transition-all cursor-pointer group" data-inbox-item>
+<div class="flex items-center gap-sm overflow-hidden">
+<span class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-highest shrink-0"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span></span>
+<span class="font-ui-semibold text-sm text-on-surface truncate">Customer call recording</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Inbox Item -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-lowest/50 hover:bg-surface-container-lowest border border-transparent hover:border-outline-variant/50 transition-all cursor-pointer group" data-inbox-item>
+<div class="flex items-center gap-sm overflow-hidden">
+<span class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-highest shrink-0"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span></span>
+<span class="font-ui-semibold text-sm text-on-surface truncate">Pricing page redesign notes</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. RECENT SECTION -->
+<section class="mt-md">
+<div class="flex justify-between items-center mb-md px-xs">
+<span class="font-label-caps text-label-caps text-outline">RECENT</span>
+<a class="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1" href="#">
+                        See all <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<div class="flex flex-col gap-xs">
+<!-- Recent Row 1 -->
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors">Idea for new onboarding flow</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px]">Created 2 hours ago • 45 words</span>
+</div>
+</div>
+</div>
+<!-- Recent Row 2 -->
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors">Interesting thread on vertical SaaS</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px]">Saved yesterday • twitter.com</span>
+</div>
+</div>
+</div>
+<!-- Recent Row 3 -->
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
+<div class="flex flex-col">
+<span class="font-ui-semibold text-[12px] text-on-surface group-hover:text-primary transition-colors">Meeting with Sarah - Q4 Goals</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-outline mt-[2px]">Oct 22 • Audio transcript • 12 mins</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-lg" id="account-modal-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="account-modal-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="relative bg-white flex flex-col w-full h-full sm:h-[640px] sm:rounded-xl opacity-0 transition-all duration-200 ease-out overflow-hidden" id="account-modal-panel" style="max-width:880px; max-height:100vh; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+<!-- Header (always full width, both breakpoints) -->
+<div class="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
+<h2 class="font-ui-semibold" style="font-size:15px; color:#1A2620;">Account</h2>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body: tabs (row on mobile, column on sm+) + content -->
+<div class="flex-1 flex flex-col sm:flex-row min-h-0">
+<div class="w-full sm:w-[200px] shrink-0 flex flex-row sm:flex-col gap-xs px-sm py-sm overflow-x-auto hide-scrollbar border-b sm:border-b-0 sm:border-r border-[#D8E2DC]" id="account-modal-tabs" style="background:#F7F9F8;">
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="account" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span> Account
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="plan" type="button">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span> Plan
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="billing" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Billing
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-lg" id="account-modal-content"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- INBOX OVERLAY -->
+<div class="hidden fixed inset-0 z-[60]" id="inbox-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out" id="inbox-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="absolute right-0 top-0 h-full w-full sm:w-[640px] bg-white flex flex-col translate-x-full transition-transform duration-300 ease-out" id="inbox-panel" style="box-shadow: -8px 0 32px rgba(26,38,32,0.14);">
+<!-- Header -->
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
+<div class="flex items-center gap-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">inbox</span>
+</div>
+<div class="min-w-0">
+<h2 class="font-ui-semibold truncate" style="color:#1A2620; font-size:16px;">Inbox</h2>
+<p class="text-xs truncate" style="color:#5C6F65;">4 items · Needs sorting</p>
+</div>
+</div>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="inbox-panel-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Search -->
+<div class="px-lg py-sm" style="border-bottom: 1px solid #D8E2DC;">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px]" style="color:#5C6F65;">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="inbox-panel-search" placeholder="Search in Inbox..." style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text">
+</div>
+</div>
+<!-- Note List -->
+<div class="flex-1 overflow-y-auto" id="inbox-panel-list"></div>
+</div>
+</div>
+<script>
+(function () {
+    var skeleton = document.getElementById('home-loading-skeleton');
+    var content = document.getElementById('home-insight-inbox-section');
+    if (!skeleton || !content) return;
+    setTimeout(function () {
+        skeleton.classList.add('hidden');
+        content.classList.remove('hidden');
+        requestAnimationFrame(function () { content.style.opacity = '1'; });
+    }, 550);
+})();
+</script>
+<!-- SIDEBAR-BEHAVIOR-JS -->
+<script>
+(function () {
+    var sidebar = document.getElementById('sidebar');
+    var mainEl = document.getElementById('main-content');
+    var toggleBtn = document.getElementById('sidebar-toggle');
+    var toggleIcon = document.getElementById('sidebar-toggle-icon');
+    var resizeHandle = document.getElementById('sidebar-resize-handle');
+
+    var COLLAPSED_KEY = 'flare-sidebar-collapsed';
+    var WIDTH_KEY = 'flare-sidebar-width';
+    var DEFAULT_WIDTH = 200;
+    var MIN_WIDTH = 64;
+    var MAX_WIDTH = 240;
+    var ICON_ONLY_THRESHOLD = 100;
+
+    var savedWidth = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+    var currentWidth = (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) ? savedWidth : DEFAULT_WIDTH;
+    var collapsed = localStorage.getItem(COLLAPSED_KEY) === '1';
+
+    function isDesktop() {
+        return window.matchMedia('(min-width: 768px)').matches;
+    }
+
+    function applyIconOnly(iconOnly) {
+        var labels = sidebar.querySelectorAll('.nav-label, .sidebar-brand-label, .sidebar-profile-label');
+        labels.forEach(function (el) { el.style.display = iconOnly ? 'none' : ''; });
+
+        // Every row (brand, nav list, nav links, account row) has a different
+        // horizontal padding by default, so centering each independently
+        // leaves their icons at different x positions. Zeroing all of them
+        // out and centering within the full-width rail makes every icon —
+        // logo included — line up on the same vertical axis.
+        var rows = sidebar.querySelectorAll('.nav-link, #account-menu-trigger, .sidebar-brand-row, .sidebar-nav-list, .sidebar-footer-wrap');
+        rows.forEach(function (el) {
+            el.style.justifyContent = iconOnly ? 'center' : '';
+            el.style.paddingLeft = iconOnly ? '0px' : '';
+            el.style.paddingRight = iconOnly ? '0px' : '';
+        });
+
+        // Push the brand row down a bit so it doesn't crowd the top edge
+        // of the rail once it's icon-only.
+        var brandRow = sidebar.querySelector('.sidebar-brand-row');
+        if (brandRow) {
+            brandRow.style.marginTop = iconOnly ? '12px' : '';
+        }
+
+        // The brand logo is sized for a wide sidebar (64px) — at the
+        // minimum rail width (64px) it would overflow its own row edge to
+        // edge. Shrink it to 1.5x the 20px nav icons (30px) so it fits
+        // with breathing room while still reading as a "brand mark"
+        // rather than just another nav icon, instead of getting clipped
+        // by the rail's overflow:hidden.
+        var logoImg = sidebar.querySelector('.sidebar-logo-img');
+        if (logoImg) {
+            logoImg.style.width = iconOnly ? '30px' : '';
+            logoImg.style.height = iconOnly ? '30px' : '';
+        }
+    }
+
+    function render() {
+        var width = collapsed ? 0 : currentWidth;
+        sidebar.style.width = width + 'px';
+        sidebar.style.opacity = collapsed ? '0' : '1';
+        sidebar.style.borderRightWidth = collapsed ? '0px' : '1.5px';
+        mainEl.style.marginLeft = (isDesktop() && !collapsed) ? currentWidth + 'px' : '0px';
+        toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
+        applyIconOnly(!collapsed && currentWidth <= ICON_ONLY_THRESHOLD);
+    }
+
+    function setCollapsed(value) {
+        collapsed = value;
+        localStorage.setItem(COLLAPSED_KEY, collapsed ? '1' : '0');
+        render();
+    }
+
+    function setWidth(px) {
+        currentWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, px));
+        localStorage.setItem(WIDTH_KEY, String(currentWidth));
+        render();
+    }
+
+    toggleBtn.addEventListener('click', function () { setCollapsed(!collapsed); });
+    window.addEventListener('resize', render);
+
+    if (resizeHandle) {
+        var dragging = false;
+        var startX = 0;
+        var startWidth = 0;
+
+        resizeHandle.addEventListener('mouseover', function () {
+            resizeHandle.style.background = 'rgba(13,159,110,0.3)';
+        });
+        resizeHandle.addEventListener('mouseout', function () {
+            if (!dragging) resizeHandle.style.background = 'transparent';
+        });
+
+        resizeHandle.addEventListener('mousedown', function (e) {
+            if (collapsed) return;
+            dragging = true;
+            startX = e.clientX;
+            startWidth = currentWidth;
+            sidebar.style.transition = 'none';
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!dragging) return;
+            setWidth(startWidth + (e.clientX - startX));
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (!dragging) return;
+            dragging = false;
+            sidebar.style.transition = '';
+            resizeHandle.style.background = 'transparent';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        });
+    }
+
+    render();
+})();
+</script>
+<script>
+
+    (function () {
+        var NOTE_ICON = 'description';
+
+        var INBOX_ITEMS = [
+            { type: 'NOTE', title: 'Q3 Marketing Strategy notes...', date: '2h ago', preview: 'Captured, not yet filed into a folder' },
+            { type: 'URL', title: 'Competitor pricing model', date: 'Yesterday', preview: 'Captured, not yet filed into a folder' },
+            { type: 'AUDIO', title: 'Customer call recording', date: 'Oct 22', preview: 'Captured, not yet filed into a folder' },
+            { type: 'NOTE', title: 'Pricing page redesign notes', date: 'Oct 21', preview: 'Captured, not yet filed into a folder' }
+        ];
+
+        var overlay = document.getElementById('inbox-overlay');
+        var backdrop = document.getElementById('inbox-backdrop');
+        var panel = document.getElementById('inbox-panel');
+        var panelList = document.getElementById('inbox-panel-list');
+        var closeBtn = document.getElementById('inbox-panel-close');
+        var openTrigger = document.getElementById('inbox-open-trigger');
+
+        function renderRow(note, isLast) {
+            var row = document.createElement('div');
+            row.className = 'flex items-center gap-3 px-lg cursor-pointer transition-colors';
+            row.style.height = '64px';
+            row.style.borderBottom = isLast ? 'none' : '1px solid #D8E2DC';
+            row.onmouseover = function () { row.style.background = '#EEF2F0'; };
+            row.onmouseout = function () { row.style.background = 'transparent'; };
+
+            row.innerHTML =
+                '<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">' +
+                    '<span class="material-symbols-outlined text-[18px] text-on-surface-variant">' + NOTE_ICON + '</span>' +
+                '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                    '<div class="flex items-center justify-between gap-2">' +
+                        '<span class="font-ui-semibold text-sm truncate" style="color:#1A2620;">' + note.title + '</span>' +
+                        '<span class="font-metadata-mono text-metadata-mono text-[11px] shrink-0" style="color:#5C6F65;">' + note.date + '</span>' +
+                    '</div>' +
+                    '<div class="mt-[2px]">' +
+                        '<span class="text-xs truncate block" style="color:#5C6F65;">' + note.preview + '</span>' +
+                    '</div>' +
+                '</div>';
+            return row;
+        }
+
+        function openInbox() {
+            panelList.innerHTML = '';
+            INBOX_ITEMS.forEach(function (note, i) {
+                panelList.appendChild(renderRow(note, i === INBOX_ITEMS.length - 1));
+            });
+
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.transform = 'translateX(0)';
+            });
+        }
+
+        function closeInbox() {
+            backdrop.style.opacity = '0';
+            panel.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 300);
+        }
+
+        openTrigger.addEventListener('click', openInbox);
+        document.querySelectorAll('[data-inbox-item]').forEach(function (row) {
+            row.addEventListener('click', openInbox);
+        });
+        closeBtn.addEventListener('click', closeInbox);
+        backdrop.addEventListener('click', closeInbox);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeInbox();
+        });
+
+        // --- Search inside inbox panel ---
+        var inboxPanelSearch = document.getElementById('inbox-panel-search');
+        inboxPanelSearch.addEventListener('input', function () {
+            var q = inboxPanelSearch.value.trim().toLowerCase();
+            Array.prototype.forEach.call(panelList.children, function (row) {
+                var match = row.textContent.toLowerCase().indexOf(q) !== -1;
+                row.style.display = match ? '' : 'none';
+            });
+        });
+        closeBtn.addEventListener('click', function () { inboxPanelSearch.value = ''; });
+
+        // --- Add a new item to the Inbox (called by Quick Capture) ---
+        var inboxCountEl = document.getElementById('inbox-count');
+        var inboxItemList = document.getElementById('inbox-item-list');
+
+        function makeInboxListRow(note) {
+            var row = document.createElement('div');
+            row.className = 'flex items-center justify-between p-sm rounded-lg bg-surface-container-lowest/50 hover:bg-surface-container-lowest border border-transparent hover:border-outline-variant/50 transition-all cursor-pointer group';
+            row.setAttribute('data-inbox-item', '');
+            row.innerHTML =
+                '<div class="flex items-center gap-sm overflow-hidden">' +
+                    '<span class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-highest shrink-0"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">' + NOTE_ICON + '</span></span>' +
+                    '<span class="font-ui-semibold text-sm text-on-surface truncate">' + note.title + '</span>' +
+                '</div>' +
+                '<span class="material-symbols-outlined text-outline group-hover:text-on-surface text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>';
+            row.addEventListener('click', openInbox);
+            return row;
+        }
+
+        window.addInboxItem = function (note) {
+            INBOX_ITEMS.unshift(note);
+            inboxItemList.insertBefore(makeInboxListRow(note), inboxItemList.firstChild);
+            inboxCountEl.textContent = INBOX_ITEMS.length;
+        };
+
+        // --- Global search (this page only knows about Inbox items) ---
+        var globalInput = document.getElementById('global-search-input');
+        var globalResult = document.getElementById('global-search-result');
+
+        function renderGlobalResults(q) {
+            var matches = INBOX_ITEMS.filter(function (note) {
+                return note.title.toLowerCase().indexOf(q) !== -1 ||
+                    note.preview.toLowerCase().indexOf(q) !== -1;
+            });
+
+            if (matches.length === 0) {
+                globalResult.innerHTML = '<span class="text-sm text-on-surface-variant">Not Found</span>';
+                return;
+            }
+
+            globalResult.innerHTML = '';
+            matches.forEach(function (note) {
+                var row = document.createElement('div');
+                row.className = 'flex items-center gap-3 py-2 px-1 cursor-pointer rounded-md hover:bg-surface-container-highest transition-colors';
+                row.innerHTML =
+                    '<span class="material-symbols-outlined text-[18px] text-on-surface-variant shrink-0">' + NOTE_ICON + '</span>' +
+                    '<div class="min-w-0 flex-1">' +
+                        '<div class="text-sm text-on-surface truncate">' + note.title + '</div>' +
+                        '<div class="text-xs text-outline truncate">Inbox</div>' +
+                    '</div>';
+                row.addEventListener('click', function () {
+                    globalInput.value = '';
+                    globalResult.classList.add('hidden');
+                    openInbox();
+                });
+                globalResult.appendChild(row);
+            });
+        }
+
+        globalInput.addEventListener('input', function () {
+            var q = globalInput.value.trim().toLowerCase();
+            globalResult.classList.toggle('hidden', q === '');
+            if (q !== '') renderGlobalResults(q);
+        });
+        document.addEventListener('click', function (e) {
+            if (e.target !== globalInput) globalResult.classList.add('hidden');
+        });
+    })();
+
+    (function () {
+        var textarea = document.getElementById('quick-capture-textarea');
+        var fileInput = document.getElementById('quick-capture-file-input');
+        var attachBtn = document.getElementById('quick-capture-attach-btn');
+        var micBtn = document.getElementById('quick-capture-mic-btn');
+        var recordingIndicator = document.getElementById('quick-capture-recording-indicator');
+        var recordingTimer = document.getElementById('quick-capture-recording-timer');
+        var attachmentsBox = document.getElementById('quick-capture-attachments');
+        var addBtn = document.getElementById('quick-capture-add-btn');
+
+        var recordingInterval = null;
+        var recordingSeconds = 0;
+        var quickNoteCounter = 0;
+
+        function autoGrow() {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        textarea.addEventListener('input', autoGrow);
+
+        function formatTime(totalSeconds) {
+            var m = Math.floor(totalSeconds / 60);
+            var s = totalSeconds % 60;
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function addAttachmentChip(iconName, label) {
+            var chip = document.createElement('span');
+            chip.className = 'inline-flex items-center gap-1 pl-2 pr-1 py-1 rounded-md text-xs';
+            chip.style.background = '#EEF2F0';
+            chip.style.color = '#1A2620';
+            chip.innerHTML =
+                '<span class="material-symbols-outlined text-[14px]" style="color:#5C6F65;">' + iconName + '</span>' +
+                '<span class="max-w-[160px] truncate">' + label + '</span>' +
+                '<button aria-label="Remove" class="material-symbols-outlined text-[14px] rounded-full flex items-center justify-center" style="color:#5C6F65; width:16px; height:16px;" type="button">close</button>';
+            chip.querySelector('button').addEventListener('click', function () {
+                chip.remove();
+                if (!attachmentsBox.children.length) attachmentsBox.style.display = 'none';
+            });
+            attachmentsBox.appendChild(chip);
+            attachmentsBox.style.display = 'flex';
+        }
+
+        function stopRecordingUI() {
+            if (recordingInterval) {
+                clearInterval(recordingInterval);
+                recordingInterval = null;
+            }
+            recordingSeconds = 0;
+            recordingIndicator.style.display = 'none';
+            micBtn.classList.remove('is-recording');
+            micBtn.style.background = 'transparent';
+            micBtn.style.color = '#3d4a42';
+        }
+
+        function resetComposer() {
+            textarea.value = '';
+            autoGrow();
+            attachmentsBox.innerHTML = '';
+            attachmentsBox.style.display = 'none';
+            stopRecordingUI();
+        }
+
+        attachBtn.addEventListener('click', function () { fileInput.click(); });
+
+        fileInput.addEventListener('change', function () {
+            Array.prototype.forEach.call(fileInput.files, function (file) {
+                addAttachmentChip('attach_file', file.name);
+            });
+            fileInput.value = '';
+        });
+
+        micBtn.addEventListener('click', function () {
+            if (micBtn.classList.contains('is-recording')) {
+                var finalSeconds = recordingSeconds;
+                stopRecordingUI();
+                addAttachmentChip('mic', 'Voice note (' + formatTime(finalSeconds) + ')');
+            } else {
+                recordingSeconds = 0;
+                recordingTimer.textContent = '0:00';
+                recordingIndicator.style.display = 'flex';
+                micBtn.classList.add('is-recording');
+                micBtn.style.background = '#ba1a1a';
+                micBtn.style.color = '#ffffff';
+                recordingInterval = setInterval(function () {
+                    recordingSeconds++;
+                    recordingTimer.textContent = formatTime(recordingSeconds);
+                }, 1000);
+            }
+        });
+
+        function submitQuickCapture() {
+            var text = textarea.value.trim();
+            var hasAttachments = attachmentsBox.children.length > 0;
+            if (!text && !hasAttachments) {
+                if (window.flareToast) window.flareToast("Write something before adding — empty notes don't get filed.", 'error');
+                textarea.focus();
+                return;
+            }
+
+            quickNoteCounter++;
+            var preview = text || 'Attachment only';
+
+            if (window.addInboxItem) {
+                window.addInboxItem({
+                    type: 'NOTE',
+                    title: 'Quick note #' + quickNoteCounter,
+                    date: 'Just now',
+                    preview: preview
+                });
+            }
+
+            resetComposer();
+        }
+
+        addBtn.addEventListener('click', submitQuickCapture);
+        textarea.addEventListener('keydown', function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                e.preventDefault();
+                submitQuickCapture();
+            }
+        });
+    })();
+</script>
+
+
+
+<script>
+    (function () {
+        var trigger = document.getElementById('account-menu-trigger');
+        var overlay = document.getElementById('account-modal-overlay');
+        var backdrop = document.getElementById('account-modal-backdrop');
+        var panel = document.getElementById('account-modal-panel');
+        var closeBtn = document.getElementById('account-modal-close');
+        var contentEl = document.getElementById('account-modal-content');
+        var tabBtns = document.querySelectorAll('.account-modal-tab');
+        var planLabelEl = document.getElementById('account-plan-label');
+
+        var accountState = {
+            activeTab: 'account',
+            name: 'Ilyas',
+            email: 'ilyas300606@gmail.com',
+            avatarFile: '',
+            plan: 'basic'
+        };
+
+        function updatePlanLabel() {
+            if (planLabelEl) planLabelEl.textContent = accountState.plan === 'plus' ? 'Plus plan' : 'Free plan';
+        }
+
+        function openAccountModal(tab) {
+            accountState.activeTab = tab || accountState.activeTab;
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderTabs();
+            renderTabContent();
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.opacity = '1';
+                panel.style.transform = 'scale(1)';
+            });
+        }
+
+        function closeAccountModal() {
+            backdrop.style.opacity = '0';
+            panel.style.opacity = '0';
+            panel.style.transform = 'scale(0.96)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 200);
+        }
+
+        trigger.addEventListener('click', function () { openAccountModal('account'); });
+        closeBtn.addEventListener('click', closeAccountModal);
+        backdrop.addEventListener('click', closeAccountModal);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeAccountModal();
+        });
+
+        function renderTabs() {
+            tabBtns.forEach(function (btn) {
+                var isActive = btn.getAttribute('data-tab') === accountState.activeTab;
+                btn.style.background = isActive ? '#D1FAE5' : 'transparent';
+                btn.style.color = isActive ? '#0D9F6E' : '#3d4a42';
+                btn.onmouseover = function () { if (!isActive) btn.style.background = '#EEF2F0'; };
+                btn.onmouseout = function () { if (!isActive) btn.style.background = 'transparent'; };
+            });
+        }
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                accountState.activeTab = btn.getAttribute('data-tab');
+                renderTabs();
+                renderTabContent();
+            });
+        });
+
+        function renderAccountTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Account</h3>' +
+                '<div class="flex items-center gap-md mb-xl">' +
+                    '<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-ui-semibold shrink-0" style="background:#0D9F6E; font-size:22px;">' + accountState.name.charAt(0).toUpperCase() + '</div>' +
+                    '<div>' +
+                        '<input class="hidden" id="account-avatar-input" type="file" accept="image/*">' +
+                        '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors" id="account-avatar-btn" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Upload photo</button>' +
+                        '<p class="text-xs mt-1" id="account-avatar-status" style="color:#5C6F65;">' + (accountState.avatarFile || 'JPG or PNG, up to 5MB') + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-lg">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Name</label>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<input class="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="account-name-input" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text" value="' + accountState.name + '">' +
+                        '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0" id="account-name-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-xl">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Email</label>' +
+                    '<p class="text-sm" style="color:#1A2620;">' + accountState.email + '</p>' +
+                '</div>' +
+                '<div class="border-t pt-lg" style="border-color:#D8E2DC;">' +
+                    '<button class="flex items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="account-signout-btn" onmouseover="this.style.background=\'#EEF2F0\'" onmouseout="this.style.background=\'transparent\'" style="color:#ba1a1a;" type="button">' +
+                        '<span class="material-symbols-outlined text-[18px]">logout</span> Sign out' +
+                    '</button>' +
+                '</div>';
+
+            document.getElementById('account-name-save').addEventListener('click', function () {
+                var input = document.getElementById('account-name-input');
+                accountState.name = input.value.trim() || 'Ilyas';
+                var btn = document.getElementById('account-name-save');
+                btn.textContent = 'Saved';
+                setTimeout(function () { btn.textContent = 'Save'; }, 1200);
+            });
+
+            var avatarInput = document.getElementById('account-avatar-input');
+            document.getElementById('account-avatar-btn').addEventListener('click', function () { avatarInput.click(); });
+            avatarInput.addEventListener('change', function () {
+                if (avatarInput.files.length > 0) {
+                    accountState.avatarFile = avatarInput.files[0].name + ' selected (demo, not uploaded)';
+                    document.getElementById('account-avatar-status').textContent = accountState.avatarFile;
+                }
+            });
+
+            document.getElementById('account-signout-btn').addEventListener('click', function () {
+                alert('Signed out (demo)');
+            });
+        }
+
+        function planCard(opts) {
+            var isCurrent = accountState.plan === opts.key;
+            var featuresHtml = opts.features.map(function (f) {
+                return '<li class="flex items-start gap-2 text-sm"><span class="material-symbols-outlined text-[16px] mt-[1px]" style="color:#0D9F6E;">check</span><span style="color:#1A2620;">' + f + '</span></li>';
+            }).join('');
+
+            var actionHtml = isCurrent
+                ? '<span class="inline-block text-xs font-ui-semibold px-3 py-1.5 rounded-lg" style="background:#EEF2F0; color:#5C6F65;">Current plan</span>'
+                : '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full account-plan-switch" data-plan="' + opts.key + '" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">' + opts.actionLabel + '</button>';
+
+            return (
+                '<div class="rounded-xl p-md flex flex-col" style="background:#FFFFFF; border:1.5px solid ' + (opts.highlight ? '#0D9F6E' : '#D8E2DC') + '; flex:1;">' +
+                    (opts.highlight ? '<span class="inline-block text-[10px] font-ui-semibold uppercase tracking-wider px-2 py-[2px] rounded-full mb-2 self-start" style="background:#D1FAE5; color:#0D9F6E;">Recommended</span>' : '') +
+                    '<p class="text-sm font-ui-semibold mb-1" style="color:#1A2620;">' + opts.title + '</p>' +
+                    '<p class="mb-md" style="color:#1A2620;"><span style="font-size:22px; font-weight:800;">' + opts.price + '</span><span class="text-xs" style="color:#5C6F65;">' + opts.priceSuffix + '</span></p>' +
+                    '<ul class="flex flex-col gap-2 mb-lg">' + featuresHtml + '</ul>' +
+                    '<div class="mt-auto">' + actionHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderPlanTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Plan</h3>' +
+                '<div class="flex gap-md" style="align-items:stretch;">' +
+                    planCard({
+                        key: 'basic',
+                        title: 'Basic',
+                        price: '$0',
+                        priceSuffix: '/mo',
+                        highlight: false,
+                        actionLabel: 'Downgrade',
+                        features: ['Up to 200 notes', '1 workspace', 'Weekly insights', 'Chat scoped to one insight at a time', 'Community support']
+                    }) +
+                    planCard({
+                        key: 'plus',
+                        title: 'Plus',
+                        price: '$10',
+                        priceSuffix: '/mo',
+                        highlight: true,
+                        actionLabel: 'Upgrade to Plus',
+                        features: ['Unlimited notes', 'Unlimited workspaces', 'Daily insights, custom schedule', 'Ask across your entire vault', 'Priority support']
+                    }) +
+                '</div>';
+
+            document.querySelectorAll('.account-plan-switch').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    accountState.plan = btn.getAttribute('data-plan');
+                    updatePlanLabel();
+                    renderPlanTab();
+                });
+            });
+        }
+
+        function renderBillingTab() {
+            var isPlus = accountState.plan === 'plus';
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Billing</h3>' +
+                '<div class="mb-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">PAYMENT METHOD</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl p-md flex items-center justify-between" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center gap-sm">' +
+                                    '<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">credit_card</span>' +
+                                    '<span class="text-sm" style="color:#1A2620;">Visa •••• 4242</span>' +
+                                '</div>' +
+                                '<span class="text-xs" style="color:#5C6F65;">Next charge Sep 4, 2026</span>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No payment method on file — you\'re on the Free plan.</p></div>'
+                    ) +
+                '</div>' +
+                '<div>' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">BILLING HISTORY</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center justify-between px-md py-sm">' +
+                                    '<span class="text-sm" style="color:#1A2620;">Aug 4, 2026 — Plus plan</span>' +
+                                    '<span class="text-sm font-ui-semibold" style="color:#1A2620;">$10.00</span>' +
+                                '</div>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No invoices yet.</p></div>'
+                    ) +
+                '</div>';
+        }
+
+        function renderTabContent() {
+            if (accountState.activeTab === 'account') renderAccountTab();
+            else if (accountState.activeTab === 'plan') renderPlanTab();
+            else renderBillingTab();
+        }
+
+        updatePlanLabel();
+    })();
+</script>
+<!-- NAV-ACTIVE-JS -->
+<script>
+(function () {
+    var current = document.body.getAttribute('data-page');
+
+    // Desktop sidebar
+    var item = document.querySelector('#sidebar li[data-nav="' + current + '"]');
+    if (item) {
+        var indicator = item.querySelector('.nav-active-indicator');
+        var link = item.querySelector('.nav-link');
+        if (indicator) indicator.style.display = '';
+        if (link) {
+            link.classList.remove('text-on-surface-variant', 'group');
+            link.classList.add('text-primary', 'font-bold');
+        }
+    }
+
+    // Mobile bottom tab bar
+    var mobileLink = document.querySelector('.mobile-nav-link[data-nav="' + current + '"]');
+    if (mobileLink) {
+        var icon = mobileLink.querySelector('.mobile-nav-icon');
+        var label = mobileLink.querySelector('.mobile-nav-label');
+        if (icon) icon.style.opacity = '1';
+        if (label) { label.style.color = '#0D9F6E'; label.style.fontWeight = '700'; }
+        var dot = document.createElement('span');
+        dot.className = 'w-1 h-1 rounded-full';
+        dot.style.background = '#0D9F6E';
+        mobileLink.insertBefore(dot, mobileLink.firstChild);
+    }
+
+    var accountBtn = document.getElementById('mobile-nav-account');
+    var desktopTrigger = document.getElementById('account-menu-trigger');
+    if (accountBtn && desktopTrigger) {
+        accountBtn.addEventListener('click', function () { desktopTrigger.click(); });
+    }
+})();
+</script>
+<!-- TOAST -->
+<div class="fixed left-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none bottom-20 md:bottom-6" id="flare-toast-stack" style="transform:translateX(-50%);"></div>
+
+<!-- TOAST-JS -->
+<script>
+(function () {
+    var ICONS = { error: 'error', success: 'check_circle' };
+    var STYLES = {
+        error: { bg: '#FEF2F2', border: '#FECACA', text: '#B91C1C', icon: '#DC2626' },
+        success: { bg: '#F0FDF9', border: 'rgba(13,159,110,0.25)', text: '#0D9F6E', icon: '#0D9F6E' }
+    };
+
+    window.flareToast = function (message, type) {
+        var stack = document.getElementById('flare-toast-stack');
+        if (!stack) return;
+        type = (type === 'success') ? 'success' : 'error';
+        var style = STYLES[type];
+
+        var toast = document.createElement('div');
+        toast.className = 'flex items-center gap-2 rounded-lg pointer-events-auto shadow-lg';
+        toast.style.cssText =
+            'background:' + style.bg + '; border:1px solid ' + style.border + '; color:' + style.text + ';' +
+            'padding:10px 16px; font-size:13px; font-weight:600; opacity:0; transform:translateY(8px); transition:opacity .18s ease-out, transform .18s ease-out; max-width:min(90vw,420px);';
+        toast.innerHTML =
+            '<span class="material-symbols-outlined text-[18px]" style="color:' + style.icon + ';">' + ICONS[type] + '</span>' +
+            '<span>' + message + '</span>';
+        stack.appendChild(toast);
+
+        requestAnimationFrame(function () {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(function () {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+            setTimeout(function () { toast.remove(); }, 200);
+        }, 3200);
+    };
+})();
+</script>
+</body></html>

@@ -1,0 +1,28 @@
+<!-- ACCOUNT MODAL -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-lg" id="account-modal-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="account-modal-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="relative bg-white flex flex-col w-full h-full sm:h-[640px] sm:rounded-xl opacity-0 transition-all duration-200 ease-out overflow-hidden" id="account-modal-panel" style="max-width:880px; max-height:100vh; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+<!-- Header (always full width, both breakpoints) -->
+<div class="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
+<h2 class="font-ui-semibold" style="font-size:15px; color:#1A2620;">Account</h2>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body: tabs (row on mobile, column on sm+) + content -->
+<div class="flex-1 flex flex-col sm:flex-row min-h-0">
+<div class="w-full sm:w-[200px] shrink-0 flex flex-row sm:flex-col gap-xs px-sm py-sm overflow-x-auto hide-scrollbar border-b sm:border-b-0 sm:border-r border-[#D8E2DC]" id="account-modal-tabs" style="background:#F7F9F8;">
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="account" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span> Account
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="plan" type="button">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span> Plan
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="billing" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Billing
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-lg" id="account-modal-content"></div>
+</div>
+</div>
+</div>

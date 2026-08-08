@@ -1,0 +1,1474 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flare - Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Material Symbols Outlined';
+            font-style: normal;
+            font-weight: 100 700;
+            font-display: block;
+            src: url('assets/fonts/material-symbols-outlined.woff2') format('woff2');
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#e9fff2",
+                      "surface-container-highest": "#d2e8dc",
+                      "on-secondary-fixed": "#121e18",
+                      "tertiary": "#3f6353",
+                      "on-background": "#0d1f18",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#e9fff2",
+                      "surface-dim": "#cadfd3",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d2e8dc",
+                      "surface-tint": "#006c49",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#d8ede1",
+                      "on-primary-container": "#f5fff6",
+                      "tertiary-container": "#577c6b",
+                      "tertiary-fixed-dim": "#a8cfbc",
+                      "on-secondary-container": "#5a6760",
+                      "secondary-fixed-dim": "#bccac1",
+                      "outline": "#6d7a71",
+                      "on-secondary-fixed-variant": "#3d4a43",
+                      "on-tertiary-fixed-variant": "#294e3f",
+                      "inverse-on-surface": "#e0f6ea",
+                      "outline-variant": "#bccac0",
+                      "primary-fixed": "#80f9c1",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#005236",
+                      "secondary-container": "#d8e6dc",
+                      "surface-container-low": "#e3f9ec",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "surface": "#e9fff2",
+                      "on-surface-variant": "#3d4a42",
+                      "primary-fixed-dim": "#63dca6",
+                      "inverse-surface": "#22342c",
+                      "secondary-fixed": "#d8e6dc",
+                      "tertiary-fixed": "#c3ecd7",
+                      "inverse-primary": "#63dca6",
+                      "surface-container": "#ddf3e7",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#f5fff7",
+                      "on-surface": "#0d1f18",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#00855b",
+                      "primary": "#0D9F6E",
+                      "on-tertiary-fixed": "#002115",
+                      "secondary": "#54615a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "lg": "40px",
+                      "gutter": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "margin-desktop": "48px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "DM Sans"
+                      ],
+                      "body-md": [
+                              "DM Sans"
+                      ],
+                      "display-sm": [
+                              "DM Sans"
+                      ],
+                      "headline-lg": [
+                              "DM Sans"
+                      ],
+                      "metadata-mono": [
+                              "Geist Mono"
+                      ],
+                      "body-lg": [
+                              "DM Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "DM Sans"
+                      ],
+                      "ui-semibold": [
+                              "DM Sans"
+                      ],
+                      "label-caps": [
+                              "DM Sans"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-sm": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metadata-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "ui-semibold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        :root {
+            /* Single source of truth for the reading column width. Both the
+               message content and the floating chat bar reference this, so
+               their edges always line up — change it once here, not per-instance. */
+            --content-width: 860px;
+        }
+        body {
+            background-color: #F7F9F8;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            #insights-two-pane:not(.mobile-show-detail) .insights-detail-pane { display: none; }
+            #insights-two-pane.mobile-show-detail .insights-list-pane { display: none; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex" data-page="insights">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
+<div>
+<!-- Brand -->
+<div class="px-md mb-lg flex items-center gap-sm sidebar-brand-row">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 shrink-0" href="../workspace_select.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain sidebar-logo-img" src="assets/images/logo.png">
+</a>
+<div class="min-w-0 sidebar-brand-label">
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider" style="white-space:nowrap;">Project Name</p>
+</div>
+</div>
+<!-- Links -->
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold sidebar-nav-list">
+<li class="relative" data-nav="home">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="home_page.html" title="Home">
+<img alt="Home" class="w-5 h-5 shrink-0" src="assets/images/nav-home.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Home</span>
+</a>
+</li>
+<li class="relative" data-nav="vault">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="vault_page.html" title="Vault">
+<img alt="Vault" class="w-5 h-5 shrink-0" src="assets/images/nav-vault.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Vault</span>
+</a>
+</li>
+<li class="relative" data-nav="insights">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="insights_page.html" title="Insights">
+<img alt="Insights" class="w-5 h-5 shrink-0" src="assets/images/nav-insights.svg">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Insights</span>
+</a>
+</li>
+<li class="relative" data-nav="settings">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="settings_page.html" title="Settings">
+<img alt="Settings" class="w-5 h-5 shrink-0" src="assets/images/nav-settings.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Profile -->
+<div class="px-sm sidebar-footer-wrap">
+<button class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface w-full" id="account-menu-trigger" title="Account" type="button">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col items-start min-w-0">
+<span class="font-ui-semibold text-ui-semibold sidebar-profile-label" style="white-space:nowrap;">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant sidebar-profile-label" id="account-plan-label" style="white-space:nowrap;">Founder Tier</span>
+</div>
+</button>
+</div>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="sidebar-resize-handle" style="width:6px; cursor:col-resize; z-index:60;"></div>
+</nav>
+<!-- Mobile bottom tab bar (hidden on md+, sidebar takes over there) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around bg-white" id="mobile-nav" style="border-top: 1.5px solid #D8E2DC; height:64px; padding-bottom: env(safe-area-inset-bottom, 0px);">
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="home" href="home_page.html">
+<img alt="Home" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-home.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Home</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="vault" href="vault_page.html">
+<img alt="Vault" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-vault.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Vault</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="insights" href="insights_page.html">
+<img alt="Insights" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-insights.svg">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Insights</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="settings" href="settings_page.html">
+<img alt="Settings" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-settings.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Settings</span>
+</a>
+<button class="flex-1 flex flex-col items-center justify-center gap-[2px]" id="mobile-nav-account" type="button">
+<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">account_circle</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px]" style="color:#5C6F65;">Account</span>
+</button>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-hidden relative flex flex-col transition-[margin] duration-200 ease-in-out pb-16 md:pb-0" id="main-content">
+<!-- 0. UTILITY ROW -->
+<div class="flex items-center justify-between px-lg pt-lg pb-md shrink-0">
+<div class="flex items-center gap-1">
+<a class="md:hidden flex items-center justify-center w-11 h-11 rounded-lg overflow-hidden active:scale-95 transition-transform" href="../workspace_select.html">
+<img alt="Flare" class="w-full h-full object-contain" src="assets/images/logo.png">
+</a>
+<button aria-label="Toggle sidebar" class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" id="sidebar-toggle">
+<span class="material-symbols-outlined text-[20px]" id="sidebar-toggle-icon">left_panel_close</span>
+</button>
+<h1 class="font-display-sm text-on-surface pl-1" style="font-size: 22px; font-weight: 800;">Insights</h1>
+</div>
+<span class="hidden sm:inline font-metadata-mono text-metadata-mono text-on-surface-variant">Monday, August 4 · 09:41</span>
+</div>
+
+<!-- 1. TWO COLUMN BODY -->
+<div class="flex-1 flex min-h-0 border-t" id="insights-two-pane" style="border-color:#D8E2DC;">
+
+<!-- LEFT: INSIGHT LIST -->
+<div class="w-full md:w-[280px] shrink-0 md:border-r flex flex-col min-h-0 relative insights-list-pane" id="insights-list-pane" style="border-color:#D8E2DC;">
+<div class="flex items-center justify-between px-md pt-md pb-sm shrink-0">
+<span class="font-label-caps text-label-caps text-outline">ALL INSIGHTS</span>
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold" id="insight-count">8</span>
+</div>
+<div class="px-md pb-sm shrink-0">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px]" style="color:#5C6F65;">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="insight-search-input" placeholder="Search insights..." style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text">
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-md" id="insight-list"></div>
+<p class="hidden text-center text-sm px-md py-md" id="insight-list-empty" style="color:#5C6F65;">No insights match.</p>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="insights-list-resize-handle" style="width:6px; cursor:col-resize; z-index:30;"></div>
+</div>
+
+<!-- RIGHT: DETAIL -->
+<div class="flex-1 flex flex-col min-h-0 relative insights-detail-pane">
+<button class="md:hidden flex items-center gap-1 text-sm font-ui-semibold px-lg pt-md pb-sm shrink-0" id="insights-back-btn" style="color:#0D9F6E;" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span> All insights
+</button>
+<div class="flex-1 overflow-y-auto" id="insight-detail"></div>
+
+<!-- Chat: floating over the scrolling content -->
+<div class="absolute bottom-0 left-0 right-0 pointer-events-none">
+<!-- backdrop layer: graduated blur + fade, sits behind the chat row -->
+<div class="absolute inset-0" style="background: linear-gradient(rgba(247,249,248,0) 0%, rgba(247,249,248,0.55) 45%, rgba(247,249,248,0.92) 100%); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,1) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,1) 100%);"></div>
+<!-- chat row: always sharp, no blur/mask. Wider than the message column, mx-auto so it stays centered on the same axis. -->
+<div class="relative pointer-events-none">
+<div class="mx-auto px-lg pt-md pb-sm pointer-events-auto" style="max-width:var(--content-width);">
+<div class="flex items-center gap-1 rounded-xl pl-4 pr-1.5 py-1.5" id="insight-chat-bar" style="background:#FFFFFF; border:1px solid #D8E2DC;">
+<input class="flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-sm py-2" id="insight-chat-input" placeholder="Ask about this insight..." style="color:#1A2620;" type="text">
+<button aria-label="Voice" class="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg transition-colors" id="insight-chat-mic" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+<button aria-label="Send" class="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="insight-chat-send" style="background:#EEF2F0; color:#9CA8A2;" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-lg" id="account-modal-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="account-modal-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="relative bg-white flex flex-col w-full h-full sm:h-[640px] sm:rounded-xl opacity-0 transition-all duration-200 ease-out overflow-hidden" id="account-modal-panel" style="max-width:880px; max-height:100vh; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+<!-- Header (always full width, both breakpoints) -->
+<div class="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
+<h2 class="font-ui-semibold" style="font-size:15px; color:#1A2620;">Account</h2>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body: tabs (row on mobile, column on sm+) + content -->
+<div class="flex-1 flex flex-col sm:flex-row min-h-0">
+<div class="w-full sm:w-[200px] shrink-0 flex flex-row sm:flex-col gap-xs px-sm py-sm overflow-x-auto hide-scrollbar border-b sm:border-b-0 sm:border-r border-[#D8E2DC]" id="account-modal-tabs" style="background:#F7F9F8;">
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="account" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span> Account
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="plan" type="button">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span> Plan
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="billing" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Billing
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-lg" id="account-modal-content"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- NOTE SOURCE PREVIEW OVERLAY -->
+<div class="hidden fixed inset-0 z-[70]" id="note-preview-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out" id="note-preview-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="absolute right-0 top-0 h-full w-full sm:w-[640px] bg-white flex flex-col translate-x-full transition-transform duration-300 ease-out" id="note-preview-panel" style="box-shadow: -8px 0 32px rgba(26,38,32,0.14);">
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
+<div class="flex items-center gap-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+</div>
+<div class="min-w-0">
+<h2 class="font-ui-semibold truncate" id="note-preview-title" style="color:#1A2620; font-size:16px;"></h2>
+<p class="text-xs truncate" id="note-preview-meta" style="color:#5C6F65;"></p>
+</div>
+</div>
+<button aria-label="Close" class="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="note-preview-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-md">
+<p class="text-sm leading-relaxed" id="note-preview-body" style="color:#1A2620;"></p>
+</div>
+</div>
+</div>
+<!-- SIDEBAR-BEHAVIOR-JS -->
+<script>
+(function () {
+    var sidebar = document.getElementById('sidebar');
+    var mainEl = document.getElementById('main-content');
+    var toggleBtn = document.getElementById('sidebar-toggle');
+    var toggleIcon = document.getElementById('sidebar-toggle-icon');
+    var resizeHandle = document.getElementById('sidebar-resize-handle');
+
+    var COLLAPSED_KEY = 'flare-sidebar-collapsed';
+    var WIDTH_KEY = 'flare-sidebar-width';
+    var DEFAULT_WIDTH = 200;
+    var MIN_WIDTH = 64;
+    var MAX_WIDTH = 240;
+    var ICON_ONLY_THRESHOLD = 100;
+
+    var savedWidth = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+    var currentWidth = (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) ? savedWidth : DEFAULT_WIDTH;
+    var collapsed = localStorage.getItem(COLLAPSED_KEY) === '1';
+
+    function isDesktop() {
+        return window.matchMedia('(min-width: 768px)').matches;
+    }
+
+    function applyIconOnly(iconOnly) {
+        var labels = sidebar.querySelectorAll('.nav-label, .sidebar-brand-label, .sidebar-profile-label');
+        labels.forEach(function (el) { el.style.display = iconOnly ? 'none' : ''; });
+
+        // Every row (brand, nav list, nav links, account row) has a different
+        // horizontal padding by default, so centering each independently
+        // leaves their icons at different x positions. Zeroing all of them
+        // out and centering within the full-width rail makes every icon —
+        // logo included — line up on the same vertical axis.
+        var rows = sidebar.querySelectorAll('.nav-link, #account-menu-trigger, .sidebar-brand-row, .sidebar-nav-list, .sidebar-footer-wrap');
+        rows.forEach(function (el) {
+            el.style.justifyContent = iconOnly ? 'center' : '';
+            el.style.paddingLeft = iconOnly ? '0px' : '';
+            el.style.paddingRight = iconOnly ? '0px' : '';
+        });
+
+        // Push the brand row down a bit so it doesn't crowd the top edge
+        // of the rail once it's icon-only.
+        var brandRow = sidebar.querySelector('.sidebar-brand-row');
+        if (brandRow) {
+            brandRow.style.marginTop = iconOnly ? '12px' : '';
+        }
+
+        // The brand logo is sized for a wide sidebar (64px) — at the
+        // minimum rail width (64px) it would overflow its own row edge to
+        // edge. Shrink it to 1.5x the 20px nav icons (30px) so it fits
+        // with breathing room while still reading as a "brand mark"
+        // rather than just another nav icon, instead of getting clipped
+        // by the rail's overflow:hidden.
+        var logoImg = sidebar.querySelector('.sidebar-logo-img');
+        if (logoImg) {
+            logoImg.style.width = iconOnly ? '30px' : '';
+            logoImg.style.height = iconOnly ? '30px' : '';
+        }
+    }
+
+    function render() {
+        var width = collapsed ? 0 : currentWidth;
+        sidebar.style.width = width + 'px';
+        sidebar.style.opacity = collapsed ? '0' : '1';
+        sidebar.style.borderRightWidth = collapsed ? '0px' : '1.5px';
+        mainEl.style.marginLeft = (isDesktop() && !collapsed) ? currentWidth + 'px' : '0px';
+        toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
+        applyIconOnly(!collapsed && currentWidth <= ICON_ONLY_THRESHOLD);
+    }
+
+    function setCollapsed(value) {
+        collapsed = value;
+        localStorage.setItem(COLLAPSED_KEY, collapsed ? '1' : '0');
+        render();
+    }
+
+    function setWidth(px) {
+        currentWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, px));
+        localStorage.setItem(WIDTH_KEY, String(currentWidth));
+        render();
+    }
+
+    toggleBtn.addEventListener('click', function () { setCollapsed(!collapsed); });
+    window.addEventListener('resize', render);
+
+    if (resizeHandle) {
+        var dragging = false;
+        var startX = 0;
+        var startWidth = 0;
+
+        resizeHandle.addEventListener('mouseover', function () {
+            resizeHandle.style.background = 'rgba(13,159,110,0.3)';
+        });
+        resizeHandle.addEventListener('mouseout', function () {
+            if (!dragging) resizeHandle.style.background = 'transparent';
+        });
+
+        resizeHandle.addEventListener('mousedown', function (e) {
+            if (collapsed) return;
+            dragging = true;
+            startX = e.clientX;
+            startWidth = currentWidth;
+            sidebar.style.transition = 'none';
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!dragging) return;
+            setWidth(startWidth + (e.clientX - startX));
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (!dragging) return;
+            dragging = false;
+            sidebar.style.transition = '';
+            resizeHandle.style.background = 'transparent';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        });
+    }
+
+    render();
+})();
+</script>
+<script>
+
+    (function () {
+        var INSIGHTS = [
+            {
+                tags: ['onboarding', 'activation'],
+                title: "You keep rewriting the onboarding flow",
+                date: '3 days ago',
+                explanation: "You've revisited the onboarding flow in your notes four times this month, each with a different framing — hook-first, value-first, speed-first. That pattern usually means the underlying assumption hasn't been tested with real users yet, so the copy keeps changing instead of the plan. Worth talking to three users before writing a fifth version.",
+                quotes: [
+                    { text: 'Hook moment: user sees their own pattern before they expect it', source: 'Onboarding flow — show first insight in 48h', folder: 'Ideas', date: 'Oct 31' },
+                    { text: 'Spent 3h on copy. Need to talk to users instead of guessing.', source: 'Feeling stuck on onboarding — Oct 28', folder: 'Journal', date: 'Oct 28' },
+                    { text: 'Focus on the insight moment, not the note-taking', source: 'Write landing page copy — hero section', folder: 'Tasks', date: 'Oct 31' }
+                ],
+                related: [
+                    { type: 'insight', index: 7 },
+                    { type: 'note', title: 'Chrome extension one-click capture', folder: 'Ideas', date: 'Yesterday', text: 'Highlight any text → save to Flare instantly, no context switch.' }
+                ]
+            },
+            {
+                tags: ['pricing', 'sales'],
+                title: 'Three founders mentioned the same pricing objection',
+                date: '1 week ago',
+                explanation: "Across three separate conversations, founders independently raised the same concern: they don't want to pay for another tool that requires manual organizing. That's not a pricing problem, it's a positioning problem — the fix is likely in how automatic sorting gets communicated up front, not in the number on the paywall.",
+                quotes: [
+                    { text: 'Pain: loses track of customer quotes across Notion, Slack, email', source: 'Interview — Sarah M., founder @ Droply', folder: 'People & Customers', date: 'Oct 22' },
+                    { text: 'Notion $8, Mem $14.99, Roam $15', source: 'Pricing research — $12–19/mo sweet spot for indie tools', folder: 'Research', date: 'Oct 22' },
+                    { text: 'Liked proactive angle, concerned about LLM cost at scale', source: 'Investor meeting — Artem @ Flint Capital', folder: 'People & Customers', date: 'Oct 18' }
+                ],
+                related: [
+                    { type: 'insight', index: 4 },
+                    { type: 'note', title: 'TAM estimate — solo founders globally ~4M', folder: 'Research', date: 'Oct 28', text: 'Addressable if even 1% pay $15/mo = $7.2M ARR ceiling for MVP.' }
+                ]
+            },
+            {
+                tags: ['productivity', 'journal'],
+                title: 'Your energy peaks on Tuesday mornings',
+                date: '5 days ago',
+                explanation: "Looking at your journal entries and task completions over the last month, your most focused, decisive writing consistently lands on Tuesday between roughly 9 and 11am. Monday entries read reactive — mostly catching up — and by Thursday the tone shifts toward fatigue. If there's one deep-work block worth protecting on your calendar, it's this one.",
+                quotes: [
+                    { text: 'Shipped vault design. Still no paying users. Need to talk to 3 more founders this week', source: 'Weekly retro — Aug 3', folder: 'Journal', date: 'Today' },
+                    { text: "US audience doesn't use Telegram. Scope creep risk. Cutting.", source: 'Decision: drop Telegram bot from MVP', folder: 'Journal', date: 'Oct 30' }
+                ],
+                related: [
+                    { type: 'insight', index: 5 },
+                    { type: 'note', title: 'Monthly reflection — October', folder: 'Journal', date: 'Oct 1', text: 'Validated the problem with 8 founders. Now need to validate the solution.' }
+                ]
+            },
+            {
+                tags: ['engineering', 'planning'],
+                title: "You've delayed the API launch four times",
+                date: '2 weeks ago',
+                explanation: "The API launch has moved four times across your task notes, roughly a week at a time, each delay attributed to a different blocker. That pattern usually signals the task is bigger than it's being sized as, not that you're procrastinating. Worth breaking it into a smaller, shippable first version instead of pushing the same deadline again.",
+                quotes: [
+                    { text: 'Need 50 real notes to test detector accuracy', source: 'Define eval corpus for insight engine', folder: 'Tasks', date: 'Oct 28' },
+                    { text: 'Block: need to finalize digest template first', source: 'Set up Resend for weekly digest email', folder: 'Tasks', date: 'Yesterday' }
+                ],
+                related: [
+                    { type: 'insight', index: 6 },
+                    { type: 'note', title: 'Apply to YC W25', folder: 'Tasks', date: 'Oct 30', text: 'Deadline: Nov 12. Need 2-min demo video.' }
+                ]
+            },
+            {
+                tags: ['competitors', 'positioning'],
+                title: 'Competitors are all moving toward AI-native UX',
+                date: '1 week ago',
+                explanation: "Every competitor note you've saved in the last month — Mem, Notion AI, Rewind — describes the same shift: passive storage giving way to proactive surfacing. None of them have fully committed to it yet, which is your window. The risk isn't being behind, it's waiting until that window closes.",
+                quotes: [
+                    { text: 'None of them proactively surface insights — they wait for queries', source: 'Competitor matrix — Mem, Notion AI, Rewind', folder: 'Research', date: 'Oct 31' },
+                    { text: 'fortelabs.com', source: 'The Second Brain methodology — Forte Labs', folder: 'Research', date: 'Oct 30' }
+                ],
+                related: [
+                    { type: 'insight', index: 1 },
+                    { type: 'note', title: 'Why knowledge tools fail — every.to', folder: 'Research', date: 'Oct 27', text: 'every.to' }
+                ]
+            },
+            {
+                tags: ['team', 'process'],
+                title: 'Team velocity drops after long planning meetings',
+                date: '3 weeks ago',
+                explanation: "On weeks with a planning meeting longer than an hour, shipped output in the following two days is noticeably lower than average, based on your task notes. This is a common pattern — long planning sessions create decision fatigue before the actual work starts. Shorter, more frequent syncs might protect momentum better.",
+                quotes: [
+                    { text: 'Common theme: everyone captures, nobody reviews', source: 'YC alumni Slack — 6 replies to my question about PKM tools', folder: 'People & Customers', date: 'Oct 10' }
+                ],
+                related: [
+                    { type: 'insight', index: 2 },
+                    { type: 'note', title: 'Weekly retro — Aug 3', folder: 'Journal', date: 'Today', text: 'Shipped vault design. Still no paying users. Need to talk to 3 more founders this week.' }
+                ]
+            },
+            {
+                tags: ['growth', 'mentorship'],
+                title: 'You reference YC advice most when stuck on growth',
+                date: '2 weeks ago',
+                explanation: "Whenever a note mentions being stuck or unsure about growth, it's almost always followed within a day or two by a reference to YC advice, a YC alum conversation, or the application itself. That's a strong signal about which mentors and frameworks you actually trust when the path isn't obvious — worth leaning into deliberately, not just reactively.",
+                quotes: [
+                    { text: 'Deadline: Nov 12. Need 2-min demo video.', source: 'Apply to YC W25', folder: 'Tasks', date: 'Oct 30' },
+                    { text: 'Offered to review onboarding flow, follow up in 2 weeks', source: 'Advisor intro — Maya R., ex-Notion PM', folder: 'People & Customers', date: 'Oct 12' }
+                ],
+                related: [
+                    { type: 'insight', index: 3 },
+                    { type: 'note', title: 'Book intro call with Maya R.', folder: 'Tasks', date: 'Oct 25', text: "She offered to review onboarding — don't let this slip." }
+                ]
+            },
+            {
+                tags: ['retention', 'trust'],
+                title: 'Users ask for export before they ask for any feature',
+                date: '1 month ago',
+                explanation: 'In every early user conversation you\'ve logged, the first request — before any feature ask — is some form of "can I get my data out." That\'s usually a trust signal, not a feature request: people want to know they won\'t be locked in before they commit to using something daily. Shipping a simple export early may do more for adoption than any single feature on the roadmap.',
+                quotes: [
+                    { text: "Never ask if they'd buy. Ask about their life.", source: 'Book notes — The Mom Test, Rob Fitzpatrick', folder: 'Sources', date: 'Oct 18' },
+                    { text: 'Transcript: uses voice memos but never reviews them', source: 'User interview — Alex K., solo founder', folder: 'People & Customers', date: 'Oct 15' }
+                ],
+                related: [
+                    { type: 'insight', index: 0 },
+                    { type: 'note', title: 'Interesting thread on vertical SaaS', folder: 'Recent', date: 'Yesterday', text: 'twitter.com' }
+                ]
+            }
+        ];
+
+        var listEl = document.getElementById('insight-list');
+        var detailEl = document.getElementById('insight-detail');
+        var countEl = document.getElementById('insight-count');
+        var activeIndex = 0;
+
+        countEl.textContent = INSIGHTS.length;
+
+        var searchInput = document.getElementById('insight-search-input');
+        var listEmptyEl = document.getElementById('insight-list-empty');
+
+        function renderList() {
+            var query = searchInput.value.trim().toLowerCase();
+            listEl.innerHTML = '';
+            var visibleCount = 0;
+
+            INSIGHTS.forEach(function (insight, i) {
+                if (query) {
+                    var titleMatch = insight.title.toLowerCase().indexOf(query) !== -1;
+                    var tagMatch = (insight.tags || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
+                    if (!titleMatch && !tagMatch) return;
+                }
+                visibleCount++;
+
+                var isActive = i === activeIndex;
+                var row = document.createElement('div');
+                row.className = 'px-md py-sm mx-sm mb-xs rounded-lg cursor-pointer transition-colors';
+                row.style.background = isActive ? '#D1FAE5' : 'transparent';
+                row.style.borderLeft = isActive ? '3px solid #0D9F6E' : '3px solid transparent';
+                row.onmouseover = function () { if (!isActive) row.style.background = '#EEF2F0'; };
+                row.onmouseout = function () { if (!isActive) row.style.background = 'transparent'; };
+
+                row.innerHTML =
+                    '<div class="font-ui-semibold text-sm leading-snug mb-1" style="color:#1A2620;">' + insight.title + '</div>' +
+                    '<div class="font-metadata-mono text-metadata-mono text-[11px]" style="color:#5C6F65;">' + insight.date + '</div>';
+
+                row.addEventListener('click', function () {
+                    activeIndex = i;
+                    renderList();
+                    renderDetail();
+                    var twoPane = document.getElementById('insights-two-pane');
+                    if (twoPane) twoPane.classList.add('mobile-show-detail');
+                });
+
+                listEl.appendChild(row);
+            });
+
+            listEmptyEl.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        searchInput.addEventListener('input', renderList);
+
+        var detailRenderedOnce = false;
+        var detailRenderToken = 0;
+
+        function renderDetail() {
+            if (!detailRenderedOnce) {
+                detailRenderedOnce = true;
+                renderDetailNow();
+                return;
+            }
+            // Switching insights — show a brief skeleton so the moment of
+            // "AI is retrieving this insight" is visible, not instant.
+            var token = ++detailRenderToken;
+            detailEl.innerHTML =
+                '<div class="mx-auto px-lg pt-lg pb-32" style="max-width:var(--content-width);">' +
+                    '<div class="h-4 w-24 rounded-full animate-pulse mb-lg" style="background:#EEF2F0;"></div>' +
+                    '<div class="h-7 w-full rounded-lg animate-pulse mb-2" style="background:#EEF2F0;"></div>' +
+                    '<div class="h-7 w-2/3 rounded-lg animate-pulse mb-xl" style="background:#EEF2F0;"></div>' +
+                    '<div class="rounded-xl p-md animate-pulse" style="background:#EEF2F0; height:100px;"></div>' +
+                '</div>';
+            setTimeout(function () {
+                if (token !== detailRenderToken) return; // a newer switch superseded this one
+                renderDetailNow();
+            }, 260);
+        }
+
+        function renderDetailNow() {
+            var insight = INSIGHTS[activeIndex];
+
+            detailEl.innerHTML =
+                '<div class="mx-auto px-lg pt-lg pb-32" style="max-width:var(--content-width);">' +
+                    '<div class="mb-md flex items-center justify-between">' +
+                        '<div class="flex items-center gap-1 flex-wrap" id="insight-tags-list"></div>' +
+                        '<span class="font-metadata-mono text-metadata-mono text-sm shrink-0" style="color:#5C6F65;">' + insight.date + '</span>' +
+                    '</div>' +
+                    '<h2 class="font-display-sm mb-lg" style="font-size:28px; line-height:1.25; font-weight:700; color:#1A2620;">' + insight.title + '</h2>' +
+                    '<div class="rounded-xl p-md flex gap-sm mb-xl" style="background:#EEF2F0;">' +
+                        '<svg width="20" height="20" viewbox="8 12 64 44" fill="none" style="flex-shrink:0; margin-top:2px;">' +
+                            '<path d="M12 34 Q40 16 68 34 Q40 52 12 34Z" stroke="#0D9F6E" stroke-linejoin="round" stroke-width="4"></path>' +
+                            '<circle cx="40" cy="34" fill="#0D9F6E" r="10"></circle>' +
+                        '</svg>' +
+                        '<div>' +
+                            '<p class="font-label-caps text-label-caps mb-1" style="color:#0D9F6E;">AI INSIGHT</p>' +
+                            '<p class="text-sm leading-relaxed" style="color:#1A2620;">' + insight.explanation + '</p>' +
+                        '</div>' +
+                    '</div>' +
+                    renderRatingHtml(insight) +
+                    '<p class="font-label-caps text-label-caps mb-sm mt-xl" style="color:#5C6F65;">FROM YOUR NOTES</p>' +
+                    '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;" id="insight-quotes-list"></div>' +
+                    renderRelatedSection(insight) +
+                    renderConversationHtml(insight) +
+                '</div>';
+
+            populateTags(insight);
+            populateQuotes(insight);
+            populateRelated(insight);
+            wireRating(insight);
+        }
+
+        function renderRelatedSection(insight) {
+            if (!insight.related || insight.related.length === 0) return '';
+            return (
+                '<div class="mt-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">RELATED</p>' +
+                    '<div class="flex gap-sm overflow-x-auto hide-scrollbar" id="insight-related-list"></div>' +
+                '</div>'
+            );
+        }
+
+        function populateTags(insight) {
+            var wrap = document.getElementById('insight-tags-list');
+            (insight.tags || []).forEach(function (tag) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'px-2 py-[2px] rounded text-[11px] font-ui-semibold transition-colors';
+                btn.style.background = '#EEF2F0';
+                btn.style.color = '#5C6F65';
+                btn.textContent = tag;
+                btn.onmouseover = function () { btn.style.background = '#D1FAE5'; btn.style.color = '#0D9F6E'; };
+                btn.onmouseout = function () { btn.style.background = '#EEF2F0'; btn.style.color = '#5C6F65'; };
+                btn.addEventListener('click', function () {
+                    searchInput.value = tag;
+                    renderList();
+                });
+                wrap.appendChild(btn);
+            });
+        }
+
+        function populateRelated(insight) {
+            var wrap = document.getElementById('insight-related-list');
+            if (!wrap || !insight.related) return;
+
+            insight.related.forEach(function (r) {
+                var card = document.createElement('div');
+                card.className = 'shrink-0 rounded-lg p-sm cursor-pointer transition-colors';
+                card.style.width = '200px';
+                card.style.background = '#FFFFFF';
+                card.style.border = '1px solid #D8E2DC';
+                card.onmouseover = function () { card.style.background = '#EEF2F0'; };
+                card.onmouseout = function () { card.style.background = '#FFFFFF'; };
+
+                if (r.type === 'insight') {
+                    var target = INSIGHTS[r.index];
+                    card.innerHTML =
+                        '<div class="flex items-center gap-1 mb-1">' +
+                            '<svg height="12" viewbox="8 12 64 44" width="12" fill="none"><path d="M12 34 Q40 16 68 34 Q40 52 12 34Z" stroke="#0D9F6E" stroke-linejoin="round" stroke-width="6"></path></svg>' +
+                            '<span class="text-[10px] font-ui-semibold uppercase tracking-wider" style="color:#0D9F6E;">Insight</span>' +
+                        '</div>' +
+                        '<div class="text-xs font-ui-semibold leading-snug" style="color:#1A2620;">' + target.title + '</div>';
+                    card.addEventListener('click', function () {
+                        activeIndex = r.index;
+                        renderList();
+                        renderDetail();
+                        detailEl.scrollTop = 0;
+                    });
+                } else {
+                    card.innerHTML =
+                        '<div class="flex items-center gap-1 mb-1">' +
+                            '<span class="material-symbols-outlined text-[12px]" style="color:#5C6F65;">description</span>' +
+                            '<span class="text-[10px] font-ui-semibold uppercase tracking-wider" style="color:#5C6F65;">' + r.folder + '</span>' +
+                        '</div>' +
+                        '<div class="text-xs font-ui-semibold leading-snug" style="color:#1A2620;">' + r.title + '</div>';
+                    card.addEventListener('click', function () {
+                        window.openNotePreview({ source: r.title, folder: r.folder, date: r.date, text: r.text });
+                    });
+                }
+
+                wrap.appendChild(card);
+            });
+        }
+
+        function populateQuotes(insight) {
+            var container = document.getElementById('insight-quotes-list');
+            insight.quotes.forEach(function (q, i) {
+                var wrap = document.createElement('div');
+                if (i > 0) {
+                    var divider = document.createElement('div');
+                    divider.className = 'border-t my-md';
+                    divider.style.borderColor = '#D8E2DC';
+                    container.appendChild(divider);
+                }
+                wrap.innerHTML =
+                    '<p class="text-sm italic leading-relaxed" style="color:#1A2620;">&ldquo;' + q.text + '&rdquo;</p>' +
+                    '<button class="flex items-center gap-2 mt-2 group" type="button">' +
+                        '<span class="material-symbols-outlined text-[14px]" style="color:#5C6F65;">description</span>' +
+                        '<span class="text-xs group-hover:underline" style="color:#5C6F65;">' + q.source + ' · ' + q.folder + ' · ' + q.date + '</span>' +
+                    '</button>';
+                wrap.querySelector('button').addEventListener('click', function () {
+                    window.openNotePreview(q);
+                });
+                container.appendChild(wrap);
+            });
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function renderConversationHtml(insight) {
+            var messages = insight.messages || [];
+            if (messages.length === 0) return '';
+
+            var bubblesHtml = messages.map(function (m) {
+                var safeText = escapeHtml(m.text);
+                if (m.role === 'user') {
+                    return (
+                        '<div class="flex justify-end mb-sm">' +
+                            '<div class="rounded-xl px-3 py-2 text-sm leading-relaxed" style="max-width:75%; background:#0D9F6E; color:#FFFFFF;">' + safeText + '</div>' +
+                        '</div>'
+                    );
+                }
+                return (
+                    '<div class="flex justify-start mb-sm">' +
+                        '<div class="rounded-xl px-3 py-2 text-sm leading-relaxed" style="max-width:75%; background:#EEF2F0; color:#1A2620;">' + safeText + '</div>' +
+                    '</div>'
+                );
+            }).join('');
+
+            return (
+                '<div class="mt-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">CONVERSATION</p>' +
+                    '<div>' + bubblesHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderRatingHtml(insight) {
+            if (insight.feedbackSubmitted) {
+                return (
+                    '<div class="mt-xl pt-lg border-t flex items-center gap-2" style="border-color:#D8E2DC;">' +
+                        '<span class="material-symbols-outlined text-[18px]" style="color:#0D9F6E;">check_circle</span>' +
+                        '<span class="text-sm" style="color:#5C6F65;">Thanks for the feedback.</span>' +
+                    '</div>'
+                );
+            }
+
+            var currentRating = insight.rating || 0;
+            var starsHtml = '';
+            for (var s = 1; s <= 5; s++) {
+                var filled = s <= currentRating;
+                starsHtml +=
+                    '<button aria-label="' + s + ' star' + (s > 1 ? 's' : '') + '" class="w-9 h-9 flex items-center justify-center rounded-lg transition-colors insight-rating-star" data-value="' + s + '" style="color:' + (filled ? '#0D9F6E' : '#D8E2DC') + ';" type="button">' +
+                        '<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: \'FILL\' ' + (filled ? '1' : '0') + ';">star</span>' +
+                    '</button>';
+            }
+
+            var showFeedbackBox = currentRating > 0;
+
+            return (
+                '<div class="mt-xl pt-lg border-t" style="border-color:#D8E2DC;">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">WAS THIS INSIGHT USEFUL?</p>' +
+                    '<div class="flex items-center gap-1" id="insight-rating-stars">' + starsHtml + '</div>' +
+                    '<div class="mt-sm" id="insight-rating-feedback-wrap" style="display:' + (showFeedbackBox ? '' : 'none') + ';">' +
+                        '<textarea class="w-full rounded-lg text-sm p-3 focus:outline-none focus:ring-2 transition-all" id="insight-rating-feedback" placeholder="Anything you want to add? (optional)" rows="2" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620; resize:none;"></textarea>' +
+                        '<button class="mt-2 text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95" id="insight-rating-submit" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Submit feedback</button>' +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
+        function wireRating(insight) {
+            var starsWrap = document.getElementById('insight-rating-stars');
+            if (!starsWrap) return;
+            var starBtns = Array.prototype.slice.call(starsWrap.querySelectorAll('.insight-rating-star'));
+
+            function paintStars(uptoValue) {
+                starBtns.forEach(function (btn) {
+                    var val = parseInt(btn.getAttribute('data-value'), 10);
+                    var filled = val <= uptoValue;
+                    btn.style.color = filled ? '#0D9F6E' : '#D8E2DC';
+                    btn.querySelector('span').style.fontVariationSettings = "'FILL' " + (filled ? '1' : '0');
+                });
+            }
+
+            function setRating(value) {
+                insight.rating = value;
+                renderDetail();
+                var box = document.getElementById('insight-rating-feedback');
+                if (box) box.focus();
+            }
+
+            starBtns.forEach(function (btn) {
+                var val = parseInt(btn.getAttribute('data-value'), 10);
+                btn.addEventListener('mouseenter', function () { paintStars(val); });
+                btn.addEventListener('mouseleave', function () { paintStars(insight.rating || 0); });
+                btn.addEventListener('click', function () { setRating(val); });
+            });
+
+            var submitBtn = document.getElementById('insight-rating-submit');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function () {
+                    var feedbackBox = document.getElementById('insight-rating-feedback');
+                    insight.feedback = feedbackBox ? feedbackBox.value.trim() : '';
+                    insight.feedbackSubmitted = true;
+                    console.log('Feedback for "' + insight.title + '":', { rating: insight.rating, feedback: insight.feedback });
+                    renderDetail();
+                });
+            }
+        }
+
+        // --- Note source preview panel ---
+        var notePreviewOverlay = document.getElementById('note-preview-overlay');
+        var notePreviewBackdrop = document.getElementById('note-preview-backdrop');
+        var notePreviewPanel = document.getElementById('note-preview-panel');
+        var notePreviewClose = document.getElementById('note-preview-close');
+        var notePreviewTitle = document.getElementById('note-preview-title');
+        var notePreviewMeta = document.getElementById('note-preview-meta');
+        var notePreviewBody = document.getElementById('note-preview-body');
+
+        window.openNotePreview = function (q) {
+            notePreviewTitle.textContent = q.source;
+            notePreviewMeta.textContent = q.folder + ' · ' + q.date;
+            notePreviewBody.textContent = q.text;
+
+            notePreviewOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(function () {
+                notePreviewBackdrop.style.opacity = '1';
+                notePreviewPanel.style.transform = 'translateX(0)';
+            });
+        };
+
+        function closeNotePreview() {
+            notePreviewBackdrop.style.opacity = '0';
+            notePreviewPanel.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+            setTimeout(function () { notePreviewOverlay.classList.add('hidden'); }, 300);
+        }
+
+        notePreviewClose.addEventListener('click', closeNotePreview);
+        notePreviewBackdrop.addEventListener('click', closeNotePreview);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !notePreviewOverlay.classList.contains('hidden')) closeNotePreview();
+        });
+
+        var chatInput = document.getElementById('insight-chat-input');
+        var chatSend = document.getElementById('insight-chat-send');
+        var chatMic = document.getElementById('insight-chat-mic');
+
+        function updateSendState() {
+            var hasText = chatInput.value.trim().length > 0;
+            chatSend.dataset.active = hasText ? '1' : '0';
+            chatSend.style.background = hasText ? '#0D9F6E' : '#EEF2F0';
+            chatSend.style.color = hasText ? '#FFFFFF' : '#9CA8A2';
+        }
+        chatSend.onmouseover = function () {
+            if (chatSend.dataset.active === '1') chatSend.style.background = '#0b8a5f';
+        };
+        chatSend.onmouseout = function () {
+            updateSendState();
+        };
+        chatInput.addEventListener('input', updateSendState);
+        updateSendState();
+
+        // --- Mock voice recording ---
+        var isRecording = false;
+        var recordingSeconds = 0;
+        var recordingInterval = null;
+        var basePlaceholder = chatInput.getAttribute('placeholder');
+
+        function formatTime(totalSeconds) {
+            var m = Math.floor(totalSeconds / 60);
+            var s = totalSeconds % 60;
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        chatMic.addEventListener('mouseover', function () {
+            if (!isRecording) chatMic.style.background = '#EEF2F0';
+        });
+        chatMic.addEventListener('mouseout', function () {
+            chatMic.style.background = isRecording ? '#ba1a1a' : 'transparent';
+        });
+        chatMic.addEventListener('click', function () {
+            if (isRecording) {
+                clearInterval(recordingInterval);
+                recordingInterval = null;
+                isRecording = false;
+                chatMic.style.background = 'transparent';
+                chatMic.style.color = '#5C6F65';
+                chatInput.placeholder = basePlaceholder;
+                chatInput.disabled = false;
+                chatInput.value = 'Voice message (' + formatTime(recordingSeconds) + ')';
+                updateSendState();
+                chatInput.focus();
+            } else {
+                isRecording = true;
+                recordingSeconds = 0;
+                chatMic.style.background = '#ba1a1a';
+                chatMic.style.color = '#ffffff';
+                chatInput.value = '';
+                chatInput.disabled = true;
+                chatInput.placeholder = 'Recording... 0:00';
+                updateSendState();
+                recordingInterval = setInterval(function () {
+                    recordingSeconds++;
+                    chatInput.placeholder = 'Recording... ' + formatTime(recordingSeconds);
+                }, 1000);
+            }
+        });
+
+        var MOCK_REPLIES = [
+            "That's a good question — once this is wired up to your actual notes index, I'll be able to dig into that directly.",
+            "I don't have live reasoning connected in this prototype yet, but this is exactly where that answer would show up.",
+            "Worth digging into — for now this is just a mock reply, but the real version would pull straight from the notes above."
+        ];
+
+        function sendChat() {
+            var q = chatInput.value.trim();
+            if (!q) return;
+
+            var insight = INSIGHTS[activeIndex];
+            insight.messages = insight.messages || [];
+            insight.messages.push({ role: 'user', text: q });
+            insight.messages.push({ role: 'assistant', text: MOCK_REPLIES[insight.messages.length % MOCK_REPLIES.length] });
+
+            chatInput.value = '';
+            updateSendState();
+            renderDetail();
+            detailEl.scrollTop = detailEl.scrollHeight;
+        }
+        chatSend.addEventListener('click', sendChat);
+        chatInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') sendChat();
+        });
+
+        var insightsBackBtn = document.getElementById('insights-back-btn');
+        insightsBackBtn.addEventListener('click', function () {
+            document.getElementById('insights-two-pane').classList.remove('mobile-show-detail');
+        });
+
+        renderList();
+        renderDetail();
+    })();
+    (function () {
+        var trigger = document.getElementById('account-menu-trigger');
+        var overlay = document.getElementById('account-modal-overlay');
+        var backdrop = document.getElementById('account-modal-backdrop');
+        var panel = document.getElementById('account-modal-panel');
+        var closeBtn = document.getElementById('account-modal-close');
+        var contentEl = document.getElementById('account-modal-content');
+        var tabBtns = document.querySelectorAll('.account-modal-tab');
+        var planLabelEl = document.getElementById('account-plan-label');
+
+        var accountState = {
+            activeTab: 'account',
+            name: 'Ilyas',
+            email: 'ilyas300606@gmail.com',
+            avatarFile: '',
+            plan: 'basic'
+        };
+
+        function updatePlanLabel() {
+            if (planLabelEl) planLabelEl.textContent = accountState.plan === 'plus' ? 'Plus plan' : 'Free plan';
+        }
+
+        function openAccountModal(tab) {
+            accountState.activeTab = tab || accountState.activeTab;
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderTabs();
+            renderTabContent();
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.opacity = '1';
+                panel.style.transform = 'scale(1)';
+            });
+        }
+
+        function closeAccountModal() {
+            backdrop.style.opacity = '0';
+            panel.style.opacity = '0';
+            panel.style.transform = 'scale(0.96)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 200);
+        }
+
+        trigger.addEventListener('click', function () { openAccountModal('account'); });
+        closeBtn.addEventListener('click', closeAccountModal);
+        backdrop.addEventListener('click', closeAccountModal);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeAccountModal();
+        });
+
+        function renderTabs() {
+            tabBtns.forEach(function (btn) {
+                var isActive = btn.getAttribute('data-tab') === accountState.activeTab;
+                btn.style.background = isActive ? '#D1FAE5' : 'transparent';
+                btn.style.color = isActive ? '#0D9F6E' : '#3d4a42';
+                btn.onmouseover = function () { if (!isActive) btn.style.background = '#EEF2F0'; };
+                btn.onmouseout = function () { if (!isActive) btn.style.background = 'transparent'; };
+            });
+        }
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                accountState.activeTab = btn.getAttribute('data-tab');
+                renderTabs();
+                renderTabContent();
+            });
+        });
+
+        function renderAccountTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Account</h3>' +
+                '<div class="flex items-center gap-md mb-xl">' +
+                    '<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-ui-semibold shrink-0" style="background:#0D9F6E; font-size:22px;">' + accountState.name.charAt(0).toUpperCase() + '</div>' +
+                    '<div>' +
+                        '<input class="hidden" id="account-avatar-input" type="file" accept="image/*">' +
+                        '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors" id="account-avatar-btn" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Upload photo</button>' +
+                        '<p class="text-xs mt-1" id="account-avatar-status" style="color:#5C6F65;">' + (accountState.avatarFile || 'JPG or PNG, up to 5MB') + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-lg">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Name</label>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<input class="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="account-name-input" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text" value="' + accountState.name + '">' +
+                        '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0" id="account-name-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-xl">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Email</label>' +
+                    '<p class="text-sm" style="color:#1A2620;">' + accountState.email + '</p>' +
+                '</div>' +
+                '<div class="border-t pt-lg" style="border-color:#D8E2DC;">' +
+                    '<button class="flex items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="account-signout-btn" onmouseover="this.style.background=\'#EEF2F0\'" onmouseout="this.style.background=\'transparent\'" style="color:#ba1a1a;" type="button">' +
+                        '<span class="material-symbols-outlined text-[18px]">logout</span> Sign out' +
+                    '</button>' +
+                '</div>';
+
+            document.getElementById('account-name-save').addEventListener('click', function () {
+                var input = document.getElementById('account-name-input');
+                accountState.name = input.value.trim() || 'Ilyas';
+                var btn = document.getElementById('account-name-save');
+                btn.textContent = 'Saved';
+                setTimeout(function () { btn.textContent = 'Save'; }, 1200);
+            });
+
+            var avatarInput = document.getElementById('account-avatar-input');
+            document.getElementById('account-avatar-btn').addEventListener('click', function () { avatarInput.click(); });
+            avatarInput.addEventListener('change', function () {
+                if (avatarInput.files.length > 0) {
+                    accountState.avatarFile = avatarInput.files[0].name + ' selected (demo, not uploaded)';
+                    document.getElementById('account-avatar-status').textContent = accountState.avatarFile;
+                }
+            });
+
+            document.getElementById('account-signout-btn').addEventListener('click', function () {
+                alert('Signed out (demo)');
+            });
+        }
+
+        function planCard(opts) {
+            var isCurrent = accountState.plan === opts.key;
+            var featuresHtml = opts.features.map(function (f) {
+                return '<li class="flex items-start gap-2 text-sm"><span class="material-symbols-outlined text-[16px] mt-[1px]" style="color:#0D9F6E;">check</span><span style="color:#1A2620;">' + f + '</span></li>';
+            }).join('');
+
+            var actionHtml = isCurrent
+                ? '<span class="inline-block text-xs font-ui-semibold px-3 py-1.5 rounded-lg" style="background:#EEF2F0; color:#5C6F65;">Current plan</span>'
+                : '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full account-plan-switch" data-plan="' + opts.key + '" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">' + opts.actionLabel + '</button>';
+
+            return (
+                '<div class="rounded-xl p-md flex flex-col" style="background:#FFFFFF; border:1.5px solid ' + (opts.highlight ? '#0D9F6E' : '#D8E2DC') + '; flex:1;">' +
+                    (opts.highlight ? '<span class="inline-block text-[10px] font-ui-semibold uppercase tracking-wider px-2 py-[2px] rounded-full mb-2 self-start" style="background:#D1FAE5; color:#0D9F6E;">Recommended</span>' : '') +
+                    '<p class="text-sm font-ui-semibold mb-1" style="color:#1A2620;">' + opts.title + '</p>' +
+                    '<p class="mb-md" style="color:#1A2620;"><span style="font-size:22px; font-weight:800;">' + opts.price + '</span><span class="text-xs" style="color:#5C6F65;">' + opts.priceSuffix + '</span></p>' +
+                    '<ul class="flex flex-col gap-2 mb-lg">' + featuresHtml + '</ul>' +
+                    '<div class="mt-auto">' + actionHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderPlanTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Plan</h3>' +
+                '<div class="flex gap-md" style="align-items:stretch;">' +
+                    planCard({
+                        key: 'basic',
+                        title: 'Basic',
+                        price: '$0',
+                        priceSuffix: '/mo',
+                        highlight: false,
+                        actionLabel: 'Downgrade',
+                        features: ['Up to 200 notes', '1 workspace', 'Weekly insights', 'Chat scoped to one insight at a time', 'Community support']
+                    }) +
+                    planCard({
+                        key: 'plus',
+                        title: 'Plus',
+                        price: '$10',
+                        priceSuffix: '/mo',
+                        highlight: true,
+                        actionLabel: 'Upgrade to Plus',
+                        features: ['Unlimited notes', 'Unlimited workspaces', 'Daily insights, custom schedule', 'Ask across your entire vault', 'Priority support']
+                    }) +
+                '</div>';
+
+            document.querySelectorAll('.account-plan-switch').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    accountState.plan = btn.getAttribute('data-plan');
+                    updatePlanLabel();
+                    renderPlanTab();
+                });
+            });
+        }
+
+        function renderBillingTab() {
+            var isPlus = accountState.plan === 'plus';
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Billing</h3>' +
+                '<div class="mb-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">PAYMENT METHOD</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl p-md flex items-center justify-between" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center gap-sm">' +
+                                    '<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">credit_card</span>' +
+                                    '<span class="text-sm" style="color:#1A2620;">Visa •••• 4242</span>' +
+                                '</div>' +
+                                '<span class="text-xs" style="color:#5C6F65;">Next charge Sep 4, 2026</span>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No payment method on file — you\'re on the Free plan.</p></div>'
+                    ) +
+                '</div>' +
+                '<div>' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">BILLING HISTORY</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center justify-between px-md py-sm">' +
+                                    '<span class="text-sm" style="color:#1A2620;">Aug 4, 2026 — Plus plan</span>' +
+                                    '<span class="text-sm font-ui-semibold" style="color:#1A2620;">$10.00</span>' +
+                                '</div>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No invoices yet.</p></div>'
+                    ) +
+                '</div>';
+        }
+
+        function renderTabContent() {
+            if (accountState.activeTab === 'account') renderAccountTab();
+            else if (accountState.activeTab === 'plan') renderPlanTab();
+            else renderBillingTab();
+        }
+
+        updatePlanLabel();
+    })();
+</script>
+<script>
+    (function () {
+        var pane = document.getElementById('insights-list-pane');
+        var handle = document.getElementById('insights-list-resize-handle');
+        if (!pane || !handle) return;
+
+        var WIDTH_KEY = 'flare-insights-list-width';
+        var MIN_WIDTH = 220;
+        var MAX_WIDTH = 440;
+        var DEFAULT_WIDTH = 280;
+
+        function isDesktop() {
+            return window.matchMedia('(min-width: 768px)').matches;
+        }
+
+        var saved = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+        var currentWidth = (saved >= MIN_WIDTH && saved <= MAX_WIDTH) ? saved : DEFAULT_WIDTH;
+
+        function render() {
+            pane.style.width = isDesktop() ? currentWidth + 'px' : '';
+        }
+
+        function setWidth(px) {
+            currentWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, px));
+            localStorage.setItem(WIDTH_KEY, String(currentWidth));
+            render();
+        }
+
+        window.addEventListener('resize', render);
+
+        var dragging = false;
+        var startX = 0;
+        var startWidth = 0;
+
+        handle.addEventListener('mouseover', function () {
+            handle.style.background = 'rgba(13,159,110,0.3)';
+        });
+        handle.addEventListener('mouseout', function () {
+            if (!dragging) handle.style.background = 'transparent';
+        });
+
+        handle.addEventListener('mousedown', function (e) {
+            if (!isDesktop()) return;
+            dragging = true;
+            startX = e.clientX;
+            startWidth = currentWidth;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!dragging) return;
+            setWidth(startWidth + (e.clientX - startX));
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (!dragging) return;
+            dragging = false;
+            handle.style.background = 'transparent';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        });
+
+        render();
+    })();
+</script>
+<!-- NAV-ACTIVE-JS -->
+<script>
+(function () {
+    var current = document.body.getAttribute('data-page');
+
+    // Desktop sidebar
+    var item = document.querySelector('#sidebar li[data-nav="' + current + '"]');
+    if (item) {
+        var indicator = item.querySelector('.nav-active-indicator');
+        var link = item.querySelector('.nav-link');
+        if (indicator) indicator.style.display = '';
+        if (link) {
+            link.classList.remove('text-on-surface-variant', 'group');
+            link.classList.add('text-primary', 'font-bold');
+        }
+    }
+
+    // Mobile bottom tab bar
+    var mobileLink = document.querySelector('.mobile-nav-link[data-nav="' + current + '"]');
+    if (mobileLink) {
+        var icon = mobileLink.querySelector('.mobile-nav-icon');
+        var label = mobileLink.querySelector('.mobile-nav-label');
+        if (icon) icon.style.opacity = '1';
+        if (label) { label.style.color = '#0D9F6E'; label.style.fontWeight = '700'; }
+        var dot = document.createElement('span');
+        dot.className = 'w-1 h-1 rounded-full';
+        dot.style.background = '#0D9F6E';
+        mobileLink.insertBefore(dot, mobileLink.firstChild);
+    }
+
+    var accountBtn = document.getElementById('mobile-nav-account');
+    var desktopTrigger = document.getElementById('account-menu-trigger');
+    if (accountBtn && desktopTrigger) {
+        accountBtn.addEventListener('click', function () { desktopTrigger.click(); });
+    }
+})();
+</script>
+<!-- TOAST -->
+<div class="fixed left-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none bottom-20 md:bottom-6" id="flare-toast-stack" style="transform:translateX(-50%);"></div>
+
+<!-- TOAST-JS -->
+<script>
+(function () {
+    var ICONS = { error: 'error', success: 'check_circle' };
+    var STYLES = {
+        error: { bg: '#FEF2F2', border: '#FECACA', text: '#B91C1C', icon: '#DC2626' },
+        success: { bg: '#F0FDF9', border: 'rgba(13,159,110,0.25)', text: '#0D9F6E', icon: '#0D9F6E' }
+    };
+
+    window.flareToast = function (message, type) {
+        var stack = document.getElementById('flare-toast-stack');
+        if (!stack) return;
+        type = (type === 'success') ? 'success' : 'error';
+        var style = STYLES[type];
+
+        var toast = document.createElement('div');
+        toast.className = 'flex items-center gap-2 rounded-lg pointer-events-auto shadow-lg';
+        toast.style.cssText =
+            'background:' + style.bg + '; border:1px solid ' + style.border + '; color:' + style.text + ';' +
+            'padding:10px 16px; font-size:13px; font-weight:600; opacity:0; transform:translateY(8px); transition:opacity .18s ease-out, transform .18s ease-out; max-width:min(90vw,420px);';
+        toast.innerHTML =
+            '<span class="material-symbols-outlined text-[18px]" style="color:' + style.icon + ';">' + ICONS[type] + '</span>' +
+            '<span>' + message + '</span>';
+        stack.appendChild(toast);
+
+        requestAnimationFrame(function () {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(function () {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+            setTimeout(function () { toast.remove(); }, 200);
+        }, 3200);
+    };
+})();
+</script>
+</body></html>

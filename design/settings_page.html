@@ -1,0 +1,1380 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flare - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Material Symbols Outlined';
+            font-style: normal;
+            font-weight: 100 700;
+            font-display: block;
+            src: url('assets/fonts/material-symbols-outlined.woff2') format('woff2');
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#e9fff2",
+                      "surface-container-highest": "#d2e8dc",
+                      "on-secondary-fixed": "#121e18",
+                      "tertiary": "#3f6353",
+                      "on-background": "#0d1f18",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#e9fff2",
+                      "surface-dim": "#cadfd3",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d2e8dc",
+                      "surface-tint": "#006c49",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#d8ede1",
+                      "on-primary-container": "#f5fff6",
+                      "tertiary-container": "#577c6b",
+                      "tertiary-fixed-dim": "#a8cfbc",
+                      "on-secondary-container": "#5a6760",
+                      "secondary-fixed-dim": "#bccac1",
+                      "outline": "#6d7a71",
+                      "on-secondary-fixed-variant": "#3d4a43",
+                      "on-tertiary-fixed-variant": "#294e3f",
+                      "inverse-on-surface": "#e0f6ea",
+                      "outline-variant": "#bccac0",
+                      "primary-fixed": "#80f9c1",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#005236",
+                      "secondary-container": "#d8e6dc",
+                      "surface-container-low": "#e3f9ec",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "surface": "#e9fff2",
+                      "on-surface-variant": "#3d4a42",
+                      "primary-fixed-dim": "#63dca6",
+                      "inverse-surface": "#22342c",
+                      "secondary-fixed": "#d8e6dc",
+                      "tertiary-fixed": "#c3ecd7",
+                      "inverse-primary": "#63dca6",
+                      "surface-container": "#ddf3e7",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#f5fff7",
+                      "on-surface": "#0d1f18",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#00855b",
+                      "primary": "#0D9F6E",
+                      "on-tertiary-fixed": "#002115",
+                      "secondary": "#54615a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "lg": "40px",
+                      "gutter": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "margin-desktop": "48px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "DM Sans"
+                      ],
+                      "body-md": [
+                              "DM Sans"
+                      ],
+                      "display-sm": [
+                              "DM Sans"
+                      ],
+                      "headline-lg": [
+                              "DM Sans"
+                      ],
+                      "metadata-mono": [
+                              "Geist Mono"
+                      ],
+                      "body-lg": [
+                              "DM Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "DM Sans"
+                      ],
+                      "ui-semibold": [
+                              "DM Sans"
+                      ],
+                      "label-caps": [
+                              "DM Sans"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-sm": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.025em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metadata-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.015em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "ui-semibold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        :root {
+            --content-width: 640px;
+        }
+        body {
+            background-color: #F7F9F8;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            #settings-two-pane:not(.mobile-show-content) .settings-content-pane { display: none; }
+            #settings-two-pane.mobile-show-content .settings-menu-pane { display: none; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex" data-page="settings">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
+<div>
+<!-- Brand -->
+<div class="px-md mb-lg flex items-center gap-sm sidebar-brand-row">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 shrink-0" href="../workspace_select.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain sidebar-logo-img" src="assets/images/logo.png">
+</a>
+<div class="min-w-0 sidebar-brand-label">
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider" style="white-space:nowrap;">Project Name</p>
+</div>
+</div>
+<!-- Links -->
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold sidebar-nav-list">
+<li class="relative" data-nav="home">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="home_page.html" title="Home">
+<img alt="Home" class="w-5 h-5 shrink-0" src="assets/images/nav-home.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Home</span>
+</a>
+</li>
+<li class="relative" data-nav="vault">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="vault_page.html" title="Vault">
+<img alt="Vault" class="w-5 h-5 shrink-0" src="assets/images/nav-vault.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Vault</span>
+</a>
+</li>
+<li class="relative" data-nav="insights">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="insights_page.html" title="Insights">
+<img alt="Insights" class="w-5 h-5 shrink-0" src="assets/images/nav-insights.svg">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Insights</span>
+</a>
+</li>
+<li class="relative" data-nav="settings">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="settings_page.html" title="Settings">
+<img alt="Settings" class="w-5 h-5 shrink-0" src="assets/images/nav-settings.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Profile -->
+<div class="px-sm sidebar-footer-wrap">
+<button class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface w-full" id="account-menu-trigger" title="Account" type="button">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col items-start min-w-0">
+<span class="font-ui-semibold text-ui-semibold sidebar-profile-label" style="white-space:nowrap;">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant sidebar-profile-label" id="account-plan-label" style="white-space:nowrap;">Founder Tier</span>
+</div>
+</button>
+</div>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="sidebar-resize-handle" style="width:6px; cursor:col-resize; z-index:60;"></div>
+</nav>
+<!-- Mobile bottom tab bar (hidden on md+, sidebar takes over there) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around bg-white" id="mobile-nav" style="border-top: 1.5px solid #D8E2DC; height:64px; padding-bottom: env(safe-area-inset-bottom, 0px);">
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="home" href="home_page.html">
+<img alt="Home" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-home.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Home</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="vault" href="vault_page.html">
+<img alt="Vault" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-vault.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Vault</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="insights" href="insights_page.html">
+<img alt="Insights" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-insights.svg">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Insights</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="settings" href="settings_page.html">
+<img alt="Settings" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-settings.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Settings</span>
+</a>
+<button class="flex-1 flex flex-col items-center justify-center gap-[2px]" id="mobile-nav-account" type="button">
+<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">account_circle</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px]" style="color:#5C6F65;">Account</span>
+</button>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-hidden relative flex flex-col transition-[margin] duration-200 ease-in-out pb-16 md:pb-0" id="main-content">
+<!-- 0. UTILITY ROW -->
+<div class="flex items-center gap-1 px-lg pt-lg pb-md shrink-0">
+<a class="md:hidden flex items-center justify-center w-11 h-11 rounded-lg overflow-hidden active:scale-95 transition-transform" href="../workspace_select.html">
+<img alt="Flare" class="w-full h-full object-contain" src="assets/images/logo.png">
+</a>
+<button aria-label="Toggle sidebar" class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" id="sidebar-toggle">
+<span class="material-symbols-outlined text-[20px]" id="sidebar-toggle-icon">left_panel_close</span>
+</button>
+</div>
+
+<!-- 1. TWO COLUMN BODY -->
+<div class="flex-1 flex min-h-0 border-t" id="settings-two-pane" style="border-color:#D8E2DC;">
+
+<!-- LEFT: SECTION MENU -->
+<div class="w-full md:w-[220px] shrink-0 md:border-r flex flex-col min-h-0 overflow-y-auto settings-menu-pane" style="border-color:#D8E2DC;">
+<div class="px-md pt-lg pb-md">
+<h1 class="font-display-sm" style="font-size:24px; font-weight:800; color:#1A2620;">Settings</h1>
+<p class="text-sm mt-1" id="settings-workspace-label" style="color:#5C6F65;">My Workspace</p>
+</div>
+<ul class="flex flex-col gap-xs px-sm pb-md font-ui-semibold text-ui-semibold" id="settings-menu"></ul>
+</div>
+
+<!-- RIGHT: SECTION CONTENT -->
+<div class="flex-1 flex flex-col min-h-0 settings-content-pane">
+<button class="md:hidden flex items-center gap-1 text-sm font-ui-semibold px-lg pt-md pb-sm shrink-0" id="settings-back-btn" style="color:#0D9F6E;" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span> Settings
+</button>
+<div class="flex-1 overflow-y-auto" id="settings-content"></div>
+</div>
+
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-lg" id="account-modal-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="account-modal-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="relative bg-white flex flex-col w-full h-full sm:h-[640px] sm:rounded-xl opacity-0 transition-all duration-200 ease-out overflow-hidden" id="account-modal-panel" style="max-width:880px; max-height:100vh; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+<!-- Header (always full width, both breakpoints) -->
+<div class="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
+<h2 class="font-ui-semibold" style="font-size:15px; color:#1A2620;">Account</h2>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body: tabs (row on mobile, column on sm+) + content -->
+<div class="flex-1 flex flex-col sm:flex-row min-h-0">
+<div class="w-full sm:w-[200px] shrink-0 flex flex-row sm:flex-col gap-xs px-sm py-sm overflow-x-auto hide-scrollbar border-b sm:border-b-0 sm:border-r border-[#D8E2DC]" id="account-modal-tabs" style="background:#F7F9F8;">
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="account" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span> Account
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="plan" type="button">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span> Plan
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="billing" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Billing
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-lg" id="account-modal-content"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- FOLDER EDITOR OVERLAY -->
+<div class="hidden fixed inset-0 z-[70]" id="folder-editor-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out" id="folder-editor-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="absolute right-0 top-0 h-full w-full sm:w-[640px] bg-white flex flex-col translate-x-full transition-transform duration-300 ease-out" id="folder-editor-panel" style="box-shadow: -8px 0 32px rgba(26,38,32,0.14);">
+<!-- Header -->
+<div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
+<div class="flex items-center gap-sm min-w-0 flex-1">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">folder</span>
+</div>
+<input class="flex-1 min-w-0 bg-transparent border-none focus:outline-none focus:ring-0 p-0 font-ui-semibold" id="folder-editor-name" placeholder="Folder name" style="color:#1A2620; font-size:16px;" type="text">
+</div>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 shrink-0" id="folder-editor-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body -->
+<div class="flex-1 overflow-y-auto px-lg py-md">
+<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">AI description</label>
+<p class="text-xs mb-sm" style="color:#5C6F65;">Tell the AI what belongs in this folder and how to treat notes filed here.</p>
+<textarea class="w-full rounded-lg text-sm p-3 focus:outline-none focus:ring-2 transition-all" id="folder-editor-description" placeholder="e.g. Early-stage product ideas, not yet validated. Route anything speculative or half-formed here." rows="8" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620; resize:none;"></textarea>
+</div>
+<!-- Footer actions -->
+<div class="flex items-center justify-end gap-2 px-lg py-md" style="border-top: 1px solid #D8E2DC;">
+<button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors" id="folder-editor-cancel" onmouseover="this.style.background='#1A2620'; this.style.color='#ffffff';" onmouseout="this.style.background='#ffffff'; this.style.color='#1A2620';" style="background:#ffffff; border:1.5px solid #1A2620; color:#1A2620;" type="button">Cancel</button>
+<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95" id="folder-editor-save" onmouseover="this.style.background='#0b8a5f'" onmouseout="this.style.background='#0D9F6E'" style="background:#0D9F6E;" type="button">Save</button>
+</div>
+</div>
+</div>
+<!-- SIDEBAR-BEHAVIOR-JS -->
+<script>
+(function () {
+    var sidebar = document.getElementById('sidebar');
+    var mainEl = document.getElementById('main-content');
+    var toggleBtn = document.getElementById('sidebar-toggle');
+    var toggleIcon = document.getElementById('sidebar-toggle-icon');
+    var resizeHandle = document.getElementById('sidebar-resize-handle');
+
+    var COLLAPSED_KEY = 'flare-sidebar-collapsed';
+    var WIDTH_KEY = 'flare-sidebar-width';
+    var DEFAULT_WIDTH = 200;
+    var MIN_WIDTH = 64;
+    var MAX_WIDTH = 240;
+    var ICON_ONLY_THRESHOLD = 100;
+
+    var savedWidth = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+    var currentWidth = (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) ? savedWidth : DEFAULT_WIDTH;
+    var collapsed = localStorage.getItem(COLLAPSED_KEY) === '1';
+
+    function isDesktop() {
+        return window.matchMedia('(min-width: 768px)').matches;
+    }
+
+    function applyIconOnly(iconOnly) {
+        var labels = sidebar.querySelectorAll('.nav-label, .sidebar-brand-label, .sidebar-profile-label');
+        labels.forEach(function (el) { el.style.display = iconOnly ? 'none' : ''; });
+
+        // Every row (brand, nav list, nav links, account row) has a different
+        // horizontal padding by default, so centering each independently
+        // leaves their icons at different x positions. Zeroing all of them
+        // out and centering within the full-width rail makes every icon —
+        // logo included — line up on the same vertical axis.
+        var rows = sidebar.querySelectorAll('.nav-link, #account-menu-trigger, .sidebar-brand-row, .sidebar-nav-list, .sidebar-footer-wrap');
+        rows.forEach(function (el) {
+            el.style.justifyContent = iconOnly ? 'center' : '';
+            el.style.paddingLeft = iconOnly ? '0px' : '';
+            el.style.paddingRight = iconOnly ? '0px' : '';
+        });
+
+        // Push the brand row down a bit so it doesn't crowd the top edge
+        // of the rail once it's icon-only.
+        var brandRow = sidebar.querySelector('.sidebar-brand-row');
+        if (brandRow) {
+            brandRow.style.marginTop = iconOnly ? '12px' : '';
+        }
+
+        // The brand logo is sized for a wide sidebar (64px) — at the
+        // minimum rail width (64px) it would overflow its own row edge to
+        // edge. Shrink it to 1.5x the 20px nav icons (30px) so it fits
+        // with breathing room while still reading as a "brand mark"
+        // rather than just another nav icon, instead of getting clipped
+        // by the rail's overflow:hidden.
+        var logoImg = sidebar.querySelector('.sidebar-logo-img');
+        if (logoImg) {
+            logoImg.style.width = iconOnly ? '30px' : '';
+            logoImg.style.height = iconOnly ? '30px' : '';
+        }
+    }
+
+    function render() {
+        var width = collapsed ? 0 : currentWidth;
+        sidebar.style.width = width + 'px';
+        sidebar.style.opacity = collapsed ? '0' : '1';
+        sidebar.style.borderRightWidth = collapsed ? '0px' : '1.5px';
+        mainEl.style.marginLeft = (isDesktop() && !collapsed) ? currentWidth + 'px' : '0px';
+        toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
+        applyIconOnly(!collapsed && currentWidth <= ICON_ONLY_THRESHOLD);
+    }
+
+    function setCollapsed(value) {
+        collapsed = value;
+        localStorage.setItem(COLLAPSED_KEY, collapsed ? '1' : '0');
+        render();
+    }
+
+    function setWidth(px) {
+        currentWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, px));
+        localStorage.setItem(WIDTH_KEY, String(currentWidth));
+        render();
+    }
+
+    toggleBtn.addEventListener('click', function () { setCollapsed(!collapsed); });
+    window.addEventListener('resize', render);
+
+    if (resizeHandle) {
+        var dragging = false;
+        var startX = 0;
+        var startWidth = 0;
+
+        resizeHandle.addEventListener('mouseover', function () {
+            resizeHandle.style.background = 'rgba(13,159,110,0.3)';
+        });
+        resizeHandle.addEventListener('mouseout', function () {
+            if (!dragging) resizeHandle.style.background = 'transparent';
+        });
+
+        resizeHandle.addEventListener('mousedown', function (e) {
+            if (collapsed) return;
+            dragging = true;
+            startX = e.clientX;
+            startWidth = currentWidth;
+            sidebar.style.transition = 'none';
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!dragging) return;
+            setWidth(startWidth + (e.clientX - startX));
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (!dragging) return;
+            dragging = false;
+            sidebar.style.transition = '';
+            resizeHandle.style.background = 'transparent';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        });
+    }
+
+    render();
+})();
+</script>
+<script>
+
+    (function () {
+        var SECTIONS = [
+            { id: 'general', label: 'General', icon: 'tune' },
+            { id: 'folders', label: 'Folders', icon: 'folder' },
+            { id: 'insights', label: 'Insights', icon: 'insights' },
+            { id: 'integrations', label: 'Integrations', icon: 'extension' },
+            { id: 'notifications', label: 'Notifications', icon: 'notifications' },
+            { id: 'export', label: 'Export', icon: 'download' },
+            { id: 'members', label: 'Members', icon: 'group' },
+            { id: 'danger', label: 'Danger Zone', icon: 'warning' }
+        ];
+
+        var state = {
+            activeSection: 'general',
+            workspaceName: 'My Workspace',
+            language: 'auto',
+            folders: [
+                { name: 'Ideas', description: 'Early-stage product and feature ideas, not yet validated.' },
+                { name: 'Research', description: 'Market research, competitor analysis, pricing benchmarks.' },
+                { name: 'Sources', description: 'External articles, books, and links worth remembering.' },
+                { name: 'People & Customers', description: 'Interview notes, calls, and conversations with real people.' },
+                { name: 'Journal', description: 'Personal reflections, retros, and day-to-day decisions.' },
+                { name: 'Tasks', description: 'Things to do, with deadlines and blockers.' }
+            ],
+            insightsInstructions: '',
+            schedule: 'daily',
+            scheduleDay: 'Monday',
+            notion: { connected: false },
+            gdrive: { connected: false },
+            digestOn: true,
+            digestDay: 'Monday',
+            digestTime: '09:00',
+            notifyNewInsight: true,
+            notifyProcessing: false,
+            membersNotified: false
+        };
+
+        var menuEl = document.getElementById('settings-menu');
+        var contentEl = document.getElementById('settings-content');
+
+        function renderMenu() {
+            menuEl.innerHTML = '';
+            SECTIONS.forEach(function (s) {
+                var isActive = s.id === state.activeSection;
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = '#';
+                a.className = 'flex items-center gap-sm px-sm py-sm rounded-lg transition-colors active:scale-95 duration-150';
+                a.style.color = isActive ? '#0D9F6E' : '#3d4a42';
+                a.style.fontWeight = isActive ? '700' : '600';
+                a.style.background = isActive ? '#D1FAE5' : 'transparent';
+                a.onmouseover = function () { if (!isActive) a.style.background = '#EEF2F0'; };
+                a.onmouseout = function () { if (!isActive) a.style.background = 'transparent'; };
+                a.innerHTML =
+                    '<span class="material-symbols-outlined text-[18px]">' + s.icon + '</span>' +
+                    '<span>' + s.label + '</span>';
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    state.activeSection = s.id;
+                    renderMenu();
+                    renderContent();
+                    var twoPane = document.getElementById('settings-two-pane');
+                    if (twoPane) twoPane.classList.add('mobile-show-content');
+                });
+                li.appendChild(a);
+                menuEl.appendChild(li);
+            });
+        }
+
+        function wrapSection(innerHtml) {
+            return '<div class="mx-auto px-lg pt-lg pb-32" style="max-width:var(--content-width);">' + innerHtml + '</div>';
+        }
+
+        function sectionHeader(title, desc) {
+            return (
+                '<h2 class="font-display-sm mb-1" style="font-size:22px; font-weight:800; color:#1A2620;">' + title + '</h2>' +
+                (desc ? '<p class="text-sm mb-lg" style="color:#5C6F65;">' + desc + '</p>' : '<div class="mb-lg"></div>')
+            );
+        }
+
+        // ---------- Section renderers ----------
+
+        function renderGeneral() {
+            return wrapSection(
+                sectionHeader('General', null) +
+                '<div class="mb-xl">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Workspace name</label>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<input class="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="settings-workspace-name" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text" value="' + state.workspaceName + '">' +
+                        '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0" id="settings-workspace-name-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Insights language</label>' +
+                    '<select class="px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="settings-language" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;">' +
+                        '<option value="auto"' + (state.language === 'auto' ? ' selected' : '') + '>Auto (detect from notes)</option>' +
+                        '<option value="en"' + (state.language === 'en' ? ' selected' : '') + '>English</option>' +
+                        '<option value="ru"' + (state.language === 'ru' ? ' selected' : '') + '>Russian</option>' +
+                    '</select>' +
+                '</div>'
+            );
+        }
+
+        function wireGeneral() {
+            var nameInput = document.getElementById('settings-workspace-name');
+            var saveBtn = document.getElementById('settings-workspace-name-save');
+            saveBtn.addEventListener('click', function () {
+                state.workspaceName = nameInput.value.trim() || 'My Workspace';
+                document.getElementById('settings-workspace-label').textContent = state.workspaceName;
+                saveBtn.textContent = 'Saved';
+                setTimeout(function () { saveBtn.textContent = 'Save'; }, 1200);
+            });
+
+            document.getElementById('settings-language').addEventListener('change', function (e) {
+                state.language = e.target.value;
+            });
+        }
+
+        function renderFolders() {
+            var rowsHtml = state.folders.map(function (folder, i) {
+                return (
+                    '<div class="flex items-start justify-between gap-sm p-sm rounded-lg cursor-pointer transition-colors settings-folder-row" data-index="' + i + '">' +
+                        '<div class="flex items-start gap-sm min-w-0 flex-1">' +
+                            '<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EEF2F0;">' +
+                                '<span class="material-symbols-outlined text-[18px]" style="color:#5C6F65;">folder</span>' +
+                            '</div>' +
+                            '<div class="min-w-0 break-words">' +
+                                '<div class="text-sm font-ui-semibold" style="color:#1A2620; overflow-wrap:break-word;">' + folder.name + '</div>' +
+                                '<div class="text-xs" style="color:#5C6F65; overflow-wrap:break-word;">' + (folder.description || 'No AI description yet') + '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<button aria-label="Delete folder" class="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg transition-colors settings-folder-delete" style="color:#5C6F65;" type="button">' +
+                            '<span class="material-symbols-outlined text-[18px]">delete</span>' +
+                        '</button>' +
+                    '</div>'
+                );
+            }).join('');
+
+            return wrapSection(
+                sectionHeader('Folders', 'Manage the folders your notes get organized into. Click a folder to rename it or write AI instructions for it.') +
+                '<div class="rounded-xl p-sm" style="background:#FFFFFF; border:1px solid #D8E2DC;" id="settings-folder-list">' + rowsHtml + '</div>' +
+                '<button class="mt-sm flex items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="settings-add-folder" onmouseover="this.style.background=\'#EEF2F0\'" onmouseout="this.style.background=\'transparent\'" style="color:#0D9F6E;" type="button">' +
+                    '<span class="material-symbols-outlined text-[18px]">add</span> Add folder' +
+                '</button>'
+            );
+        }
+
+        function wireFolders() {
+            var list = document.getElementById('settings-folder-list');
+
+            function showDeleteConfirm(row, index) {
+                var folder = state.folders[index];
+                var original = row.innerHTML;
+                row.setAttribute('data-confirming', '1');
+
+                row.innerHTML =
+                    '<div class="flex items-center justify-between gap-sm w-full">' +
+                        '<span class="text-sm" style="color:#1A2620;">Delete <strong>' + folder.name + '</strong>? This can\'t be undone.</span>' +
+                        '<div class="flex items-center gap-2 shrink-0">' +
+                            '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors settings-folder-delete-cancel" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Cancel</button>' +
+                            '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors text-white settings-folder-delete-confirm" style="background:#ba1a1a;" type="button">Delete</button>' +
+                        '</div>' +
+                    '</div>';
+
+                row.querySelector('.settings-folder-delete-cancel').addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    row.innerHTML = original;
+                    row.removeAttribute('data-confirming');
+                    wireRowButtons(row);
+                });
+                row.querySelector('.settings-folder-delete-confirm').addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    state.folders.splice(index, 1);
+                    renderContent();
+                });
+            }
+
+            function wireRowButtons(row) {
+                var delBtn = row.querySelector('.settings-folder-delete');
+                delBtn.onmouseover = function () { delBtn.style.color = '#ba1a1a'; };
+                delBtn.onmouseout = function () { delBtn.style.color = '#5C6F65'; };
+                delBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var index = parseInt(row.getAttribute('data-index'), 10);
+                    showDeleteConfirm(row, index);
+                });
+            }
+
+            function wireRow(row) {
+                wireRowButtons(row);
+                row.addEventListener('click', function () {
+                    if (row.getAttribute('data-confirming') === '1') return;
+                    var index = parseInt(row.getAttribute('data-index'), 10);
+                    openFolderEditor(index);
+                });
+            }
+
+            list.querySelectorAll('.settings-folder-row').forEach(wireRow);
+
+            document.getElementById('settings-add-folder').addEventListener('click', function () {
+                openFolderEditor(null);
+            });
+        }
+
+        function renderInsights() {
+            var scheduleOptions = [
+                { id: 'daily', label: 'Daily' },
+                { id: 'weekly', label: 'Weekly' },
+                { id: 'threshold', label: 'When 10+ new notes added' }
+            ];
+            var chipsHtml = scheduleOptions.map(function (o) {
+                var isActive = o.id === state.schedule;
+                return (
+                    '<button class="px-4 py-1.5 rounded-full font-ui-semibold text-sm whitespace-nowrap transition-colors settings-schedule-chip" data-schedule="' + o.id + '" style="background:' + (isActive ? '#0D9F6E' : '#FFFFFF') + '; color:' + (isActive ? '#FFFFFF' : '#5C6F65') + '; border:1px solid ' + (isActive ? '#0D9F6E' : '#D8E2DC') + ';" type="button">' + o.label + '</button>'
+                );
+            }).join('');
+
+            var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            var dayOptionsHtml = days.map(function (d) {
+                return '<option value="' + d + '"' + (d === state.scheduleDay ? ' selected' : '') + '>' + d + '</option>';
+            }).join('');
+
+            return wrapSection(
+                sectionHeader('Insights', 'Tell the AI what to focus on when generating insights for this workspace.') +
+                '<textarea class="w-full rounded-lg text-sm p-3 focus:outline-none focus:ring-2 transition-all mb-sm" id="settings-insights-instructions" placeholder="e.g. Focus more on customer feedback. Highlight recurring blockers. Prioritize insights about growth and retention." rows="6" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620; resize:none;">' + state.insightsInstructions + '</textarea>' +
+                '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95" id="settings-insights-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                '<div class="border-t my-xl" style="border-color:#D8E2DC;"></div>' +
+                '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">GENERATION SCHEDULE</p>' +
+                '<div class="flex items-center gap-2 flex-wrap" id="settings-schedule-chips">' + chipsHtml + '</div>' +
+                '<div class="mt-sm" id="settings-schedule-day-wrap" style="display:' + (state.schedule === 'weekly' ? '' : 'none') + ';">' +
+                    '<select class="px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="settings-schedule-day" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;">' + dayOptionsHtml + '</select>' +
+                '</div>'
+            );
+        }
+
+        function wireInsights() {
+            var textarea = document.getElementById('settings-insights-instructions');
+            var saveBtn = document.getElementById('settings-insights-save');
+            saveBtn.addEventListener('click', function () {
+                state.insightsInstructions = textarea.value;
+                saveBtn.textContent = 'Saved';
+                setTimeout(function () { saveBtn.textContent = 'Save'; }, 1200);
+            });
+
+            var dayWrap = document.getElementById('settings-schedule-day-wrap');
+            document.querySelectorAll('.settings-schedule-chip').forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    state.schedule = chip.getAttribute('data-schedule');
+                    dayWrap.style.display = state.schedule === 'weekly' ? '' : 'none';
+                    document.querySelectorAll('.settings-schedule-chip').forEach(function (c) {
+                        var active = c === chip;
+                        c.style.background = active ? '#0D9F6E' : '#FFFFFF';
+                        c.style.color = active ? '#FFFFFF' : '#5C6F65';
+                        c.style.border = '1px solid ' + (active ? '#0D9F6E' : '#D8E2DC');
+                    });
+                });
+            });
+
+            var dayInput = document.getElementById('settings-schedule-day');
+            if (dayInput) dayInput.addEventListener('change', function (e) { state.scheduleDay = e.target.value; });
+        }
+
+        function integrationCard(opts) {
+            var statusHtml = opts.connected
+                ? (
+                    '<span class="flex items-center gap-1 text-xs" style="color:#0D9F6E;">' +
+                        '<span class="w-1.5 h-1.5 rounded-full" style="background:#0D9F6E;"></span>' +
+                        'Connected as ' + state.workspaceName +
+                    '</span>'
+                  )
+                : '<span class="text-xs" style="color:#5C6F65;">Not connected</span>';
+
+            var btnHtml = opts.connected
+                ? '<button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors settings-integration-btn" data-key="' + opts.key + '" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Disconnect</button>'
+                : '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors settings-integration-btn" data-key="' + opts.key + '" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Connect</button>';
+
+            return (
+                '<div class="rounded-xl p-md flex items-center justify-between gap-md" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                    '<div class="flex items-center gap-sm min-w-0">' +
+                        '<div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-white font-ui-semibold" style="background:' + opts.iconBg + ';">' + opts.iconLabel + '</div>' +
+                        '<div class="min-w-0">' +
+                            '<p class="text-sm font-ui-semibold" style="color:#1A2620;">' + opts.title + '</p>' +
+                            '<p class="text-xs" style="color:#5C6F65;">' + opts.desc + '</p>' +
+                            '<div class="mt-1">' + statusHtml + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="shrink-0">' + btnHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderIntegrations() {
+            return wrapSection(
+                sectionHeader('Integrations', 'Bring notes in from where you already write.') +
+                '<div class="flex flex-col gap-sm">' +
+                    integrationCard({ key: 'notion', title: 'Notion', desc: 'Import pages and databases', iconBg: '#000000', iconLabel: 'N', connected: state.notion.connected }) +
+                    integrationCard({ key: 'gdrive', title: 'Google Drive', desc: 'Import Docs and files', iconBg: '#0D9F6E', iconLabel: 'G', connected: state.gdrive.connected }) +
+                    '<div class="rounded-xl p-md flex items-center justify-between gap-md" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                        '<div class="flex items-center gap-sm min-w-0">' +
+                            '<div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background:#EEF2F0;">' +
+                                '<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">folder_zip</span>' +
+                            '</div>' +
+                            '<div class="min-w-0">' +
+                                '<p class="text-sm font-ui-semibold" style="color:#1A2620;">Markdown folder</p>' +
+                                '<p class="text-xs" style="color:#5C6F65;" id="settings-md-status">Import from local folder or .zip</p>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="shrink-0">' +
+                            '<input class="hidden" id="settings-md-file-input" multiple type="file">' +
+                            '<button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors" id="settings-md-import-btn" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Import files</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
+        function wireIntegrations() {
+            document.querySelectorAll('.settings-integration-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var key = btn.getAttribute('data-key');
+                    state[key].connected = !state[key].connected;
+                    renderContent();
+                });
+            });
+
+            var fileInput = document.getElementById('settings-md-file-input');
+            var importBtn = document.getElementById('settings-md-import-btn');
+            var status = document.getElementById('settings-md-status');
+            importBtn.addEventListener('click', function () { fileInput.click(); });
+            fileInput.addEventListener('change', function () {
+                var count = fileInput.files.length;
+                status.textContent = count > 0 ? count + ' file' + (count === 1 ? '' : 's') + ' selected (demo, not uploaded)' : 'Import from local folder or .zip';
+            });
+        }
+
+        function toggleRow(opts) {
+            return (
+                '<div class="flex items-center justify-between py-sm">' +
+                    '<div>' +
+                        '<p class="text-sm font-ui-semibold" style="color:#1A2620;">' + opts.label + '</p>' +
+                        (opts.desc ? '<p class="text-xs" style="color:#5C6F65;">' + opts.desc + '</p>' : '') +
+                    '</div>' +
+                    '<button aria-pressed="' + opts.on + '" class="shrink-0 relative inline-block rounded-full transition-colors settings-toggle" data-key="' + opts.key + '" style="width:36px; height:20px; background:' + (opts.on ? '#0D9F6E' : '#D8E2DC') + ';" type="button">' +
+                        '<span class="absolute top-[2px] left-[2px] w-4 h-4 rounded-full bg-white transition-transform" style="transform:' + (opts.on ? 'translateX(16px)' : '') + '; box-shadow:0 1px 2px rgba(0,0,0,0.25);"></span>' +
+                    '</button>' +
+                '</div>'
+            );
+        }
+
+        function renderNotifications() {
+            var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            var times = ['08:00', '09:00', '10:00', '12:00'];
+            var dayOptionsHtml = days.map(function (d) { return '<option value="' + d + '"' + (d === state.digestDay ? ' selected' : '') + '>' + d + '</option>'; }).join('');
+            var timeOptionsHtml = times.map(function (t) { return '<option value="' + t + '"' + (t === state.digestTime ? ' selected' : '') + '>' + t + '</option>'; }).join('');
+
+            return wrapSection(
+                sectionHeader('Notifications', null) +
+                '<div class="divide-y" style="border-color:#D8E2DC;">' +
+                    toggleRow({ key: 'digestOn', label: 'Weekly email digest', desc: 'A summary of new insights, sent once a week.', on: state.digestOn }) +
+                    '<div id="settings-digest-options" class="pb-sm" style="display:' + (state.digestOn ? '' : 'none') + ';">' +
+                        '<div class="flex items-center gap-2 pl-0">' +
+                            '<select class="px-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="settings-digest-day" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;">' + dayOptionsHtml + '</select>' +
+                            '<select class="px-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="settings-digest-time" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;">' + timeOptionsHtml + '</select>' +
+                        '</div>' +
+                    '</div>' +
+                    toggleRow({ key: 'notifyNewInsight', label: 'Notify when new insight is ready', desc: null, on: state.notifyNewInsight }) +
+                    toggleRow({ key: 'notifyProcessing', label: 'Notify when notes finish processing', desc: null, on: state.notifyProcessing }) +
+                '</div>'
+            );
+        }
+
+        function wireNotifications() {
+            var digestOptions = document.getElementById('settings-digest-options');
+
+            document.querySelectorAll('.settings-toggle').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var key = btn.getAttribute('data-key');
+                    state[key] = !state[key];
+                    if (key === 'digestOn') {
+                        digestOptions.style.display = state.digestOn ? '' : 'none';
+                    }
+                    btn.style.background = state[key] ? '#0D9F6E' : '#D8E2DC';
+                    btn.querySelector('span').style.transform = state[key] ? 'translateX(16px)' : '';
+                });
+            });
+
+            var dayInput = document.getElementById('settings-digest-day');
+            var timeInput = document.getElementById('settings-digest-time');
+            if (dayInput) dayInput.addEventListener('change', function (e) { state.digestDay = e.target.value; });
+            if (timeInput) timeInput.addEventListener('change', function (e) { state.digestTime = e.target.value; });
+        }
+
+        function renderExport() {
+            return wrapSection(
+                sectionHeader('Export', 'Download all your notes and insights as Markdown files.') +
+                '<button class="text-sm font-ui-semibold px-5 py-3 rounded-lg transition-colors active:scale-95" id="settings-export-btn" onmouseover="this.style.background=\'#D1FAE5\'" onmouseout="this.style.background=\'#FFFFFF\'" style="background:#FFFFFF; border:1.5px solid #0D9F6E; color:#0D9F6E;" type="button">' +
+                    '<span class="material-symbols-outlined text-[18px] align-middle mr-1">download</span>Export as Markdown .zip' +
+                '</button>' +
+                '<p class="text-xs mt-sm" style="color:#5C6F65;">Includes all notes, sources, and generated insights. Does not include AI embeddings.</p>'
+            );
+        }
+
+        function wireExport() {
+            var btn = document.getElementById('settings-export-btn');
+            btn.addEventListener('click', function () {
+                var original = btn.innerHTML;
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px] align-middle mr-1">hourglass_top</span>Preparing export…';
+                setTimeout(function () {
+                    btn.innerHTML = original;
+                    console.log('Export requested (demo, no real file generated)');
+                }, 1400);
+            });
+        }
+
+        function renderMembers() {
+            var alreadyClicked = state.membersNotified;
+            return wrapSection(
+                '<div class="flex flex-col items-center justify-center text-center py-32">' +
+                    '<span class="material-symbols-outlined text-[40px] mb-md" style="color:#0D9F6E;">group</span>' +
+                    '<h2 class="font-display-sm mb-1" style="font-size:20px; font-weight:800; color:#1A2620;">Team workspaces are coming</h2>' +
+                    '<p class="text-sm mb-lg" style="color:#5C6F65; max-width:320px;">Invite teammates to collaborate on shared notes and insights.</p>' +
+                    '<button class="text-sm font-ui-semibold px-5 py-2.5 rounded-lg transition-colors active:scale-95" id="settings-members-btn" style="background:' + (alreadyClicked ? '#D1FAE5' : '#0D9F6E') + '; color:' + (alreadyClicked ? '#0D9F6E' : '#FFFFFF') + ';" type="button">' +
+                        (alreadyClicked ? "You're on the list ✓" : 'Notify me when it\'s ready') +
+                    '</button>' +
+                '</div>'
+            );
+        }
+
+        function wireMembers() {
+            var btn = document.getElementById('settings-members-btn');
+            if (state.membersNotified) return;
+            btn.addEventListener('click', function () {
+                state.membersNotified = true;
+                var count = parseInt(localStorage.getItem('members_interest_clicks') || '0', 10) + 1;
+                localStorage.setItem('members_interest_clicks', String(count));
+                renderContent();
+            });
+        }
+
+        function renderDanger() {
+            return wrapSection(
+                sectionHeader('Danger Zone', null) +
+                '<div class="rounded-xl p-md" style="border:1px solid #FCA5A5;">' +
+                    '<div class="flex items-center justify-between gap-md py-sm">' +
+                        '<div class="min-w-0">' +
+                            '<p class="text-sm font-ui-semibold" style="color:#1A2620;">Delete all data</p>' +
+                            '<p class="text-xs" style="color:#5C6F65;">Permanently delete all notes, sources, and insights in this workspace. The workspace itself will remain.</p>' +
+                        '</div>' +
+                        '<button class="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors" id="settings-delete-data-btn" style="background:#FFFFFF; border:1.5px solid #ba1a1a; color:#ba1a1a;" type="button">Delete all data</button>' +
+                    '</div>' +
+                    '<div class="border-t my-sm" style="border-color:#FCA5A5;"></div>' +
+                    '<div class="flex items-center justify-between gap-md py-sm">' +
+                        '<div class="min-w-0">' +
+                            '<p class="text-sm font-ui-semibold" style="color:#1A2620;">Delete workspace</p>' +
+                            '<p class="text-xs" style="color:#5C6F65;">Permanently delete this workspace and everything in it. This cannot be undone.</p>' +
+                        '</div>' +
+                        '<button class="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors text-white" id="settings-delete-workspace-btn" style="background:#ba1a1a;" type="button">Delete workspace</button>' +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
+        function wireDanger() {
+            document.getElementById('settings-delete-data-btn').addEventListener('click', function () {
+                var confirmation = window.prompt('Type DELETE to confirm you want to permanently delete all data in this workspace.');
+                if (confirmation === 'DELETE') {
+                    alert('All data deleted (demo)');
+                }
+            });
+            document.getElementById('settings-delete-workspace-btn').addEventListener('click', function () {
+                var confirmation = window.prompt('Type DELETE to confirm you want to permanently delete this workspace.');
+                if (confirmation === 'DELETE') {
+                    alert('Workspace deleted (demo)');
+                }
+            });
+        }
+
+        var RENDERERS = {
+            general: { render: renderGeneral, wire: wireGeneral },
+            folders: { render: renderFolders, wire: wireFolders },
+            insights: { render: renderInsights, wire: wireInsights },
+            integrations: { render: renderIntegrations, wire: wireIntegrations },
+            notifications: { render: renderNotifications, wire: wireNotifications },
+            export: { render: renderExport, wire: wireExport },
+            members: { render: renderMembers, wire: wireMembers },
+            danger: { render: renderDanger, wire: wireDanger }
+        };
+
+        function renderContent() {
+            var entry = RENDERERS[state.activeSection];
+            contentEl.innerHTML = entry.render();
+            entry.wire();
+        }
+
+        // ---------- Folder editor overlay ----------
+        var folderOverlay = document.getElementById('folder-editor-overlay');
+        var folderBackdrop = document.getElementById('folder-editor-backdrop');
+        var folderPanel = document.getElementById('folder-editor-panel');
+        var folderCloseBtn = document.getElementById('folder-editor-close');
+        var folderCancelBtn = document.getElementById('folder-editor-cancel');
+        var folderSaveBtn = document.getElementById('folder-editor-save');
+        var folderNameInput = document.getElementById('folder-editor-name');
+        var folderDescInput = document.getElementById('folder-editor-description');
+        var editingFolderIndex = null;
+
+        function openFolderEditor(index) {
+            editingFolderIndex = index;
+            var folder = index === null ? { name: '', description: '' } : state.folders[index];
+            folderNameInput.value = folder.name;
+            folderDescInput.value = folder.description || '';
+
+            folderOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(function () {
+                folderBackdrop.style.opacity = '1';
+                folderPanel.style.transform = 'translateX(0)';
+            });
+            setTimeout(function () {
+                if (index === null) folderNameInput.focus(); else folderDescInput.focus();
+            }, 300);
+        }
+
+        function closeFolderEditor() {
+            folderBackdrop.style.opacity = '0';
+            folderPanel.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+            setTimeout(function () {
+                folderOverlay.classList.add('hidden');
+                folderNameInput.value = '';
+                folderDescInput.value = '';
+                editingFolderIndex = null;
+            }, 300);
+        }
+
+        folderCloseBtn.addEventListener('click', closeFolderEditor);
+        folderCancelBtn.addEventListener('click', closeFolderEditor);
+        folderBackdrop.addEventListener('click', closeFolderEditor);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !folderOverlay.classList.contains('hidden')) closeFolderEditor();
+        });
+
+        folderSaveBtn.addEventListener('click', function () {
+            var name = folderNameInput.value.trim();
+            if (!name) { folderNameInput.focus(); return; }
+            var description = folderDescInput.value.trim();
+
+            if (editingFolderIndex === null) {
+                state.folders.push({ name: name, description: description });
+            } else {
+                state.folders[editingFolderIndex].name = name;
+                state.folders[editingFolderIndex].description = description;
+            }
+
+            closeFolderEditor();
+            if (state.activeSection === 'folders') renderContent();
+        });
+
+        var settingsBackBtn = document.getElementById('settings-back-btn');
+        settingsBackBtn.addEventListener('click', function () {
+            document.getElementById('settings-two-pane').classList.remove('mobile-show-content');
+        });
+
+        renderMenu();
+        renderContent();
+    })();
+    (function () {
+        var trigger = document.getElementById('account-menu-trigger');
+        var overlay = document.getElementById('account-modal-overlay');
+        var backdrop = document.getElementById('account-modal-backdrop');
+        var panel = document.getElementById('account-modal-panel');
+        var closeBtn = document.getElementById('account-modal-close');
+        var contentEl = document.getElementById('account-modal-content');
+        var tabBtns = document.querySelectorAll('.account-modal-tab');
+        var planLabelEl = document.getElementById('account-plan-label');
+
+        var accountState = {
+            activeTab: 'account',
+            name: 'Ilyas',
+            email: 'ilyas300606@gmail.com',
+            avatarFile: '',
+            plan: 'basic'
+        };
+
+        function updatePlanLabel() {
+            if (planLabelEl) planLabelEl.textContent = accountState.plan === 'plus' ? 'Plus plan' : 'Free plan';
+        }
+
+        function openAccountModal(tab) {
+            accountState.activeTab = tab || accountState.activeTab;
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderTabs();
+            renderTabContent();
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.opacity = '1';
+                panel.style.transform = 'scale(1)';
+            });
+        }
+
+        function closeAccountModal() {
+            backdrop.style.opacity = '0';
+            panel.style.opacity = '0';
+            panel.style.transform = 'scale(0.96)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 200);
+        }
+
+        trigger.addEventListener('click', function () { openAccountModal('account'); });
+        closeBtn.addEventListener('click', closeAccountModal);
+        backdrop.addEventListener('click', closeAccountModal);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeAccountModal();
+        });
+
+        function renderTabs() {
+            tabBtns.forEach(function (btn) {
+                var isActive = btn.getAttribute('data-tab') === accountState.activeTab;
+                btn.style.background = isActive ? '#D1FAE5' : 'transparent';
+                btn.style.color = isActive ? '#0D9F6E' : '#3d4a42';
+                btn.onmouseover = function () { if (!isActive) btn.style.background = '#EEF2F0'; };
+                btn.onmouseout = function () { if (!isActive) btn.style.background = 'transparent'; };
+            });
+        }
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                accountState.activeTab = btn.getAttribute('data-tab');
+                renderTabs();
+                renderTabContent();
+            });
+        });
+
+        function renderAccountTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Account</h3>' +
+                '<div class="flex items-center gap-md mb-xl">' +
+                    '<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-ui-semibold shrink-0" style="background:#0D9F6E; font-size:22px;">' + accountState.name.charAt(0).toUpperCase() + '</div>' +
+                    '<div>' +
+                        '<input class="hidden" id="account-avatar-input" type="file" accept="image/*">' +
+                        '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors" id="account-avatar-btn" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Upload photo</button>' +
+                        '<p class="text-xs mt-1" id="account-avatar-status" style="color:#5C6F65;">' + (accountState.avatarFile || 'JPG or PNG, up to 5MB') + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-lg">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Name</label>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<input class="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="account-name-input" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text" value="' + accountState.name + '">' +
+                        '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0" id="account-name-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-xl">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Email</label>' +
+                    '<p class="text-sm" style="color:#1A2620;">' + accountState.email + '</p>' +
+                '</div>' +
+                '<div class="border-t pt-lg" style="border-color:#D8E2DC;">' +
+                    '<button class="flex items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="account-signout-btn" onmouseover="this.style.background=\'#EEF2F0\'" onmouseout="this.style.background=\'transparent\'" style="color:#ba1a1a;" type="button">' +
+                        '<span class="material-symbols-outlined text-[18px]">logout</span> Sign out' +
+                    '</button>' +
+                '</div>';
+
+            document.getElementById('account-name-save').addEventListener('click', function () {
+                var input = document.getElementById('account-name-input');
+                accountState.name = input.value.trim() || 'Ilyas';
+                var btn = document.getElementById('account-name-save');
+                btn.textContent = 'Saved';
+                setTimeout(function () { btn.textContent = 'Save'; }, 1200);
+            });
+
+            var avatarInput = document.getElementById('account-avatar-input');
+            document.getElementById('account-avatar-btn').addEventListener('click', function () { avatarInput.click(); });
+            avatarInput.addEventListener('change', function () {
+                if (avatarInput.files.length > 0) {
+                    accountState.avatarFile = avatarInput.files[0].name + ' selected (demo, not uploaded)';
+                    document.getElementById('account-avatar-status').textContent = accountState.avatarFile;
+                }
+            });
+
+            document.getElementById('account-signout-btn').addEventListener('click', function () {
+                alert('Signed out (demo)');
+            });
+        }
+
+        function planCard(opts) {
+            var isCurrent = accountState.plan === opts.key;
+            var featuresHtml = opts.features.map(function (f) {
+                return '<li class="flex items-start gap-2 text-sm"><span class="material-symbols-outlined text-[16px] mt-[1px]" style="color:#0D9F6E;">check</span><span style="color:#1A2620;">' + f + '</span></li>';
+            }).join('');
+
+            var actionHtml = isCurrent
+                ? '<span class="inline-block text-xs font-ui-semibold px-3 py-1.5 rounded-lg" style="background:#EEF2F0; color:#5C6F65;">Current plan</span>'
+                : '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full account-plan-switch" data-plan="' + opts.key + '" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">' + opts.actionLabel + '</button>';
+
+            return (
+                '<div class="rounded-xl p-md flex flex-col" style="background:#FFFFFF; border:1.5px solid ' + (opts.highlight ? '#0D9F6E' : '#D8E2DC') + '; flex:1;">' +
+                    (opts.highlight ? '<span class="inline-block text-[10px] font-ui-semibold uppercase tracking-wider px-2 py-[2px] rounded-full mb-2 self-start" style="background:#D1FAE5; color:#0D9F6E;">Recommended</span>' : '') +
+                    '<p class="text-sm font-ui-semibold mb-1" style="color:#1A2620;">' + opts.title + '</p>' +
+                    '<p class="mb-md" style="color:#1A2620;"><span style="font-size:22px; font-weight:800;">' + opts.price + '</span><span class="text-xs" style="color:#5C6F65;">' + opts.priceSuffix + '</span></p>' +
+                    '<ul class="flex flex-col gap-2 mb-lg">' + featuresHtml + '</ul>' +
+                    '<div class="mt-auto">' + actionHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderPlanTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Plan</h3>' +
+                '<div class="flex gap-md" style="align-items:stretch;">' +
+                    planCard({
+                        key: 'basic',
+                        title: 'Basic',
+                        price: '$0',
+                        priceSuffix: '/mo',
+                        highlight: false,
+                        actionLabel: 'Downgrade',
+                        features: ['Up to 200 notes', '1 workspace', 'Weekly insights', 'Chat scoped to one insight at a time', 'Community support']
+                    }) +
+                    planCard({
+                        key: 'plus',
+                        title: 'Plus',
+                        price: '$10',
+                        priceSuffix: '/mo',
+                        highlight: true,
+                        actionLabel: 'Upgrade to Plus',
+                        features: ['Unlimited notes', 'Unlimited workspaces', 'Daily insights, custom schedule', 'Ask across your entire vault', 'Priority support']
+                    }) +
+                '</div>';
+
+            document.querySelectorAll('.account-plan-switch').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    accountState.plan = btn.getAttribute('data-plan');
+                    updatePlanLabel();
+                    renderPlanTab();
+                });
+            });
+        }
+
+        function renderBillingTab() {
+            var isPlus = accountState.plan === 'plus';
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Billing</h3>' +
+                '<div class="mb-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">PAYMENT METHOD</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl p-md flex items-center justify-between" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center gap-sm">' +
+                                    '<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">credit_card</span>' +
+                                    '<span class="text-sm" style="color:#1A2620;">Visa •••• 4242</span>' +
+                                '</div>' +
+                                '<span class="text-xs" style="color:#5C6F65;">Next charge Sep 4, 2026</span>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No payment method on file — you\'re on the Free plan.</p></div>'
+                    ) +
+                '</div>' +
+                '<div>' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">BILLING HISTORY</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center justify-between px-md py-sm">' +
+                                    '<span class="text-sm" style="color:#1A2620;">Aug 4, 2026 — Plus plan</span>' +
+                                    '<span class="text-sm font-ui-semibold" style="color:#1A2620;">$10.00</span>' +
+                                '</div>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No invoices yet.</p></div>'
+                    ) +
+                '</div>';
+        }
+
+        function renderTabContent() {
+            if (accountState.activeTab === 'account') renderAccountTab();
+            else if (accountState.activeTab === 'plan') renderPlanTab();
+            else renderBillingTab();
+        }
+
+        updatePlanLabel();
+    })();
+</script>
+<!-- NAV-ACTIVE-JS -->
+<script>
+(function () {
+    var current = document.body.getAttribute('data-page');
+
+    // Desktop sidebar
+    var item = document.querySelector('#sidebar li[data-nav="' + current + '"]');
+    if (item) {
+        var indicator = item.querySelector('.nav-active-indicator');
+        var link = item.querySelector('.nav-link');
+        if (indicator) indicator.style.display = '';
+        if (link) {
+            link.classList.remove('text-on-surface-variant', 'group');
+            link.classList.add('text-primary', 'font-bold');
+        }
+    }
+
+    // Mobile bottom tab bar
+    var mobileLink = document.querySelector('.mobile-nav-link[data-nav="' + current + '"]');
+    if (mobileLink) {
+        var icon = mobileLink.querySelector('.mobile-nav-icon');
+        var label = mobileLink.querySelector('.mobile-nav-label');
+        if (icon) icon.style.opacity = '1';
+        if (label) { label.style.color = '#0D9F6E'; label.style.fontWeight = '700'; }
+        var dot = document.createElement('span');
+        dot.className = 'w-1 h-1 rounded-full';
+        dot.style.background = '#0D9F6E';
+        mobileLink.insertBefore(dot, mobileLink.firstChild);
+    }
+
+    var accountBtn = document.getElementById('mobile-nav-account');
+    var desktopTrigger = document.getElementById('account-menu-trigger');
+    if (accountBtn && desktopTrigger) {
+        accountBtn.addEventListener('click', function () { desktopTrigger.click(); });
+    }
+})();
+</script>
+<!-- TOAST -->
+<div class="fixed left-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none bottom-20 md:bottom-6" id="flare-toast-stack" style="transform:translateX(-50%);"></div>
+
+<!-- TOAST-JS -->
+<script>
+(function () {
+    var ICONS = { error: 'error', success: 'check_circle' };
+    var STYLES = {
+        error: { bg: '#FEF2F2', border: '#FECACA', text: '#B91C1C', icon: '#DC2626' },
+        success: { bg: '#F0FDF9', border: 'rgba(13,159,110,0.25)', text: '#0D9F6E', icon: '#0D9F6E' }
+    };
+
+    window.flareToast = function (message, type) {
+        var stack = document.getElementById('flare-toast-stack');
+        if (!stack) return;
+        type = (type === 'success') ? 'success' : 'error';
+        var style = STYLES[type];
+
+        var toast = document.createElement('div');
+        toast.className = 'flex items-center gap-2 rounded-lg pointer-events-auto shadow-lg';
+        toast.style.cssText =
+            'background:' + style.bg + '; border:1px solid ' + style.border + '; color:' + style.text + ';' +
+            'padding:10px 16px; font-size:13px; font-weight:600; opacity:0; transform:translateY(8px); transition:opacity .18s ease-out, transform .18s ease-out; max-width:min(90vw,420px);';
+        toast.innerHTML =
+            '<span class="material-symbols-outlined text-[18px]" style="color:' + style.icon + ';">' + ICONS[type] + '</span>' +
+            '<span>' + message + '</span>';
+        stack.appendChild(toast);
+
+        requestAnimationFrame(function () {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(function () {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+            setTimeout(function () { toast.remove(); }, 200);
+        }, 3200);
+    };
+})();
+</script>
+</body></html>

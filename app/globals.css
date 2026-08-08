@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../";
 
 /*
  * Flare design tokens (Sage palette) — kept in sync by eye with
@@ -30,6 +31,7 @@
   --font-display-lg: var(--font-dm-sans);
   --font-display-sm: var(--font-dm-sans);
   --font-headline-lg: var(--font-dm-sans);
+  --font-headline-lg-mobile: var(--font-dm-sans);
   --font-body-lg: var(--font-dm-sans);
   --font-body-md: var(--font-dm-sans);
   --font-ui-semibold: var(--font-dm-sans);
@@ -52,6 +54,11 @@
   --text-headline-lg--letter-spacing: -0.015em;
   --text-headline-lg--font-weight: 700;
 
+  --text-headline-lg-mobile: 20px;
+  --text-headline-lg-mobile--line-height: 28px;
+  --text-headline-lg-mobile--letter-spacing: -0.015em;
+  --text-headline-lg-mobile--font-weight: 700;
+
   --text-body-lg: 18px;
   --text-body-lg--line-height: 28px;
 
@@ -69,10 +76,159 @@
 
   --text-metadata-mono: 13px;
   --text-metadata-mono--line-height: 18px;
+
+  /* Spacing scale from design/partials/tailwind-config.js */
+  --spacing-xs: 4px;
+  --spacing-sm: 12px;
+  --spacing-base: 8px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 64px;
+  --spacing-gutter: 24px;
+  --spacing-margin-mobile: 16px;
+  --spacing-margin-desktop: 48px;
+
+  /*
+   * NOTE: Tailwind v4 resolves max-w-{xs,sm,md,lg,xl} (and any other utility
+   * that shares this scale) against --spacing-* first, even when a
+   * --container-* value of the same name is also defined — so max-w-sm
+   * means 12px here, not Tailwind's usual 384px. Redefining --container-*
+   * does NOT override this. Any max-w-xs/sm/md/lg/xl usage in this codebase
+   * must use an explicit arbitrary value instead, e.g. max-w-[24rem].
+   */
+
+  /*
+   * Material palette (Sage/mint) from design/partials/tailwind-config.js —
+   * used only by markup ported 1:1 from design/*.html (bg-surface-container-*,
+   * text-on-surface, border-outline-variant, bg-primary, etc). Kept separate
+   * from the --background/--surface/--accent tokens above (used by auth
+   * pages and predate this palette) since their bare names would otherwise
+   * collide with very different hex values.
+   */
+  --color-surface-bright: #e9fff2;
+  --color-surface-container-highest: #d2e8dc;
+  --color-on-secondary-fixed: #121e18;
+  --color-tertiary: #3f6353;
+  --color-on-background: #0d1f18;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-dim: #cadfd3;
+  --color-on-error: #ffffff;
+  --color-surface-variant: #d2e8dc;
+  --color-surface-tint: #006c49;
+  --color-on-error-container: #93000a;
+  --color-surface-container-high: #d8ede1;
+  --color-on-primary-container: #f5fff6;
+  --color-tertiary-container: #577c6b;
+  --color-tertiary-fixed-dim: #a8cfbc;
+  --color-on-secondary-container: #5a6760;
+  --color-secondary-fixed-dim: #bccac1;
+  --color-outline: #6d7a71;
+  --color-on-secondary-fixed-variant: #3d4a43;
+  --color-on-tertiary-fixed-variant: #294e3f;
+  --color-inverse-on-surface: #e0f6ea;
+  --color-outline-variant: #bccac0;
+  --color-primary-fixed: #80f9c1;
+  --color-error: #ba1a1a;
+  --color-on-primary-fixed-variant: #005236;
+  --color-secondary-container: #d8e6dc;
+  --color-surface-container-low: #e3f9ec;
+  --color-on-primary: #ffffff;
+  --color-on-primary-fixed: #002113;
+  --color-error-container: #ffdad6;
+  --color-on-surface-variant: #3d4a42;
+  --color-primary-fixed-dim: #63dca6;
+  --color-inverse-surface: #22342c;
+  --color-secondary-fixed: #d8e6dc;
+  --color-tertiary-fixed: #c3ecd7;
+  --color-inverse-primary: #63dca6;
+  --color-surface-container: #ddf3e7;
+  --color-on-secondary: #ffffff;
+  --color-on-tertiary-container: #f5fff7;
+  --color-on-surface: #0d1f18;
+  --color-on-tertiary: #ffffff;
+  --color-primary-container: #00855b;
+  --color-primary: #0d9f6e;
+  --color-on-tertiary-fixed: #002115;
+  --color-secondary: #54615a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Material Symbols icon font used by markup ported from design/*.html */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url('/assets/fonts/material-symbols-outlined.woff2') format('woff2');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-toast-in {
+  animation: toast-in 0.18s ease-out;
+}
+
+.card-flat {
+  background-color: #ffffff;
+  border: 1.5px solid #d8e2dc;
+  box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+}
+
+.insight-card-accent {
+  background-color: #e3f9ec;
+  border: 1px solid rgba(13, 159, 110, 0.15);
+  box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
+  position: relative;
+}
+
+.insight-card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

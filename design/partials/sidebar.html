@@ -1,0 +1,57 @@
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
+<div>
+<!-- Brand -->
+<div class="px-md mb-lg flex items-center gap-sm sidebar-brand-row">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 shrink-0" href="../workspace_select.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain sidebar-logo-img" src="assets/images/logo.png">
+</a>
+<div class="min-w-0 sidebar-brand-label">
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider" style="white-space:nowrap;">Project Name</p>
+</div>
+</div>
+<!-- Links -->
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold sidebar-nav-list">
+<li class="relative" data-nav="home">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="home_page.html" title="Home">
+<img alt="Home" class="w-5 h-5 shrink-0" src="assets/images/nav-home.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Home</span>
+</a>
+</li>
+<li class="relative" data-nav="vault">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="vault_page.html" title="Vault">
+<img alt="Vault" class="w-5 h-5 shrink-0" src="assets/images/nav-vault.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Vault</span>
+</a>
+</li>
+<li class="relative" data-nav="insights">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="insights_page.html" title="Insights">
+<img alt="Insights" class="w-5 h-5 shrink-0" src="assets/images/nav-insights.svg">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Insights</span>
+</a>
+</li>
+<li class="relative" data-nav="settings">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="settings_page.html" title="Settings">
+<img alt="Settings" class="w-5 h-5 shrink-0" src="assets/images/nav-settings.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Profile -->
+<div class="px-sm sidebar-footer-wrap">
+<button class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface w-full" id="account-menu-trigger" title="Account" type="button">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col items-start min-w-0">
+<span class="font-ui-semibold text-ui-semibold sidebar-profile-label" style="white-space:nowrap;">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant sidebar-profile-label" id="account-plan-label" style="white-space:nowrap;">Founder Tier</span>
+</div>
+</button>
+</div>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="sidebar-resize-handle" style="width:6px; cursor:col-resize; z-index:60;"></div>
+</nav>

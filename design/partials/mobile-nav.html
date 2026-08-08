@@ -1,0 +1,23 @@
+<!-- Mobile bottom tab bar (hidden on md+, sidebar takes over there) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around bg-white" id="mobile-nav" style="border-top: 1.5px solid #D8E2DC; height:64px; padding-bottom: env(safe-area-inset-bottom, 0px);">
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="home" href="home_page.html">
+<img alt="Home" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-home.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Home</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="vault" href="vault_page.html">
+<img alt="Vault" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-vault.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Vault</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="insights" href="insights_page.html">
+<img alt="Insights" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-insights.svg">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Insights</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="settings" href="settings_page.html">
+<img alt="Settings" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-settings.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Settings</span>
+</a>
+<button class="flex-1 flex flex-col items-center justify-center gap-[2px]" id="mobile-nav-account" type="button">
+<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">account_circle</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px]" style="color:#5C6F65;">Account</span>
+</button>
+</nav>

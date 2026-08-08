@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flare - Select Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    @font-face {
+        font-family: 'Material Symbols Outlined';
+        font-style: normal;
+        font-weight: 100 700;
+        font-display: block;
+        src: url('design/assets/fonts/material-symbols-outlined.woff2') format('woff2');
+    }
+    .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+    }
+</style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "spacing": {
+                  "xs": "4px",
+                  "base": "8px",
+                  "sm": "12px",
+                  "md": "24px",
+                  "lg": "40px",
+                  "xl": "64px",
+                  "gutter": "24px"
+          },
+          "fontFamily": {
+                  "display-sm": ["DM Sans"],
+                  "headline-lg": ["DM Sans"],
+                  "body-md": ["DM Sans"],
+                  "ui-semibold": ["DM Sans"],
+                  "metadata-mono": ["Geist Mono"],
+                  "label-caps": ["DM Sans"]
+          },
+          "fontSize": {
+                  "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+                  "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+                  "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                  "ui-semibold": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "600" }],
+                  "metadata-mono": ["13px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }],
+                  "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+          }
+      },
+      },
+    }
+</script>
+<style>
+    body {
+        background-color: #F7F9F8;
+    }
+    .ws-card {
+        transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+    .ws-card:hover {
+        box-shadow: 0 4px 16px rgba(26,38,32,0.06);
+        border-color: #0D9F6E;
+    }
+    .ws-card:active {
+        transform: scale(0.995);
+    }
+    .new-ws-btn:hover {
+        border-color: #0D9F6E;
+        background: #D1FAE5;
+        color: #0D9F6E;
+    }
+</style>
+</head>
+<body class="font-body-md text-body-md antialiased selection:bg-[#D1FAE5] selection:text-[#0D9F6E] min-h-screen flex flex-col" style="color:#1A2620;" data-page="workspace-select">
+
+<!-- Main centered content -->
+<main class="flex-1 flex items-center justify-center px-md py-xl">
+<div class="w-full" style="max-width:560px;">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center mb-lg">
+        <a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 mb-md" href="workspace_select.html">
+            <img alt="Flare" class="w-12 h-12 rounded-lg object-contain" src="design/assets/images/logo.png">
+        </a>
+        <h1 class="font-display-sm text-display-sm text-center" style="color:#1A2620;">Your workspaces</h1>
+        <p class="text-sm mt-2" style="color:#5C6F65;">Select a workspace to continue</p>
+    </div>
+
+    <!-- Workspace -->
+    <div class="flex flex-col gap-sm" id="workspace-list">
+
+        <a class="ws-card block bg-white rounded-2xl flex items-center gap-md" href="design/home_page.html" style="border:1px solid #D8E2DC; border-radius:16px; padding:20px 24px;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#D1FAE5;">
+                <span class="material-symbols-outlined" style="color:#0D9F6E;">workspaces</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="font-ui-semibold text-ui-semibold" style="font-size:16px; color:#1A2620;">Flare MVP</p>
+                <p class="text-sm mt-1 truncate" style="color:#5C6F65;">34 notes · 8 insights · Last opened today</p>
+            </div>
+            <span class="material-symbols-outlined shrink-0" style="color:#5C6F65;">arrow_forward</span>
+        </a>
+
+    </div>
+
+    <!-- New workspace -->
+    <button class="new-ws-btn w-full flex items-center justify-center gap-2 rounded-2xl font-ui-semibold text-ui-semibold transition-colors active:scale-[0.99] mt-md" id="new-ws-btn" style="border:1.5px dashed #0D9F6E; border-radius:16px; padding:16px 24px; color:#0D9F6E; background:transparent;" type="button">
+        <span class="material-symbols-outlined text-[18px]">add</span> New workspace
+    </button>
+
+</div>
+</main>
+
+<!-- Bottom account bar -->
+<footer class="shrink-0 w-full bg-white flex items-center justify-between px-lg py-sm" style="border-top:1.5px solid #D8E2DC;">
+    <div class="flex items-center gap-sm min-w-0">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center font-ui-semibold shrink-0" style="background:#D1FAE5; color:#0D9F6E; font-size:14px;">IL</div>
+        <div class="min-w-0">
+            <p class="font-ui-semibold text-ui-semibold truncate" style="color:#1A2620;">Ilyas</p>
+            <p class="font-metadata-mono text-metadata-mono text-[11px]" style="color:#5C6F65;">Free plan</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-1 shrink-0">
+        <button aria-label="Account settings" class="w-9 h-9 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-settings-btn" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+        </button>
+        <button aria-label="Log out" class="w-9 h-9 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="logout-btn" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+        </button>
+    </div>
+</footer>
+
+<!-- New workspace modal -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-md" id="new-ws-modal-overlay">
+    <div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="new-ws-modal-backdrop" style="background: rgba(26,38,32,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);"></div>
+    <div class="relative bg-white flex flex-col w-full opacity-0 transition-all duration-200 ease-out" id="new-ws-modal-panel" style="max-width:400px; border-radius:20px; padding:32px; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+        <button aria-label="Close" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="new-ws-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+
+        <h2 class="font-ui-semibold mb-lg" style="font-size:18px; color:#1A2620;">New workspace</h2>
+
+        <label class="block font-metadata-mono text-metadata-mono text-[11px] uppercase tracking-wider mb-sm" for="new-ws-name-input" style="color:#5C6F65;">Workspace name</label>
+        <input class="w-full rounded-lg text-sm focus:outline-none focus:ring-2 transition-all mb-lg" id="new-ws-name-input" placeholder="e.g. My Startup" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620; padding:10px 12px;" type="text">
+
+        <div class="flex items-center justify-end gap-sm">
+            <button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95" id="new-ws-cancel-btn" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">Cancel</button>
+            <button class="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95" disabled id="new-ws-create-btn" style="background:#9CA8A1; color:#fff; cursor:not-allowed;" type="button">Create</button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var overlay = document.getElementById('new-ws-modal-overlay');
+    var backdrop = document.getElementById('new-ws-modal-backdrop');
+    var panel = document.getElementById('new-ws-modal-panel');
+    var openBtn = document.getElementById('new-ws-btn');
+    var closeBtn = document.getElementById('new-ws-modal-close');
+    var cancelBtn = document.getElementById('new-ws-cancel-btn');
+    var createBtn = document.getElementById('new-ws-create-btn');
+    var nameInput = document.getElementById('new-ws-name-input');
+
+    function openModal() {
+        overlay.classList.remove('hidden');
+        requestAnimationFrame(function () {
+            backdrop.style.opacity = '1';
+            panel.style.opacity = '1';
+            panel.style.transform = 'scale(1)';
+        });
+        nameInput.focus();
+    }
+
+    function closeModal() {
+        backdrop.style.opacity = '0';
+        panel.style.opacity = '0';
+        panel.style.transform = 'scale(0.96)';
+        setTimeout(function () {
+            overlay.classList.add('hidden');
+            nameInput.value = '';
+            updateCreateState();
+        }, 200);
+    }
+
+    function updateCreateState() {
+        var hasName = nameInput.value.trim().length > 0;
+        createBtn.disabled = !hasName;
+        createBtn.style.background = hasName ? '#0D9F6E' : '#9CA8A1';
+        createBtn.style.cursor = hasName ? 'pointer' : 'not-allowed';
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeModal();
+    });
+
+    nameInput.addEventListener('input', updateCreateState);
+
+    createBtn.addEventListener('click', function () {
+        if (createBtn.disabled) return;
+        closeModal();
+    });
+})();
+</script>
+</body>
+</html>

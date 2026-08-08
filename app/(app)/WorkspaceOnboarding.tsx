@@ -32,7 +32,7 @@ export function WorkspaceOnboarding() {
     <div className="flex flex-1 items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-xl border border-border bg-white p-6"
+        className="w-full max-w-[24rem] rounded-xl border border-border bg-white p-6"
       >
         <h2 className="font-headline-lg text-headline-lg text-foreground mb-3">
           Создай свой первый workspace

@@ -4,7 +4,30 @@
 <title>Flare - Vault</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Material Symbols Outlined';
+            font-style: normal;
+            font-weight: 100 700;
+            font-display: block;
+            src: url('assets/fonts/material-symbols-outlined.woff2') format('woff2');
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -55,7 +78,7 @@
                       "on-surface": "#0d1f18",
                       "on-tertiary": "#ffffff",
                       "primary-container": "#00855b",
-                      "primary": "#006947",
+                      "primary": "#0D9F6E",
                       "on-tertiary-fixed": "#002115",
                       "secondary": "#54615a"
               },
@@ -184,21 +207,10 @@
         }
     </script>
 <style>
-        .glass-panel {
+        .card-flat {
             background-color: #ffffff;
-            border: 1.5px solid var(--tw-colors-outline-variant);
+            border: 1.5px solid #D8E2DC;
             box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
-        }
-
-        .insight-card-glass {
-            background-color: #E3F9EC;
-            border: 1px solid rgba(13, 159, 110, 0.15);
-            box-shadow: 0 1px 2px 0 rgba(26, 38, 32, 0.04);
-            position: relative;
-        }
-
-        .ambient-shadow {
-            box-shadow: 0 8px 32px 0 rgba(26, 38, 32, 0.04);
         }
 
         body {
@@ -214,69 +226,100 @@
         }
     </style>
 </head>
-<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex">
+<body class="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex" data-page="vault">
 <!-- SideNavBar (Shared Component) -->
 <nav class="hidden md:flex bg-surface-container-low border-r-[1.5px] border-outline-variant h-screen w-[200px] fixed left-0 top-0 flex-col justify-between py-md z-50 transition-[width,opacity] duration-200 ease-in-out overflow-hidden" id="sidebar">
 <div>
 <!-- Brand -->
-<div class="px-md mb-lg flex items-center gap-sm">
-<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150" href="home_page.html">
-<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtR07-UXVoG9XFRRZDVwR96-ZaXfPmF4CH_UwwmSbcDDGdKzcX7gHL0YigVhkuipJwlleFJ280yfD1ILoYMz2661h1PQ_iGvuKAu2C98Zpx_adpw5hv-G-DscoXkp8jHhNPgDvAr-_QyU_9NuR4lCQf0dGff3c9nzbinBrL5-T-XyeVBBPqV4uxkjfwuQoavlK5m5YNNVt-QwKHaEYq0KEYzqakpTL8ElYN4Sp_oRT1hu1kxnhLvXDQxcUUTbL3UhhofoduC6jLEP5VnA">
+<div class="px-md mb-lg flex items-center gap-sm sidebar-brand-row">
+<a class="rounded-lg hover:opacity-80 active:scale-95 transition-all duration-150 shrink-0" href="../workspace_select.html">
+<img alt="Flare Brand Logo" class="w-16 h-16 rounded-lg object-contain sidebar-logo-img" src="assets/images/logo.png">
 </a>
-<div>
-<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider">Project Name</p>
+<div class="min-w-0 sidebar-brand-label">
+<p class="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider" style="white-space:nowrap;">Project Name</p>
 </div>
 </div>
 <!-- Links -->
-<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold">
-<li class="">
-<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="home_page.html">
-<img alt="Home" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLu2PfTGCDf-vudvatfWcikMBqZ_JcbFJMiDN0TkE8qGJZUMLYHmY4stmqW4Zi123QCnehK7HTbShgqqDngZ6zDH03jSufZuW2RN0VQ0Rsp7yc5wgagsZJUuJBF3645dwx2btGi-CMlAco-K1eCk36stFKCOAbFjsXSXSqZ29BcuWd5hN8ThF4vrRCI_QFvpDmKzjClxDh8mxq3b9Kt8lzkeETSRm0kW6fVaNO__VWgsn93wIDoBJwCg1wI">
-<span class="group-hover:text-on-surface transition-colors">Home</span>
+<ul class="flex flex-col gap-xs px-sm font-ui-semibold text-ui-semibold sidebar-nav-list">
+<li class="relative" data-nav="home">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="home_page.html" title="Home">
+<img alt="Home" class="w-5 h-5 shrink-0" src="assets/images/nav-home.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Home</span>
 </a>
 </li>
-<li class="relative">
-<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary"></span>
-<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-primary font-bold hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
-<img alt="Vault" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLspbag76u5uflSun7Syh6vhFSH5VLA3rju-djixO_9RI5jsNItN9BHKg35PbvNIG_s0U7eDFUYkHSPyftY07rXF5Ujao-L3YIiTk16L3Qo4CbHB6Pq7WRf9wlND69Pw1j1LIk-fhs9dIOMDcqyI7I9Li3uJ6ktpVtdOTPUP9cKlC-FYhsPBiOsB9cG3a18_cQezxNgCFonIGMC0qkBSNFZ3LDZ4zEGZJwzyg0xQQbS0Ta4_PrcrELJ5MLCi">
-<span class="">Vault</span>
+<li class="relative" data-nav="vault">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="vault_page.html" title="Vault">
+<img alt="Vault" class="w-5 h-5 shrink-0" src="assets/images/nav-vault.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Vault</span>
 </a>
 </li>
-<li class="">
-<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
-<img alt="Insights" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLugd6_srI55YrUY6SlFJO_W8h9ax8mj81JcCCUnTbcNIBmbl0TObN0eNnfhU1pCZyYQgR3veVzdCRN151UxiwIwZqA5pSWqWGHtei-JiuNku9pcsz6YOAoz44HgGP8Ws96VmUl3WJrOPJ2iB4CghWTqWkp95HK5Hqtoevagq_RjgL5liDrbomq6RvouLvqzZoUYJd9gplDA3BClLnyASLDIYmaFoNgVk6TpeaM2H9AQYyOCrcUM_5Bf0R_b">
-<span class="group-hover:text-on-surface transition-colors">Insights</span>
+<li class="relative" data-nav="insights">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="insights_page.html" title="Insights">
+<img alt="Insights" class="w-5 h-5 shrink-0" src="assets/images/nav-insights.svg">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Insights</span>
 </a>
 </li>
-<li class="">
-<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group" href="#">
-<img alt="Settings" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida/AP1WRLsB25NTbWXGWmR2B-r5bkzwIiI_-fFTPiRU9S8dGnr1zpxpnMt557ccP5WPXItj5pYzewRDKqxdoqKQrdB3gZoqUVHdy7pi2GJ6H8NEN-bD7ZjDltqSi9T-eZCY5VEgYbeW5y86QAJvt5SWGAOsAI7iFtyQGEmMw_4FLzGCEIqpU3CHszA7NurVweH_ONIskyPgA2kCGlxlo_V3Ng1iw6kdJ0ZeVHqGnUTd5yDf7YskiQbevpAjByHyrQ0">
-<span class="group-hover:text-on-surface transition-colors">Settings</span>
+<li class="relative" data-nav="settings">
+<span class="absolute left-[-12px] top-1/2 -translate-y-1/2 h-[calc(100%+8px)] w-[3px] rounded-r-full bg-primary nav-active-indicator" style="display:none;"></span>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 group nav-link" href="settings_page.html" title="Settings">
+<img alt="Settings" class="w-5 h-5 shrink-0" src="assets/images/nav-settings.png">
+<span class="group-hover:text-on-surface transition-colors nav-label" style="white-space:nowrap;">Settings</span>
 </a>
 </li>
 </ul>
 </div>
 <!-- Footer Profile -->
-<div class="px-sm">
-<a class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface" href="#">
-<span class="material-symbols-outlined text-[28px] text-primary" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
-<div class="flex flex-col">
-<span class="font-ui-semibold text-ui-semibold">Ilyas</span>
-<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant">Founder Tier</span>
+<div class="px-sm sidebar-footer-wrap">
+<button class="flex items-center gap-sm px-sm py-sm rounded-lg hover:opacity-90 transition-all active:scale-95 duration-150 group text-on-surface w-full" id="account-menu-trigger" title="Account" type="button">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<div class="flex flex-col items-start min-w-0">
+<span class="font-ui-semibold text-ui-semibold sidebar-profile-label" style="white-space:nowrap;">Ilyas</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px] text-on-surface-variant sidebar-profile-label" id="account-plan-label" style="white-space:nowrap;">Founder Tier</span>
 </div>
+</button>
+</div>
+<!-- Drag-to-resize handle -->
+<div class="hidden md:block absolute top-0 right-0 h-full" id="sidebar-resize-handle" style="width:6px; cursor:col-resize; z-index:60;"></div>
+</nav>
+<!-- Mobile bottom tab bar (hidden on md+, sidebar takes over there) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around bg-white" id="mobile-nav" style="border-top: 1.5px solid #D8E2DC; height:64px; padding-bottom: env(safe-area-inset-bottom, 0px);">
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="home" href="home_page.html">
+<img alt="Home" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-home.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Home</span>
 </a>
-</div>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="vault" href="vault_page.html">
+<img alt="Vault" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-vault.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Vault</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="insights" href="insights_page.html">
+<img alt="Insights" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-insights.svg">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Insights</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center gap-[2px] mobile-nav-link" data-nav="settings" href="settings_page.html">
+<img alt="Settings" class="w-5 h-5 mobile-nav-icon" style="opacity:0.6;" src="assets/images/nav-settings.png">
+<span class="font-metadata-mono text-metadata-mono text-[10px] mobile-nav-label" style="color:#5C6F65;">Settings</span>
+</a>
+<button class="flex-1 flex flex-col items-center justify-center gap-[2px]" id="mobile-nav-account" type="button">
+<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">account_circle</span>
+<span class="font-metadata-mono text-metadata-mono text-[10px]" style="color:#5C6F65;">Account</span>
+</button>
 </nav>
 <!-- Main Content Area -->
-<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-y-auto relative scroll-smooth flex flex-col transition-[margin] duration-200 ease-in-out" id="main-content">
+<main class="ml-0 md:ml-[200px] flex-1 h-screen overflow-y-auto relative scroll-smooth flex flex-col transition-[margin] duration-200 ease-in-out pb-16 md:pb-0" id="main-content">
 <div class="p-lg max-w-[1280px] mx-auto w-full flex-1 flex flex-col gap-lg">
 <!-- 0. UTILITY ROW (search + day/time, borderless) -->
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-1">
+<a class="md:hidden flex items-center justify-center w-11 h-11 rounded-lg overflow-hidden active:scale-95 transition-transform" href="../workspace_select.html">
+<img alt="Flare" class="w-full h-full object-contain" src="assets/images/logo.png">
+</a>
 <button aria-label="Toggle sidebar" class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" id="sidebar-toggle">
 <span class="material-symbols-outlined text-[20px]" id="sidebar-toggle-icon">left_panel_close</span>
 </button>
-<div class="relative flex items-center gap-2 text-on-surface-variant w-full max-w-xs pl-1">
+<div class="relative flex items-center gap-2 text-on-surface-variant w-full max-w-xs min-w-0 pl-1">
 <span class="material-symbols-outlined text-[18px]">search</span>
 <input class="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none p-0 text-sm placeholder:text-on-surface-variant" id="global-search-input" placeholder="Search your brain..." type="text">
 <div class="hidden absolute left-0 top-[calc(100%+8px)] w-full max-w-md bg-white border border-outline-variant/60 rounded-lg shadow-lg px-3 py-2 z-50 max-h-80 overflow-y-auto" id="global-search-result">
@@ -285,7 +328,7 @@
 </div>
 </div>
 <div class="flex items-center gap-md shrink-0">
-<span class="font-metadata-mono text-metadata-mono text-on-surface-variant">Monday, August 3 · 09:41</span>
+<span class="hidden sm:inline font-metadata-mono text-metadata-mono text-on-surface-variant">Monday, August 3 · 09:41</span>
 <button class="text-on-surface-variant hover:text-primary transition-all active:opacity-80 p-sm rounded-full hover:bg-surface-container-highest">
 <span class="material-symbols-outlined">add_circle</span>
 </button>
@@ -324,7 +367,7 @@ New Note
 <!-- 3. FOLDER GRID -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="vault-folder-grid">
 <!-- Folder: Ideas -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="ideas">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="ideas">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -347,7 +390,7 @@ New Note
 </div>
 </div>
 <!-- Folder: Research -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="research">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="research">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -370,7 +413,7 @@ New Note
 </div>
 </div>
 <!-- Folder: Sources -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="sources">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="sources">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -393,7 +436,7 @@ New Note
 </div>
 </div>
 <!-- Folder: People & Customers -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="people">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="people">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -416,7 +459,7 @@ New Note
 </div>
 </div>
 <!-- Folder: Journal -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="journal">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="journal">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -439,7 +482,7 @@ New Note
 </div>
 </div>
 <!-- Folder: Tasks -->
-<div class="glass-panel rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="tasks">
+<div class="card-flat rounded-xl p-md hover:border-[#0D9F6E]/50 transition-colors group cursor-pointer flex flex-col h-40" data-folder="tasks">
 <div class="flex justify-between items-start mb-sm">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span>
@@ -462,7 +505,7 @@ New Note
 </div>
 </div>
 </div>
-<p class="hidden text-center text-sm py-lg" id="vault-folder-empty" style="color:#6B7F75;">No folders match "<span id="vault-folder-empty-query"></span>"</p>
+<p class="hidden text-center text-sm py-lg" id="vault-folder-empty" style="color:#5C6F65;">No folders match "<span id="vault-folder-empty-query"></span>"</p>
 <!-- 4. RECENTLY ADDED -->
 <section class="mt-md">
 <div class="flex justify-between items-center mb-md px-xs">
@@ -470,7 +513,7 @@ New Note
 </div>
 <div class="flex flex-col gap-xs">
 <!-- Item 1 -->
-<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="audio">
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="audio">
 <div class="flex items-center gap-md overflow-hidden">
 <div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
 <div class="flex flex-col min-w-0">
@@ -480,7 +523,7 @@ New Note
 </div>
 </div>
 <!-- Item 2 -->
-<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="url">
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="url">
 <div class="flex items-center gap-md overflow-hidden">
 <div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
 <div class="flex flex-col min-w-0">
@@ -490,7 +533,7 @@ New Note
 </div>
 </div>
 <!-- Item 3 -->
-<div class="glass-panel p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="note">
+<div class="card-flat p-sm rounded-[9px] flex items-center hover:bg-surface-container-low transition-colors cursor-pointer group" data-type="note">
 <div class="flex items-center gap-md overflow-hidden">
 <div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded-md shrink-0"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span></div>
 <div class="flex flex-col min-w-0">
@@ -499,9 +542,38 @@ New Note
 </div>
 </div>
 </div>
-<p class="hidden text-center text-sm py-md" id="vault-recent-empty" style="color:#6B7F75;">No items match this filter.</p>
+<p class="hidden text-center text-sm py-md" id="vault-recent-empty" style="color:#5C6F65;">No items match this filter.</p>
 </div>
 </section>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="hidden fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-lg" id="account-modal-overlay">
+<div class="absolute inset-0 opacity-0 transition-opacity duration-200 ease-out" id="account-modal-backdrop" style="background: rgba(26,38,32,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"></div>
+<div class="relative bg-white flex flex-col w-full h-full sm:h-[640px] sm:rounded-xl opacity-0 transition-all duration-200 ease-out overflow-hidden" id="account-modal-panel" style="max-width:880px; max-height:100vh; box-shadow:0 24px 64px rgba(26,38,32,0.28); transform:scale(0.96);">
+<!-- Header (always full width, both breakpoints) -->
+<div class="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
+<h2 class="font-ui-semibold" style="font-size:15px; color:#1A2620;">Account</h2>
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="account-modal-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Body: tabs (row on mobile, column on sm+) + content -->
+<div class="flex-1 flex flex-col sm:flex-row min-h-0">
+<div class="w-full sm:w-[200px] shrink-0 flex flex-row sm:flex-col gap-xs px-sm py-sm overflow-x-auto hide-scrollbar border-b sm:border-b-0 sm:border-r border-[#D8E2DC]" id="account-modal-tabs" style="background:#F7F9F8;">
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="account" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span> Account
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="plan" type="button">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span> Plan
+</button>
+<button class="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-sm py-sm rounded-lg text-sm font-ui-semibold whitespace-nowrap transition-colors account-modal-tab" data-tab="billing" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Billing
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-lg py-lg" id="account-modal-content"></div>
+</div>
+</div>
 </div>
 </main>
 <!-- FOLDER OVERLAY -->
@@ -516,7 +588,7 @@ New Note
 </div>
 <div class="min-w-0">
 <h2 class="font-ui-semibold truncate" id="folder-panel-name" style="color:#1A2620; font-size:16px;">Ideas</h2>
-<p class="text-xs truncate" id="folder-panel-meta" style="color:#6B7F75;">34 notes · Updated today</p>
+<p class="text-xs truncate" id="folder-panel-meta" style="color:#5C6F65;">34 notes · Updated today</p>
 </div>
 </div>
 <div class="flex items-center gap-2 shrink-0">
@@ -524,7 +596,7 @@ New Note
 <span class="material-symbols-outlined text-[18px]">add</span>
 Add note
                 </button>
-<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="folder-panel-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#6B7F75;">
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95" id="folder-panel-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;">
 <span class="material-symbols-outlined text-[20px]">close</span>
 </button>
 </div>
@@ -532,7 +604,7 @@ Add note
 <!-- Search -->
 <div class="px-lg py-sm" style="border-bottom: 1px solid #D8E2DC;">
 <div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px]" style="color:#6B7F75;">search</span>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px]" style="color:#5C6F65;">search</span>
 <input class="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="folder-panel-search" placeholder="Search in this folder..." style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text">
 </div>
 </div>
@@ -547,13 +619,20 @@ Add note
 <!-- Header -->
 <div class="flex items-center justify-between gap-md px-lg py-md" style="border-bottom: 1px solid #D8E2DC;">
 <input class="flex-1 min-w-0 bg-transparent border-none focus:outline-none focus:ring-0 p-0 font-ui-semibold" id="note-editor-title" placeholder="Untitled note" style="color:#1A2620; font-size:16px;" type="text">
-<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 shrink-0" id="note-editor-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#6B7F75;" type="button">
+<button aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 shrink-0" id="note-editor-close" onmouseover="this.style.background='#EEF2F0'" onmouseout="this.style.background='transparent'" style="color:#5C6F65;" type="button">
 <span class="material-symbols-outlined text-[20px]">close</span>
 </button>
 </div>
 <!-- Meta -->
 <div class="px-lg pt-sm" id="note-editor-meta-wrap" style="display:none;">
-<span class="text-xs font-metadata-mono" id="note-editor-meta" style="color:#6B7F75;"></span>
+<span class="text-xs font-metadata-mono" id="note-editor-meta" style="color:#5C6F65;"></span>
+</div>
+<!-- Tags -->
+<div class="hidden px-lg pt-sm flex items-center gap-1 flex-wrap" id="note-editor-tags-wrap"></div>
+<!-- Related notes -->
+<div class="hidden px-lg pt-sm" id="note-editor-related-wrap">
+<p class="font-label-caps text-label-caps mb-1" style="color:#5C6F65;">RELATED</p>
+<div class="flex gap-sm overflow-x-auto hide-scrollbar" id="note-editor-related-list"></div>
 </div>
 <!-- Toolbar -->
 <div class="flex items-center gap-1 px-lg py-sm" style="border-bottom: 1px solid #D8E2DC;">
@@ -565,7 +644,7 @@ Add note
 <span class="text-xs font-metadata-mono" id="note-editor-recording-timer" style="color:#ba1a1a;">0:00</span>
 </span>
 <button aria-pressed="false" class="ml-auto flex items-center gap-2" id="note-editor-hide-ai" type="button">
-<span class="material-symbols-outlined text-[16px]" id="note-editor-hide-ai-icon" style="color:#6B7F75;">visibility_off</span>
+<span class="material-symbols-outlined text-[16px]" id="note-editor-hide-ai-icon" style="color:#5C6F65;">visibility_off</span>
 <span class="text-xs font-ui-semibold" style="color:#1A2620;">Hide from AI</span>
 <span class="relative inline-block rounded-full transition-colors" id="note-editor-hide-ai-track" style="width:36px; height:20px; background:#D8E2DC;">
 <span class="absolute top-[2px] left-[2px] w-4 h-4 rounded-full bg-white transition-transform" id="note-editor-hide-ai-knob" style="box-shadow:0 1px 2px rgba(0,0,0,0.25);"></span>
@@ -591,31 +670,133 @@ Delete
 </div>
 </div>
 </div>
+<!-- SIDEBAR-BEHAVIOR-JS -->
 <script>
-    (function () {
-        var sidebar = document.getElementById('sidebar');
-        var mainEl = document.getElementById('main-content');
-        var toggleBtn = document.getElementById('sidebar-toggle');
-        var toggleIcon = document.getElementById('sidebar-toggle-icon');
-        var STORAGE_KEY = 'flare-sidebar-collapsed';
+(function () {
+    var sidebar = document.getElementById('sidebar');
+    var mainEl = document.getElementById('main-content');
+    var toggleBtn = document.getElementById('sidebar-toggle');
+    var toggleIcon = document.getElementById('sidebar-toggle-icon');
+    var resizeHandle = document.getElementById('sidebar-resize-handle');
 
-        function setCollapsed(collapsed) {
-            sidebar.classList.toggle('w-[200px]', !collapsed);
-            sidebar.classList.toggle('w-0', collapsed);
-            sidebar.classList.toggle('opacity-0', collapsed);
-            sidebar.classList.toggle('border-r-0', collapsed);
-            mainEl.classList.toggle('md:ml-[200px]', !collapsed);
-            mainEl.classList.toggle('md:ml-0', collapsed);
-            toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
-            localStorage.setItem(STORAGE_KEY, collapsed ? '1' : '0');
-        }
+    var COLLAPSED_KEY = 'flare-sidebar-collapsed';
+    var WIDTH_KEY = 'flare-sidebar-width';
+    var DEFAULT_WIDTH = 200;
+    var MIN_WIDTH = 64;
+    var MAX_WIDTH = 240;
+    var ICON_ONLY_THRESHOLD = 100;
 
-        toggleBtn.addEventListener('click', function () {
-            setCollapsed(!sidebar.classList.contains('w-0'));
+    var savedWidth = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+    var currentWidth = (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) ? savedWidth : DEFAULT_WIDTH;
+    var collapsed = localStorage.getItem(COLLAPSED_KEY) === '1';
+
+    function isDesktop() {
+        return window.matchMedia('(min-width: 768px)').matches;
+    }
+
+    function applyIconOnly(iconOnly) {
+        var labels = sidebar.querySelectorAll('.nav-label, .sidebar-brand-label, .sidebar-profile-label');
+        labels.forEach(function (el) { el.style.display = iconOnly ? 'none' : ''; });
+
+        // Every row (brand, nav list, nav links, account row) has a different
+        // horizontal padding by default, so centering each independently
+        // leaves their icons at different x positions. Zeroing all of them
+        // out and centering within the full-width rail makes every icon —
+        // logo included — line up on the same vertical axis.
+        var rows = sidebar.querySelectorAll('.nav-link, #account-menu-trigger, .sidebar-brand-row, .sidebar-nav-list, .sidebar-footer-wrap');
+        rows.forEach(function (el) {
+            el.style.justifyContent = iconOnly ? 'center' : '';
+            el.style.paddingLeft = iconOnly ? '0px' : '';
+            el.style.paddingRight = iconOnly ? '0px' : '';
         });
 
-        setCollapsed(localStorage.getItem(STORAGE_KEY) === '1');
-    })();
+        // Push the brand row down a bit so it doesn't crowd the top edge
+        // of the rail once it's icon-only.
+        var brandRow = sidebar.querySelector('.sidebar-brand-row');
+        if (brandRow) {
+            brandRow.style.marginTop = iconOnly ? '12px' : '';
+        }
+
+        // The brand logo is sized for a wide sidebar (64px) — at the
+        // minimum rail width (64px) it would overflow its own row edge to
+        // edge. Shrink it to 1.5x the 20px nav icons (30px) so it fits
+        // with breathing room while still reading as a "brand mark"
+        // rather than just another nav icon, instead of getting clipped
+        // by the rail's overflow:hidden.
+        var logoImg = sidebar.querySelector('.sidebar-logo-img');
+        if (logoImg) {
+            logoImg.style.width = iconOnly ? '30px' : '';
+            logoImg.style.height = iconOnly ? '30px' : '';
+        }
+    }
+
+    function render() {
+        var width = collapsed ? 0 : currentWidth;
+        sidebar.style.width = width + 'px';
+        sidebar.style.opacity = collapsed ? '0' : '1';
+        sidebar.style.borderRightWidth = collapsed ? '0px' : '1.5px';
+        mainEl.style.marginLeft = (isDesktop() && !collapsed) ? currentWidth + 'px' : '0px';
+        toggleIcon.textContent = collapsed ? 'left_panel_open' : 'left_panel_close';
+        applyIconOnly(!collapsed && currentWidth <= ICON_ONLY_THRESHOLD);
+    }
+
+    function setCollapsed(value) {
+        collapsed = value;
+        localStorage.setItem(COLLAPSED_KEY, collapsed ? '1' : '0');
+        render();
+    }
+
+    function setWidth(px) {
+        currentWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, px));
+        localStorage.setItem(WIDTH_KEY, String(currentWidth));
+        render();
+    }
+
+    toggleBtn.addEventListener('click', function () { setCollapsed(!collapsed); });
+    window.addEventListener('resize', render);
+
+    if (resizeHandle) {
+        var dragging = false;
+        var startX = 0;
+        var startWidth = 0;
+
+        resizeHandle.addEventListener('mouseover', function () {
+            resizeHandle.style.background = 'rgba(13,159,110,0.3)';
+        });
+        resizeHandle.addEventListener('mouseout', function () {
+            if (!dragging) resizeHandle.style.background = 'transparent';
+        });
+
+        resizeHandle.addEventListener('mousedown', function (e) {
+            if (collapsed) return;
+            dragging = true;
+            startX = e.clientX;
+            startWidth = currentWidth;
+            sidebar.style.transition = 'none';
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!dragging) return;
+            setWidth(startWidth + (e.clientX - startX));
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (!dragging) return;
+            dragging = false;
+            sidebar.style.transition = '';
+            resizeHandle.style.background = 'transparent';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        });
+    }
+
+    render();
+})();
+</script>
+<script>
 
     (function () {
         var trigger = document.getElementById('new-note-trigger');
@@ -634,6 +815,9 @@ Delete
         var hideAiTrack = document.getElementById('note-editor-hide-ai-track');
         var hideAiKnob = document.getElementById('note-editor-hide-ai-knob');
         var hideAiIcon = document.getElementById('note-editor-hide-ai-icon');
+        var tagsWrap = document.getElementById('note-editor-tags-wrap');
+        var relatedWrap = document.getElementById('note-editor-related-wrap');
+        var relatedList = document.getElementById('note-editor-related-list');
 
         var snapshot = { title: '', body: '', hideFromAI: false };
         var currentSourceRow = null;
@@ -644,7 +828,7 @@ Delete
             hideAiBtn.setAttribute('aria-pressed', state ? 'true' : 'false');
             hideAiTrack.style.background = state ? '#0D9F6E' : '#D8E2DC';
             hideAiKnob.style.transform = state ? 'translateX(16px)' : '';
-            hideAiIcon.style.color = state ? '#0D9F6E' : '#6B7F75';
+            hideAiIcon.style.color = state ? '#0D9F6E' : '#5C6F65';
         }
 
         hideAiBtn.addEventListener('click', function () { setHideFromAI(!hideFromAI); });
@@ -666,6 +850,47 @@ Delete
                 metaWrap.style.display = '';
             } else {
                 metaWrap.style.display = 'none';
+            }
+
+            tagsWrap.innerHTML = '';
+            if (data.tags && data.tags.length) {
+                tagsWrap.style.display = 'flex';
+                data.tags.forEach(function (tag) {
+                    var chip = document.createElement('span');
+                    chip.className = 'px-2 py-[2px] rounded text-[11px] font-ui-semibold';
+                    chip.style.background = '#EEF2F0';
+                    chip.style.color = '#5C6F65';
+                    chip.textContent = tag;
+                    tagsWrap.appendChild(chip);
+                });
+            } else {
+                tagsWrap.style.display = 'none';
+            }
+
+            relatedList.innerHTML = '';
+            if (data.related && data.related.length) {
+                relatedWrap.style.display = 'block';
+                data.related.forEach(function (r) {
+                    var card = document.createElement('div');
+                    card.className = 'shrink-0 rounded-lg p-sm cursor-pointer transition-colors';
+                    card.style.width = '180px';
+                    card.style.background = '#FFFFFF';
+                    card.style.border = '1px solid #D8E2DC';
+                    card.onmouseover = function () { card.style.background = '#EEF2F0'; };
+                    card.onmouseout = function () { card.style.background = '#FFFFFF'; };
+                    card.innerHTML =
+                        '<div class="flex items-center gap-1 mb-1">' +
+                            '<span class="material-symbols-outlined text-[12px]" style="color:#5C6F65;">description</span>' +
+                            '<span class="text-[10px] font-ui-semibold uppercase tracking-wider" style="color:#5C6F65;">' + r.folder + '</span>' +
+                        '</div>' +
+                        '<div class="text-xs font-ui-semibold leading-snug" style="color:#1A2620;">' + r.title + '</div>';
+                    card.addEventListener('click', function () {
+                        openNoteEditor({ title: r.title, body: r.text, meta: r.folder + ' · ' + r.date });
+                    });
+                    relatedList.appendChild(card);
+                });
+            } else {
+                relatedWrap.style.display = 'none';
             }
 
             overlay.classList.remove('hidden');
@@ -701,6 +926,11 @@ Delete
         });
 
         saveBtn.addEventListener('click', function () {
+            if (!titleInput.value.trim() && !textarea.value.trim()) {
+                if (window.flareToast) window.flareToast("Add a title or some text before saving — can't save an empty note.", 'error');
+                titleInput.focus();
+                return;
+            }
             if (currentSourceRow) {
                 var titleEl = currentSourceRow.querySelector('.font-ui-semibold');
                 if (titleEl) titleEl.textContent = titleInput.value || 'Untitled note';
@@ -759,9 +989,9 @@ Delete
             chip.style.background = '#EEF2F0';
             chip.style.color = '#1A2620';
             chip.innerHTML =
-                '<span class="material-symbols-outlined text-[14px]" style="color:#6B7F75;">' + iconName + '</span>' +
+                '<span class="material-symbols-outlined text-[14px]" style="color:#5C6F65;">' + iconName + '</span>' +
                 '<span class="max-w-[160px] truncate">' + label + '</span>' +
-                '<button aria-label="Remove" class="material-symbols-outlined text-[14px] rounded-full flex items-center justify-center" style="color:#6B7F75; width:16px; height:16px;" type="button">close</button>';
+                '<button aria-label="Remove" class="material-symbols-outlined text-[14px] rounded-full flex items-center justify-center" style="color:#5C6F65; width:16px; height:16px;" type="button">close</button>';
             chip.querySelector('button').addEventListener('click', function () {
                 chip.remove();
                 if (!attachmentsBox.children.length) attachmentsBox.style.display = 'none';
@@ -914,7 +1144,7 @@ Delete
         var panelList = document.getElementById('folder-panel-list');
         var closeBtn = document.getElementById('folder-panel-close');
 
-        function renderRow(note, isLast, folderName) {
+        function renderRow(note, isLast, folderName, folderKey) {
             var row = document.createElement('div');
             row.className = 'flex items-center gap-3 px-lg cursor-pointer transition-colors';
             row.style.height = '64px';
@@ -931,19 +1161,26 @@ Delete
                         '<span class="flex items-center gap-1 min-w-0">' +
                             '<span class="font-ui-semibold text-sm truncate" style="color:#1A2620;">' + note.title + '</span>' +
                         '</span>' +
-                        '<span class="font-metadata-mono text-metadata-mono text-[11px] shrink-0" style="color:#6B7F75;">' + note.date + '</span>' +
+                        '<span class="font-metadata-mono text-metadata-mono text-[11px] shrink-0" style="color:#5C6F65;">' + note.date + '</span>' +
                     '</div>' +
                     '<div class="mt-[2px]">' +
-                        '<span class="text-xs truncate block" style="color:#6B7F75;">' + note.preview + '</span>' +
+                        '<span class="text-xs truncate block" style="color:#5C6F65;">' + note.preview + '</span>' +
                     '</div>' +
                 '</div>';
 
             row.addEventListener('click', function () {
+                var siblingNotes = (FOLDERS[folderKey] ? FOLDERS[folderKey].notes : [])
+                    .filter(function (n) { return n !== note; })
+                    .slice(0, 2)
+                    .map(function (n) { return { title: n.title, folder: folderName, date: n.date, text: n.preview }; });
+
                 window.openNoteEditor({
                     title: note.title,
                     body: note.preview,
                     meta: folderName + ' · ' + note.date,
                     hideFromAI: !!row.querySelector('.hide-ai-badge'),
+                    tags: [folderName],
+                    related: siblingNotes,
                     sourceRow: row
                 });
             });
@@ -960,7 +1197,7 @@ Delete
             panelMeta.textContent = folder.meta;
             panelList.innerHTML = '';
             folder.notes.forEach(function (note, i) {
-                panelList.appendChild(renderRow(note, i === folder.notes.length - 1, folder.name));
+                panelList.appendChild(renderRow(note, i === folder.notes.length - 1, folder.name, key));
             });
 
             overlay.classList.remove('hidden');
@@ -1193,4 +1430,295 @@ Delete
     })();
 </script>
 
+<script>
+    (function () {
+        var trigger = document.getElementById('account-menu-trigger');
+        var overlay = document.getElementById('account-modal-overlay');
+        var backdrop = document.getElementById('account-modal-backdrop');
+        var panel = document.getElementById('account-modal-panel');
+        var closeBtn = document.getElementById('account-modal-close');
+        var contentEl = document.getElementById('account-modal-content');
+        var tabBtns = document.querySelectorAll('.account-modal-tab');
+        var planLabelEl = document.getElementById('account-plan-label');
+
+        var accountState = {
+            activeTab: 'account',
+            name: 'Ilyas',
+            email: 'ilyas300606@gmail.com',
+            avatarFile: '',
+            plan: 'basic'
+        };
+
+        function updatePlanLabel() {
+            if (planLabelEl) planLabelEl.textContent = accountState.plan === 'plus' ? 'Plus plan' : 'Free plan';
+        }
+
+        function openAccountModal(tab) {
+            accountState.activeTab = tab || accountState.activeTab;
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderTabs();
+            renderTabContent();
+            requestAnimationFrame(function () {
+                backdrop.style.opacity = '1';
+                panel.style.opacity = '1';
+                panel.style.transform = 'scale(1)';
+            });
+        }
+
+        function closeAccountModal() {
+            backdrop.style.opacity = '0';
+            panel.style.opacity = '0';
+            panel.style.transform = 'scale(0.96)';
+            document.body.style.overflow = '';
+            setTimeout(function () { overlay.classList.add('hidden'); }, 200);
+        }
+
+        trigger.addEventListener('click', function () { openAccountModal('account'); });
+        closeBtn.addEventListener('click', closeAccountModal);
+        backdrop.addEventListener('click', closeAccountModal);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeAccountModal();
+        });
+
+        function renderTabs() {
+            tabBtns.forEach(function (btn) {
+                var isActive = btn.getAttribute('data-tab') === accountState.activeTab;
+                btn.style.background = isActive ? '#D1FAE5' : 'transparent';
+                btn.style.color = isActive ? '#0D9F6E' : '#3d4a42';
+                btn.onmouseover = function () { if (!isActive) btn.style.background = '#EEF2F0'; };
+                btn.onmouseout = function () { if (!isActive) btn.style.background = 'transparent'; };
+            });
+        }
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                accountState.activeTab = btn.getAttribute('data-tab');
+                renderTabs();
+                renderTabContent();
+            });
+        });
+
+        function renderAccountTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Account</h3>' +
+                '<div class="flex items-center gap-md mb-xl">' +
+                    '<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-ui-semibold shrink-0" style="background:#0D9F6E; font-size:22px;">' + accountState.name.charAt(0).toUpperCase() + '</div>' +
+                    '<div>' +
+                        '<input class="hidden" id="account-avatar-input" type="file" accept="image/*">' +
+                        '<button class="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors" id="account-avatar-btn" style="background:#FFFFFF; border:1.5px solid #D8E2DC; color:#1A2620;" type="button">Upload photo</button>' +
+                        '<p class="text-xs mt-1" id="account-avatar-status" style="color:#5C6F65;">' + (accountState.avatarFile || 'JPG or PNG, up to 5MB') + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-lg">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Name</label>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<input class="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all" id="account-name-input" style="background:#EEF2F0; border:1px solid #D8E2DC; color:#1A2620;" type="text" value="' + accountState.name + '">' +
+                        '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0" id="account-name-save" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">Save</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="mb-xl">' +
+                    '<label class="block text-xs font-ui-semibold mb-1" style="color:#5C6F65;">Email</label>' +
+                    '<p class="text-sm" style="color:#1A2620;">' + accountState.email + '</p>' +
+                '</div>' +
+                '<div class="border-t pt-lg" style="border-color:#D8E2DC;">' +
+                    '<button class="flex items-center gap-1 text-sm font-ui-semibold px-3 py-2 rounded-lg transition-colors" id="account-signout-btn" onmouseover="this.style.background=\'#EEF2F0\'" onmouseout="this.style.background=\'transparent\'" style="color:#ba1a1a;" type="button">' +
+                        '<span class="material-symbols-outlined text-[18px]">logout</span> Sign out' +
+                    '</button>' +
+                '</div>';
+
+            document.getElementById('account-name-save').addEventListener('click', function () {
+                var input = document.getElementById('account-name-input');
+                accountState.name = input.value.trim() || 'Ilyas';
+                var btn = document.getElementById('account-name-save');
+                btn.textContent = 'Saved';
+                setTimeout(function () { btn.textContent = 'Save'; }, 1200);
+            });
+
+            var avatarInput = document.getElementById('account-avatar-input');
+            document.getElementById('account-avatar-btn').addEventListener('click', function () { avatarInput.click(); });
+            avatarInput.addEventListener('change', function () {
+                if (avatarInput.files.length > 0) {
+                    accountState.avatarFile = avatarInput.files[0].name + ' selected (demo, not uploaded)';
+                    document.getElementById('account-avatar-status').textContent = accountState.avatarFile;
+                }
+            });
+
+            document.getElementById('account-signout-btn').addEventListener('click', function () {
+                alert('Signed out (demo)');
+            });
+        }
+
+        function planCard(opts) {
+            var isCurrent = accountState.plan === opts.key;
+            var featuresHtml = opts.features.map(function (f) {
+                return '<li class="flex items-start gap-2 text-sm"><span class="material-symbols-outlined text-[16px] mt-[1px]" style="color:#0D9F6E;">check</span><span style="color:#1A2620;">' + f + '</span></li>';
+            }).join('');
+
+            var actionHtml = isCurrent
+                ? '<span class="inline-block text-xs font-ui-semibold px-3 py-1.5 rounded-lg" style="background:#EEF2F0; color:#5C6F65;">Current plan</span>'
+                : '<button class="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full account-plan-switch" data-plan="' + opts.key + '" onmouseover="this.style.background=\'#0b8a5f\'" onmouseout="this.style.background=\'#0D9F6E\'" style="background:#0D9F6E;" type="button">' + opts.actionLabel + '</button>';
+
+            return (
+                '<div class="rounded-xl p-md flex flex-col" style="background:#FFFFFF; border:1.5px solid ' + (opts.highlight ? '#0D9F6E' : '#D8E2DC') + '; flex:1;">' +
+                    (opts.highlight ? '<span class="inline-block text-[10px] font-ui-semibold uppercase tracking-wider px-2 py-[2px] rounded-full mb-2 self-start" style="background:#D1FAE5; color:#0D9F6E;">Recommended</span>' : '') +
+                    '<p class="text-sm font-ui-semibold mb-1" style="color:#1A2620;">' + opts.title + '</p>' +
+                    '<p class="mb-md" style="color:#1A2620;"><span style="font-size:22px; font-weight:800;">' + opts.price + '</span><span class="text-xs" style="color:#5C6F65;">' + opts.priceSuffix + '</span></p>' +
+                    '<ul class="flex flex-col gap-2 mb-lg">' + featuresHtml + '</ul>' +
+                    '<div class="mt-auto">' + actionHtml + '</div>' +
+                '</div>'
+            );
+        }
+
+        function renderPlanTab() {
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Plan</h3>' +
+                '<div class="flex gap-md" style="align-items:stretch;">' +
+                    planCard({
+                        key: 'basic',
+                        title: 'Basic',
+                        price: '$0',
+                        priceSuffix: '/mo',
+                        highlight: false,
+                        actionLabel: 'Downgrade',
+                        features: ['Up to 200 notes', '1 workspace', 'Weekly insights', 'Chat scoped to one insight at a time', 'Community support']
+                    }) +
+                    planCard({
+                        key: 'plus',
+                        title: 'Plus',
+                        price: '$10',
+                        priceSuffix: '/mo',
+                        highlight: true,
+                        actionLabel: 'Upgrade to Plus',
+                        features: ['Unlimited notes', 'Unlimited workspaces', 'Daily insights, custom schedule', 'Ask across your entire vault', 'Priority support']
+                    }) +
+                '</div>';
+
+            document.querySelectorAll('.account-plan-switch').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    accountState.plan = btn.getAttribute('data-plan');
+                    updatePlanLabel();
+                    renderPlanTab();
+                });
+            });
+        }
+
+        function renderBillingTab() {
+            var isPlus = accountState.plan === 'plus';
+            contentEl.innerHTML =
+                '<h3 class="font-display-sm mb-lg" style="font-size:20px; font-weight:800; color:#1A2620;">Billing</h3>' +
+                '<div class="mb-xl">' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">PAYMENT METHOD</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl p-md flex items-center justify-between" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center gap-sm">' +
+                                    '<span class="material-symbols-outlined text-[20px]" style="color:#5C6F65;">credit_card</span>' +
+                                    '<span class="text-sm" style="color:#1A2620;">Visa •••• 4242</span>' +
+                                '</div>' +
+                                '<span class="text-xs" style="color:#5C6F65;">Next charge Sep 4, 2026</span>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No payment method on file — you\'re on the Free plan.</p></div>'
+                    ) +
+                '</div>' +
+                '<div>' +
+                    '<p class="font-label-caps text-label-caps mb-sm" style="color:#5C6F65;">BILLING HISTORY</p>' +
+                    (isPlus
+                        ? '<div class="rounded-xl" style="background:#FFFFFF; border:1px solid #D8E2DC;">' +
+                                '<div class="flex items-center justify-between px-md py-sm">' +
+                                    '<span class="text-sm" style="color:#1A2620;">Aug 4, 2026 — Plus plan</span>' +
+                                    '<span class="text-sm font-ui-semibold" style="color:#1A2620;">$10.00</span>' +
+                                '</div>' +
+                          '</div>'
+                        : '<div class="rounded-xl p-md" style="background:#FFFFFF; border:1px solid #D8E2DC;"><p class="text-sm" style="color:#5C6F65;">No invoices yet.</p></div>'
+                    ) +
+                '</div>';
+        }
+
+        function renderTabContent() {
+            if (accountState.activeTab === 'account') renderAccountTab();
+            else if (accountState.activeTab === 'plan') renderPlanTab();
+            else renderBillingTab();
+        }
+
+        updatePlanLabel();
+    })();
+</script>
+<!-- NAV-ACTIVE-JS -->
+<script>
+(function () {
+    var current = document.body.getAttribute('data-page');
+
+    // Desktop sidebar
+    var item = document.querySelector('#sidebar li[data-nav="' + current + '"]');
+    if (item) {
+        var indicator = item.querySelector('.nav-active-indicator');
+        var link = item.querySelector('.nav-link');
+        if (indicator) indicator.style.display = '';
+        if (link) {
+            link.classList.remove('text-on-surface-variant', 'group');
+            link.classList.add('text-primary', 'font-bold');
+        }
+    }
+
+    // Mobile bottom tab bar
+    var mobileLink = document.querySelector('.mobile-nav-link[data-nav="' + current + '"]');
+    if (mobileLink) {
+        var icon = mobileLink.querySelector('.mobile-nav-icon');
+        var label = mobileLink.querySelector('.mobile-nav-label');
+        if (icon) icon.style.opacity = '1';
+        if (label) { label.style.color = '#0D9F6E'; label.style.fontWeight = '700'; }
+        var dot = document.createElement('span');
+        dot.className = 'w-1 h-1 rounded-full';
+        dot.style.background = '#0D9F6E';
+        mobileLink.insertBefore(dot, mobileLink.firstChild);
+    }
+
+    var accountBtn = document.getElementById('mobile-nav-account');
+    var desktopTrigger = document.getElementById('account-menu-trigger');
+    if (accountBtn && desktopTrigger) {
+        accountBtn.addEventListener('click', function () { desktopTrigger.click(); });
+    }
+})();
+</script>
+<!-- TOAST -->
+<div class="fixed left-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none bottom-20 md:bottom-6" id="flare-toast-stack" style="transform:translateX(-50%);"></div>
+
+<!-- TOAST-JS -->
+<script>
+(function () {
+    var ICONS = { error: 'error', success: 'check_circle' };
+    var STYLES = {
+        error: { bg: '#FEF2F2', border: '#FECACA', text: '#B91C1C', icon: '#DC2626' },
+        success: { bg: '#F0FDF9', border: 'rgba(13,159,110,0.25)', text: '#0D9F6E', icon: '#0D9F6E' }
+    };
+
+    window.flareToast = function (message, type) {
+        var stack = document.getElementById('flare-toast-stack');
+        if (!stack) return;
+        type = (type === 'success') ? 'success' : 'error';
+        var style = STYLES[type];
+
+        var toast = document.createElement('div');
+        toast.className = 'flex items-center gap-2 rounded-lg pointer-events-auto shadow-lg';
+        toast.style.cssText =
+            'background:' + style.bg + '; border:1px solid ' + style.border + '; color:' + style.text + ';' +
+            'padding:10px 16px; font-size:13px; font-weight:600; opacity:0; transform:translateY(8px); transition:opacity .18s ease-out, transform .18s ease-out; max-width:min(90vw,420px);';
+        toast.innerHTML =
+            '<span class="material-symbols-outlined text-[18px]" style="color:' + style.icon + ';">' + ICONS[type] + '</span>' +
+            '<span>' + message + '</span>';
+        stack.appendChild(toast);
+
+        requestAnimationFrame(function () {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(function () {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+            setTimeout(function () { toast.remove(); }, 200);
+        }, 3200);
+    };
+})();
+</script>
 </body></html>
