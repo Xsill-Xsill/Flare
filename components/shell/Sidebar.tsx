@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { useSidebarUI } from './SidebarUIContext'
+import { WorkspaceSwitcher } from './WorkspaceSwitcher'
 
 const NAV_ITEMS = [
   { key: 'home', href: '/dashboard', label: 'Home', icon: '/assets/images/nav-home.png' },
@@ -19,12 +20,10 @@ function activeKeyForPath(pathname: string) {
 }
 
 export function Sidebar({
-  workspaceName,
   userName,
   userPlanLabel,
   onAccountClick,
 }: {
-  workspaceName: string
   userName: string
   userPlanLabel: string
   onAccountClick: () => void
@@ -108,12 +107,7 @@ export function Sidebar({
           </Link>
           {!iconOnly && (
             <div className="min-w-0">
-              <p
-                className="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider"
-                style={{ whiteSpace: 'nowrap' }}
-              >
-                {workspaceName}
-              </p>
+              <WorkspaceSwitcher />
             </div>
           )}
         </div>

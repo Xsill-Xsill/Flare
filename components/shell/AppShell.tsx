@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ShellDataProvider } from './WorkspaceContext'
+import { ShellDataProvider, type Workspace } from './WorkspaceContext'
 import { SidebarUIProvider, useSidebarUI } from './SidebarUIContext'
 import { ToastProvider } from './ToastProvider'
 import { Sidebar } from './Sidebar'
@@ -23,22 +23,23 @@ function MainArea({ children }: { children: React.ReactNode }) {
 export function AppShell({
   user,
   workspace,
+  workspaces,
   children,
 }: {
   user: { name: string; email: string }
-  workspace: { id: string; name: string }
+  workspace: Workspace
+  workspaces: Workspace[]
   children: React.ReactNode
 }) {
   const [accountModalOpen, setAccountModalOpen] = useState(false)
   const [planLabel, setPlanLabel] = useState('Free plan')
 
   return (
-    <ShellDataProvider user={user} workspace={workspace}>
+    <ShellDataProvider user={user} workspace={workspace} workspaces={workspaces}>
       <SidebarUIProvider>
         <ToastProvider>
           <div className="font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden flex" style={{ background: '#F7F9F8' }}>
             <Sidebar
-              workspaceName={workspace.name}
               userName={user.name}
               userPlanLabel={planLabel}
               onAccountClick={() => setAccountModalOpen(true)}
