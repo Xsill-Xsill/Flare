@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { db } from '@/lib/db'
 import { items, workspaces } from '@/lib/db/schema'
 import { inngest } from '@/lib/inngest/client'
+import { applyCors, preflightResponse } from '@/lib/http/cors'
 
 const ITEM_TYPES = ['text', 'url', 'file', 'audio'] as const
 type ItemType = (typeof ITEM_TYPES)[number]
@@ -20,22 +21,22 @@ function isValidUrl(value: string) {
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!user) return applyCors(req, NextResponse.json({ error: 'Unauthorized' }, { status: 401 }))
 
   const body = await req.json()
-  const { workspaceId, type, rawContent, sourceUrl } = body ?? {}
+  const { workspaceId, type, rawContent, sourceUrl, hideFromAi } = body ?? {}
 
   if (typeof workspaceId !== 'string' || !workspaceId) {
-    return NextResponse.json({ error: 'workspaceId is required' }, { status: 400 })
+    return applyCors(req, NextResponse.json({ error: 'workspaceId is required' }, { status: 400 }))
   }
   if (!ITEM_TYPES.includes(type)) {
-    return NextResponse.json({ error: `type must be one of ${ITEM_TYPES.join(', ')}` }, { status: 400 })
+    return applyCors(req, NextResponse.json({ error: `type must be one of ${ITEM_TYPES.join(', ')}` }, { status: 400 }))
   }
   if (type === 'text' && (typeof rawContent !== 'string' || !rawContent.trim())) {
-    return NextResponse.json({ error: 'rawContent is required for type=text' }, { status: 400 })
+    return applyCors(req, NextResponse.json({ error: 'rawContent is required for type=text' }, { status: 400 }))
   }
   if (type === 'url' && (typeof sourceUrl !== 'string' || !isValidUrl(sourceUrl))) {
-    return NextResponse.json({ error: 'sourceUrl must be a valid URL for type=url' }, { status: 400 })
+    return applyCors(req, NextResponse.json({ error: 'sourceUrl must be a valid URL for type=url' }, { status: 400 }))
   }
 
   const [workspace] = await db
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
     .limit(1)
 
   if (!workspace) {
-    return NextResponse.json({ error: 'workspace not found' }, { status: 404 })
+    return applyCors(req, NextResponse.json({ error: 'workspace not found' }, { status: 404 }))
   }
 
   const [item] = await db
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
       rawContent: rawContent ?? null,
       sourceUrl: sourceUrl ?? null,
       status: 'queued',
+      hideFromAi: hideFromAi === true,
     })
     .returning()
 
@@ -65,7 +67,11 @@ export async function POST(req: NextRequest) {
     console.error('inngest.send failed for item', item.id, err)
   }
 
-  return NextResponse.json(item, { status: 201 })
+  return applyCors(req, NextResponse.json(item, { status: 201 }))
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return preflightResponse(req)
 }
 
 export async function GET(req: NextRequest) {

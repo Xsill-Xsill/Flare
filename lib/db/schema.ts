@@ -7,6 +7,8 @@ import {
   jsonb,
   pgEnum,
   vector,
+  uniqueIndex,
+  boolean,
 } from 'drizzle-orm/pg-core'
 
 export const itemTypeEnum = pgEnum('item_type', ['text', 'url', 'file', 'audio'])
@@ -26,6 +28,10 @@ export const items = pgTable('items', {
   rawContent: text('raw_content'),
   sourceUrl: text('source_url'),
   status: itemStatusEnum('status').default('queued').notNull(),
+  folder: text('folder'),
+  // When true, ingest-item.ts skips chunking/embeddings/claims/detectors entirely for this
+  // item — the note is stored but never read by the AI pipeline.
+  hideFromAi: boolean('hide_from_ai').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
@@ -35,6 +41,14 @@ export const chunks = pgTable('chunks', {
   content: text('content').notNull(),
   tokenCount: integer('token_count'),
   embedding: vector('embedding', { dimensions: 1024 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
+export const itemTags = pgTable('item_tags', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  itemId: uuid('item_id').references(() => items.id, { onDelete: 'cascade' }).notNull(),
+  tag: text('tag').notNull(),
+  userId: text('user_id').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
@@ -66,5 +80,10 @@ export const insights = pgTable('insights', {
   title: text('title').notNull(),
   summary: text('summary').notNull(),
   evidence: jsonb('evidence'),
+  // sha256 of the normalized (lowercase, trimmed) title — a deterministic identifier for
+  // the underlying pattern, used to dedupe re-detected insights regardless of copy changes.
+  patternHash: text('pattern_hash').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-})
+}, (table) => ({
+  workspacePatternHashUnique: uniqueIndex('insights_workspace_pattern_hash_idx').on(table.workspaceId, table.patternHash),
+}))

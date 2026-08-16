@@ -10,11 +10,18 @@ export async function extractClaims(chunkText: string): Promise<string[]> {
       messages: [
         {
           role: 'system',
-          content: `Extract 2-5 factual claims from the text.
+          content: `Extract up to 2-5 factual claims from the text below, but ONLY claims that are
+            explicitly stated or directly implied by that exact text. Each claim must be
+            traceable to specific words in the text — never invent, assume, or reuse claims
+            from anywhere else, including this instruction.
             Each claim should be a single sentence stating something the founder believes,
-            experienced, or observed. Return a JSON object of the shape {"claims": string[]}.
-            Example: {"claims": ["Users keep asking for export before any other feature",
-                      "The onboarding flow was rewritten three times this month"]}`,
+            experienced, or observed.
+            If the text is incoherent, gibberish, unintelligible, unrelated fragments, or
+            otherwise contains no clear factual statement, return {"claims": []} — an empty
+            list is a valid and expected answer, do not force claims that aren't there.
+            Return a JSON object of the shape {"claims": string[]}, e.g. {"claims":
+            ["<short factual statement 1>", "<short factual statement 2>"]} — that example
+            shows the JSON shape only, not real content to copy.`,
         },
         { role: 'user', content: chunkText },
       ],

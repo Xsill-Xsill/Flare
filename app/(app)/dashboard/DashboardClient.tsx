@@ -37,12 +37,24 @@ function isUrl(value: string) {
   }
 }
 
+type Insight = {
+  id: string
+  detectorType: string
+  title: string
+  summary: string
+  evidence: { itemId: string; claimId: string; statement: string }[] | null
+  createdAt: string
+}
+
 export function DashboardClient() {
   const workspace = useWorkspace()
   const showToast = useToast()
 
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
+
+  const [insights, setInsights] = useState<Insight[]>([])
+  const [insightsLoading, setInsightsLoading] = useState(true)
 
   const [text, setText] = useState('')
   const [pendingFiles, setPendingFiles] = useState<File[]>([])
@@ -53,19 +65,52 @@ export function DashboardClient() {
   const [globalSearch, setGlobalSearch] = useState('')
   const [globalSearchFocused, setGlobalSearchFocused] = useState(false)
 
+  const [audioState, setAudioState] = useState<'idle' | 'recording' | 'recorded' | 'sending'>('idle')
+  const [recordingSeconds, setRecordingSeconds] = useState(0)
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null)
+  const [recordedUrl, setRecordedUrl] = useState<string | null>(null)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const audioChunksRef = useRef<Blob[]>([])
+  const recordingStreamRef = useRef<MediaStream | null>(null)
+  const recordingTimerRef = useRef<number | null>(null)
 
   useEffect(() => {
     loadItems()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the workspace changes, not on every loadItems identity change
   }, [workspace.id])
 
+  useEffect(() => {
+    loadInsights()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the workspace changes, not on every loadInsights identity change
+  }, [workspace.id])
+
+  useEffect(() => {
+    return () => {
+      if (recordingTimerRef.current) window.clearInterval(recordingTimerRef.current)
+      recordingStreamRef.current?.getTracks().forEach((track) => track.stop())
+    }
+  }, [])
+
   async function loadItems() {
     setLoading(true)
     const res = await fetch(`/api/v1/items?workspaceId=${workspace.id}&limit=50`)
     if (res.ok) setItems(await res.json())
     setLoading(false)
+  }
+
+  async function loadInsights() {
+    setInsightsLoading(true)
+    try {
+      const res = await fetch(`/api/v1/insights?workspaceId=${workspace.id}`)
+      setInsights(res.ok ? await res.json() : [])
+    } catch {
+      setInsights([])
+    } finally {
+      setInsightsLoading(false)
+    }
   }
 
   async function postItem(body: Record<string, string>) {
@@ -86,6 +131,92 @@ export function DashboardClient() {
 
   function removeFile(index: number) {
     setPendingFiles((files) => files.filter((_, i) => i !== index))
+  }
+
+  function formatDuration(totalSeconds: number) {
+    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0')
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0')
+    return `${minutes}:${seconds}`
+  }
+
+  async function startRecording() {
+    let stream: MediaStream
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    } catch {
+      showToast('Не удалось получить доступ к микрофону — проверь разрешения браузера.', 'error')
+      return
+    }
+
+    recordingStreamRef.current = stream
+    audioChunksRef.current = []
+
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : ''
+    const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream)
+
+    recorder.ondataavailable = (e) => {
+      if (e.data.size > 0) audioChunksRef.current.push(e.data)
+    }
+    recorder.onstop = () => {
+      const blob = new Blob(audioChunksRef.current, { type: mimeType || 'audio/webm' })
+      setRecordedBlob(blob)
+      setRecordedUrl(URL.createObjectURL(blob))
+      setAudioState('recorded')
+      stream.getTracks().forEach((track) => track.stop())
+      recordingStreamRef.current = null
+    }
+
+    mediaRecorderRef.current = recorder
+    recorder.start()
+    setAudioState('recording')
+    setRecordingSeconds(0)
+    recordingTimerRef.current = window.setInterval(() => {
+      setRecordingSeconds((s) => s + 1)
+    }, 1000)
+  }
+
+  function stopRecording() {
+    mediaRecorderRef.current?.stop()
+    if (recordingTimerRef.current) {
+      window.clearInterval(recordingTimerRef.current)
+      recordingTimerRef.current = null
+    }
+  }
+
+  function discardRecording() {
+    if (recordedUrl) URL.revokeObjectURL(recordedUrl)
+    setRecordedBlob(null)
+    setRecordedUrl(null)
+    setRecordingSeconds(0)
+    setAudioState('idle')
+  }
+
+  function reRecordAudio() {
+    discardRecording()
+    startRecording()
+  }
+
+  async function sendRecording() {
+    if (!recordedBlob) return
+    setAudioState('sending')
+    try {
+      const form = new FormData()
+      form.append('audio', recordedBlob, 'recording.webm')
+      form.append('workspaceId', workspace.id)
+      const res = await fetch('/api/v1/audio', { method: 'POST', body: form })
+      if (!res.ok) throw new Error((await res.json()).error ?? 'Failed to upload recording')
+
+      if (recordedUrl) URL.revokeObjectURL(recordedUrl)
+      setRecordedBlob(null)
+      setRecordedUrl(null)
+      setRecordingSeconds(0)
+      setAudioState('idle')
+      await loadItems()
+      showToast('Транскрибируется…', 'success')
+    } catch (err) {
+      setAudioState('recorded')
+      showToast(err instanceof Error ? err.message : 'Не удалось отправить запись', 'error')
+    }
   }
 
   async function submitQuickCapture(e?: FormEvent) {
@@ -129,7 +260,7 @@ export function DashboardClient() {
 
   const inboxItems = items
   const recentItems = items.slice(0, 3)
-  const latestInsightAvailable = false // no insights backend yet
+  const latestInsight = insights[0] ?? null
 
   const filteredInboxItems = useMemo(() => {
     const q = inboxSearch.trim().toLowerCase()
@@ -251,6 +382,39 @@ export function DashboardClient() {
               ))}
             </div>
           )}
+
+          {audioState === 'recording' && (
+            <div className="flex items-center gap-2 pl-lg pt-sm">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+              <span className="font-metadata-mono text-xs text-on-surface">{formatDuration(recordingSeconds)}</span>
+              <span className="text-xs text-on-surface-variant">Запись идёт…</span>
+            </div>
+          )}
+
+          {(audioState === 'recorded' || audioState === 'sending') && recordedUrl && (
+            <div className="flex flex-col gap-2 pl-lg pt-sm">
+              <audio controls src={recordedUrl} className="w-full h-9" />
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="bg-[#0D9F6E] hover:bg-primary text-white font-ui-semibold text-xs px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"
+                  disabled={audioState === 'sending'}
+                  onClick={sendRecording}
+                >
+                  {audioState === 'sending' ? 'Транскрибируется…' : 'Отправить'}
+                </button>
+                <button
+                  type="button"
+                  className="text-on-surface-variant hover:text-on-surface font-ui-semibold text-xs px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"
+                  disabled={audioState === 'sending'}
+                  onClick={reRecordAudio}
+                >
+                  Перезаписать
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center justify-between pl-lg pt-sm">
             <div className="flex items-center gap-1">
               <input
@@ -258,7 +422,7 @@ export function DashboardClient() {
                 className="hidden"
                 multiple
                 type="file"
-                accept=".pdf,.txt,.md"
+                accept=".pdf,.txt,.md,.mp3,.mp4,.m4a,.wav,.webm,.ogg"
                 onChange={(e) => {
                   const files = Array.from(e.target.files ?? [])
                   setPendingFiles((prev) => [...prev, ...files])
@@ -274,15 +438,28 @@ export function DashboardClient() {
               >
                 <span className="material-symbols-outlined text-[18px]">attach_file</span>
               </button>
-              <button
-                aria-label="Voice"
-                className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-[#EEF2F0]"
-                style={{ color: '#3d4a42' }}
-                type="button"
-                onClick={() => showToast('Voice capture is coming soon.', 'error')}
-              >
-                <span className="material-symbols-outlined text-[18px]">mic</span>
-              </button>
+              {audioState === 'idle' && (
+                <button
+                  aria-label="Записать"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-[#EEF2F0]"
+                  style={{ color: '#3d4a42' }}
+                  type="button"
+                  onClick={startRecording}
+                >
+                  <span className="material-symbols-outlined text-[18px]">mic</span>
+                </button>
+              )}
+              {audioState === 'recording' && (
+                <button
+                  aria-label="Стоп"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-red-50"
+                  style={{ color: '#dc2626' }}
+                  type="button"
+                  onClick={stopRecording}
+                >
+                  <span className="material-symbols-outlined text-[18px]">stop_circle</span>
+                </button>
+              )}
             </div>
             <button
               className="bg-[#0D9F6E] hover:bg-primary text-white font-ui-semibold text-xs px-4 py-2 rounded-lg shadow-sm transition-colors flex items-center gap-1 active:scale-95 disabled:opacity-50"
@@ -321,7 +498,39 @@ export function DashboardClient() {
           {/* Insight hero */}
           <div className="lg:col-span-8 flex flex-col h-full">
             <div className="insight-card-accent rounded-xl p-md flex flex-col h-full justify-between group hover:shadow-lg transition-all duration-300">
-              {latestInsightAvailable ? null : (
+              {insightsLoading ? (
+                <div className="flex flex-col h-full justify-center gap-2">
+                  <div className="h-3 w-28 rounded-full animate-pulse" style={{ background: '#D8E2DC' }} />
+                  <div className="h-6 w-full max-w-[28rem] rounded-lg animate-pulse mt-md" style={{ background: '#D8E2DC' }} />
+                  <div className="h-6 w-3/4 rounded-lg animate-pulse mt-2" style={{ background: '#D8E2DC' }} />
+                </div>
+              ) : latestInsight ? (
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center gap-2 mb-md">
+                    <span className="w-2 h-2 rounded-full bg-[#0D9F6E]" />
+                    <span className="font-label-caps text-label-caps text-[#0D9F6E]">LATEST INSIGHT</span>
+                  </div>
+                  <h3 className="font-ui-semibold text-on-surface" style={{ fontSize: 18 }}>
+                    {latestInsight.title}
+                  </h3>
+                  <p className="font-body-md text-body-md text-on-surface-variant mt-sm flex-1">{latestInsight.summary}</p>
+                  {latestInsight.evidence && latestInsight.evidence.length > 0 && (
+                    <div className="mt-md flex flex-wrap gap-1.5">
+                      {latestInsight.evidence.slice(0, 3).map((ref) => (
+                        <span
+                          key={ref.claimId}
+                          className="max-w-full truncate rounded-md bg-surface-container-highest px-2 py-1 text-xs text-on-surface-variant"
+                        >
+                          {ref.statement.length > 80 ? `${ref.statement.slice(0, 80)}…` : ref.statement}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <p className="mt-md font-metadata-mono text-[11px] text-on-surface-variant">
+                    {relativeTime(latestInsight.createdAt)}
+                  </p>
+                </div>
+              ) : (
                 <div className="flex flex-col h-full items-start justify-center">
                   <div className="flex items-center gap-2 mb-md">
                     <span className="w-2 h-2 rounded-full bg-[#0D9F6E]" />

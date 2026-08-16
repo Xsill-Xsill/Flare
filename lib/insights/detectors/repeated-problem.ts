@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm'
+import { and, desc, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { chunks, claims, items } from '@/lib/db/schema'
 import type { DetectorResult, EvidenceRef } from '@/lib/insights/types'
@@ -9,6 +9,12 @@ type ClaimCluster = {
   problem: string
   claimIds: string[]
 }
+
+// Caps how many claims get sent to Groq per detector run. Sending an entire workspace's
+// history risks blowing past the model's context window and driving up cost/latency as a
+// workspace grows; 200 recent claims is enough headroom for repeated-problem clustering
+// while keeping the prompt small and predictable.
+const MAX_CLAIMS_FOR_DETECTION = 200
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object'
@@ -76,6 +82,8 @@ export async function detectRepeatedProblems(workspaceId: string): Promise<Detec
       .innerJoin(chunks, eq(claims.chunkId, chunks.id))
       .innerJoin(items, and(eq(claims.itemId, items.id), eq(chunks.itemId, items.id)))
       .where(and(eq(items.workspaceId, workspaceId), eq(items.status, 'done')))
+      .orderBy(desc(claims.createdAt))
+      .limit(MAX_CLAIMS_FOR_DETECTION)
 
     const itemIds = new Set(claimRows.map((claim) => claim.itemId))
     if (itemIds.size < 5) return []
