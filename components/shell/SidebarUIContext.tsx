@@ -30,8 +30,11 @@ export function SidebarUIProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedWidth = parseInt(localStorage.getItem(WIDTH_KEY) || '', 10)
-    if (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) setWidthState(savedWidth)
-    setCollapsed(localStorage.getItem(COLLAPSED_KEY) === '1')
+    const savedCollapsed = localStorage.getItem(COLLAPSED_KEY) === '1'
+    requestAnimationFrame(() => {
+      if (savedWidth >= MIN_WIDTH && savedWidth <= MAX_WIDTH) setWidthState(savedWidth)
+      setCollapsed(savedCollapsed)
+    })
   }, [])
 
   function toggle() {

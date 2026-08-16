@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone vanilla-JS Chrome extension package — not part of the Next.js/TS toolchain
+    // this config targets (see apps/extension/README.md for how it's built/loaded).
+    "apps/extension/**",
   ]),
 ]);
 

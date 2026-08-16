@@ -34,7 +34,7 @@ export function AccountModal({
       requestAnimationFrame(() => setVisible(true))
       document.body.style.overflow = 'hidden'
     } else {
-      setVisible(false)
+      requestAnimationFrame(() => setVisible(false))
       document.body.style.overflow = ''
     }
   }, [open])

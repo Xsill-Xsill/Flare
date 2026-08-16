@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
@@ -33,7 +34,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-[24rem]">
         <div className="flex flex-col items-center mb-8">
-          <img alt="Flare" src="/logo.png" className="w-12 h-12 rounded-lg object-contain mb-4" />
+          <Image alt="Flare" src="/logo.png" width={48} height={48} className="w-12 h-12 rounded-lg object-contain mb-4" />
           <h1 className="text-2xl font-bold text-foreground">Войти в Flare</h1>
           <p className="text-sm text-muted mt-1">С возвращением</p>
         </div>
