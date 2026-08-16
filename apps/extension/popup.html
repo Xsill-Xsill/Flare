@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Flare</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <span class="logo-dot"></span>
+        <span class="title">Flare</span>
+      </header>
+
+      <section id="login-view" class="view hidden">
+        <p class="hint">Войди, чтобы сохранять страницы в Flare.</p>
+        <form id="login-form">
+          <label class="field">
+            <span>Email</span>
+            <input type="email" id="login-email" required autocomplete="username" />
+          </label>
+          <label class="field">
+            <span>Пароль</span>
+            <input type="password" id="login-password" required autocomplete="current-password" />
+          </label>
+          <button type="submit" id="login-submit" class="btn btn-primary">Войти</button>
+          <p id="login-error" class="error hidden"></p>
+        </form>
+      </section>
+
+      <section id="main-view" class="view hidden">
+        <label class="field">
+          <span>Workspace</span>
+          <select id="workspace-select"></select>
+        </label>
+
+        <div class="field">
+          <span>Страница</span>
+          <p id="page-url" class="page-url"></p>
+        </div>
+
+        <div id="selection-block" class="field hidden">
+          <label class="checkbox-row">
+            <input type="checkbox" id="selection-checkbox" checked />
+            <span>Включить выделенный текст</span>
+          </label>
+          <p id="selection-preview" class="selection-preview"></p>
+        </div>
+
+        <button type="button" id="save-button" class="btn btn-primary">Сохранить в Flare</button>
+        <p id="save-status" class="status hidden"></p>
+
+        <button type="button" id="logout-button" class="btn btn-link">Выйти</button>
+      </section>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
