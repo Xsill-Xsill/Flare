@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { and, eq } from 'drizzle-orm'
 import { createClient } from '@/lib/supabase/server'
 import { db } from '@/lib/db'
-import { chunks, claims, itemTags, items, workspaces } from '@/lib/db/schema'
+import { chunks, claims, folders, itemTags, items, workspaces } from '@/lib/db/schema'
 
 const SOURCE_PREVIEW_LENGTH = 500
 
@@ -88,7 +88,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   await db.transaction(async (tx) => {
     if (folder !== undefined) {
-      await tx.update(items).set({ folder: folder?.trim() || null }).where(eq(items.id, id))
+      const cleanFolder = folder?.trim() || null
+      await tx.update(items).set({ folder: cleanFolder }).where(eq(items.id, id))
+      if (cleanFolder) {
+        await tx
+          .insert(folders)
+          .values({ workspaceId: item.workspaceId, name: cleanFolder })
+          .onConflictDoNothing({ target: [folders.workspaceId, folders.name] })
+      }
     }
 
     if (tags !== undefined) {

@@ -1,6 +1,6 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { chunks, claims, items } from '@/lib/db/schema'
+import { chunks, claims, items, workspaceSettings } from '@/lib/db/schema'
 import type { DetectorResult, EvidenceRef } from '@/lib/insights/types'
 
 type ClaimRecord = EvidenceRef
@@ -31,7 +31,9 @@ function parseGroqContent(payload: unknown): unknown {
   return JSON.parse(message.content) as unknown
 }
 
-async function askGroq(system: string, user: string): Promise<unknown> {
+async function askGroq(system: string, user: string, userFocus?: string): Promise<unknown> {
+  const systemWithFocus = userFocus ? `${system}\n\nUser focus: ${userFocus}` : system
+
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -41,7 +43,7 @@ async function askGroq(system: string, user: string): Promise<unknown> {
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [
-        { role: 'system', content: system },
+        { role: 'system', content: systemWithFocus },
         { role: 'user', content: user },
       ],
       response_format: { type: 'json_object' },
@@ -76,6 +78,13 @@ function parseInsightCopy(value: unknown): { title: string; summary: string } | 
 
 export async function detectRepeatedProblems(workspaceId: string): Promise<DetectorResult[]> {
   try {
+    const [settings] = await db
+      .select({ insightsInstructions: workspaceSettings.insightsInstructions })
+      .from(workspaceSettings)
+      .where(eq(workspaceSettings.workspaceId, workspaceId))
+      .limit(1)
+    const userFocus = settings?.insightsInstructions?.trim() || undefined
+
     const claimRows = await db
       .select({ id: claims.id, itemId: claims.itemId, statement: claims.statement })
       .from(claims)
@@ -102,7 +111,8 @@ from DIFFERENT item_ids that describe the same underlying problem.
 Return JSON: {"clusters": [{"problem": string, "claim_ids": string[]}]}
 Only return clusters where claim_ids span at least 3 distinct item_ids.
 If no such clusters exist, return {"clusters": []}.`,
-      `<claims>\n${JSON.stringify(claimRecords.map(({ claimId, itemId, statement }) => ({ claim_id: claimId, item_id: itemId, statement })))}\n</claims>`
+      `<claims>\n${JSON.stringify(claimRecords.map(({ claimId, itemId, statement }) => ({ claim_id: claimId, item_id: itemId, statement })))}\n</claims>`,
+      userFocus
     )
 
     const results: DetectorResult[] = []
@@ -119,7 +129,8 @@ If no such clusters exist, return {"clusters": []}.`,
           `You are writing insight summaries for a founder's second brain app.
 Be specific and concrete. Title: one sentence (fewer than 10 words). Summary: 2-3 sentences explaining the pattern and why it matters.
 Return JSON: {"title": string, "summary": string}.`,
-          `Problem cluster: ${cluster.problem}\nEvidence claims:\n${evidence.map((claim) => `- ${claim.statement}`).join('\n')}`
+          `Problem cluster: ${cluster.problem}\nEvidence claims:\n${evidence.map((claim) => `- ${claim.statement}`).join('\n')}`,
+          userFocus
         )
       )
       if (copy) results.push({ ...copy, evidence })

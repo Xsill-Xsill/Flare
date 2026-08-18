@@ -35,6 +35,32 @@ export const items = pgTable('items', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
+export const folders = pgTable('folders', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  workspaceId: uuid('workspace_id').references(() => workspaces.id, { onDelete: 'cascade' }).notNull(),
+  name: text('name').notNull(),
+  // Seeded base folders (Ideas, Research, Sources, People & Customers, Journal, Tasks) vs.
+  // ones the user created — lets the UI protect the base set from accidental rename/delete.
+  isDefault: boolean('is_default').default(false).notNull(),
+  // AI-facing instructions for what belongs in this folder — read by the (future) daily
+  // inbox-routing agent, not required for the folder to function.
+  description: text('description'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => ({
+  workspaceNameUnique: uniqueIndex('folders_workspace_name_idx').on(table.workspaceId, table.name),
+}))
+
+export const workspaceSettings = pgTable('workspace_settings', {
+  workspaceId: uuid('workspace_id').references(() => workspaces.id, { onDelete: 'cascade' }).primaryKey(),
+  digestEnabled: boolean('digest_enabled').default(true).notNull(),
+  notifyNewInsight: boolean('notify_new_insight').default(true).notNull(),
+  notifyProcessingDone: boolean('notify_processing_done').default(false).notNull(),
+  insightsInstructions: text('insights_instructions'),
+  // UI-only for now — schedule/time pickers don't change when daily-digest.ts actually runs
+  // (still a single global 08:00 UTC cron for everyone).
+  insightsSchedule: text('insights_schedule').default('daily').notNull(),
+})
+
 export const chunks = pgTable('chunks', {
   id: uuid('id').defaultRandom().primaryKey(),
   itemId: uuid('item_id').references(() => items.id).notNull(),

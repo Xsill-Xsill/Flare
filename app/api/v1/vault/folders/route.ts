@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { and, eq, isNotNull } from 'drizzle-orm'
+import { and, asc, desc, eq } from 'drizzle-orm'
 import { createClient } from '@/lib/supabase/server'
 import { db } from '@/lib/db'
-import { items, workspaces } from '@/lib/db/schema'
+import { folders, workspaces } from '@/lib/db/schema'
 
 export async function GET(req: NextRequest) {
   const supabase = await createClient()
@@ -25,10 +25,10 @@ export async function GET(req: NextRequest) {
   }
 
   const rows = await db
-    .selectDistinct({ folder: items.folder })
-    .from(items)
-    .where(and(eq(items.workspaceId, workspaceId), isNotNull(items.folder)))
-    .orderBy(items.folder)
+    .select({ name: folders.name })
+    .from(folders)
+    .where(eq(folders.workspaceId, workspaceId))
+    .orderBy(desc(folders.isDefault), asc(folders.name))
 
-  return NextResponse.json(rows.map((r) => r.folder).filter((f): f is string => Boolean(f)))
+  return NextResponse.json(rows.map((r) => r.name))
 }

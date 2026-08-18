@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useWorkspace } from '@/components/shell/WorkspaceContext'
 import { SidebarToggleButton } from '@/components/shell/SidebarToggleButton'
 import { useToast } from '@/components/shell/ToastProvider'
@@ -15,7 +15,9 @@ type SectionKey =
   | 'members'
   | 'danger'
 
-type Folder = { name: string; description: string }
+// `description` is UI-only for now — there's no column to persist it to yet
+// (see the folders table). Everything else round-trips through /api/v1/settings.
+type Folder = { id: string; name: string; description: string; isDefault: boolean }
 
 const SECTIONS: { id: SectionKey; label: string; icon: string }[] = [
   { id: 'general', label: 'General', icon: 'tune' },
@@ -27,10 +29,6 @@ const SECTIONS: { id: SectionKey; label: string; icon: string }[] = [
   { id: 'members', label: 'Members', icon: 'group' },
   { id: 'danger', label: 'Danger Zone', icon: 'warning' },
 ]
-
-// No folders API exists yet, so there's no real data to seed this with —
-// starts empty rather than showing made-up folder names.
-const DEFAULT_FOLDERS: Folder[] = []
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -87,10 +85,29 @@ function ToggleRow({ label, desc, on, onToggle }: { label: string; desc?: string
   )
 }
 
-function GeneralSection({ workspaceName, onLabelChange }: { workspaceName: string; onLabelChange: (name: string) => void }) {
+function GeneralSection({ workspaceName }: { workspaceName: string }) {
+  const { id: workspaceId, renameWorkspace } = useWorkspace()
+  const showToast = useToast()
   const [name, setName] = useState(workspaceName)
   const [language, setLanguage] = useState('auto')
-  const [saved, setSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
+
+  async function handleSave() {
+    const trimmed = name.trim()
+    if (!trimmed) {
+      setName(workspaceName)
+      return
+    }
+    setSaving(true)
+    try {
+      await renameWorkspace(workspaceId, trimmed)
+      showToast('Saved', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to save workspace name', 'error')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
     <SectionShell title="General">
@@ -107,18 +124,13 @@ function GeneralSection({ workspaceName, onLabelChange }: { workspaceName: strin
             onChange={(e) => setName(e.target.value)}
           />
           <button
-            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0 hover:bg-[#0b8a5f]"
+            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0 hover:bg-[#0b8a5f] disabled:opacity-60"
             style={{ background: '#0D9F6E' }}
             type="button"
-            onClick={() => {
-              const next = name.trim() || workspaceName
-              setName(next)
-              onLabelChange(next)
-              setSaved(true)
-              setTimeout(() => setSaved(false), 1200)
-            }}
+            disabled={saving}
+            onClick={handleSave}
           >
-            {saved ? 'Saved' : 'Save'}
+            {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>
@@ -143,11 +155,13 @@ function GeneralSection({ workspaceName, onLabelChange }: { workspaceName: strin
 
 function FoldersSection({
   folders,
+  loading,
   onEdit,
   onDelete,
   onAdd,
 }: {
   folders: Folder[]
+  loading: boolean
   onEdit: (index: number) => void
   onDelete: (index: number) => void
   onAdd: () => void
@@ -160,7 +174,12 @@ function FoldersSection({
       desc="Manage the folders your notes get organized into. Click a folder to rename it or write AI instructions for it."
     >
       <div className="rounded-xl p-sm" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-        {folders.length === 0 && (
+        {loading && (
+          <p className="text-sm p-sm" style={{ color: '#5C6F65' }}>
+            Loading…
+          </p>
+        )}
+        {!loading && folders.length === 0 && (
           <p className="text-sm p-sm" style={{ color: '#5C6F65' }}>
             No folders yet — add one to start organizing your Vault.
           </p>
@@ -206,14 +225,25 @@ function FoldersSection({
                   </span>
                 </div>
                 <div className="min-w-0 break-words">
-                  <div className="text-sm font-ui-semibold" style={{ color: '#1A2620', overflowWrap: 'break-word' }}>
-                    {folder.name}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-ui-semibold" style={{ color: '#1A2620', overflowWrap: 'break-word' }}>
+                      {folder.name}
+                    </span>
+                    {folder.isDefault && (
+                      <span
+                        className="text-[10px] font-ui-semibold uppercase tracking-wider px-1.5 py-[1px] rounded-full shrink-0"
+                        style={{ background: '#EEF2F0', color: '#5C6F65' }}
+                      >
+                        Default
+                      </span>
+                    )}
                   </div>
                   <div className="text-xs" style={{ color: '#5C6F65', overflowWrap: 'break-word' }}>
                     {folder.description || 'No AI description yet'}
                   </div>
                 </div>
               </div>
+              {!folder.isDefault && (
               <button
                 aria-label="Delete folder"
                 className="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg transition-colors hover:text-[#ba1a1a]"
@@ -226,6 +256,7 @@ function FoldersSection({
               >
                 <span className="material-symbols-outlined text-[18px]">delete</span>
               </button>
+              )}
             </div>
           )
         )}
@@ -242,17 +273,32 @@ function FoldersSection({
   )
 }
 
-function InsightsSection() {
-  const [instructions, setInstructions] = useState('')
+function InsightsSection({
+  initialInstructions,
+  onSaveInstructions,
+}: {
+  initialInstructions: string
+  onSaveInstructions: (instructions: string) => Promise<void>
+}) {
+  const [instructions, setInstructions] = useState(initialInstructions)
   const [schedule, setSchedule] = useState<'daily' | 'weekly' | 'threshold'>('daily')
   const [scheduleDay, setScheduleDay] = useState('Monday')
-  const [saved, setSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   const scheduleOptions: { id: typeof schedule; label: string }[] = [
     { id: 'daily', label: 'Daily' },
     { id: 'weekly', label: 'Weekly' },
     { id: 'threshold', label: 'When 10+ new notes added' },
   ]
+
+  async function handleSave() {
+    setSaving(true)
+    try {
+      await onSaveInstructions(instructions)
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
     <SectionShell title="Insights" desc="Tell the AI what to focus on when generating insights for this workspace.">
@@ -265,16 +311,17 @@ function InsightsSection() {
         onChange={(e) => setInstructions(e.target.value)}
       />
       <button
-        className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 hover:bg-[#0b8a5f]"
+        className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 hover:bg-[#0b8a5f] disabled:opacity-60"
         style={{ background: '#0D9F6E' }}
         type="button"
-        onClick={() => {
-          setSaved(true)
-          setTimeout(() => setSaved(false), 1200)
-        }}
+        disabled={saving}
+        onClick={handleSave}
       >
-        {saved ? 'Saved' : 'Save'}
+        {saving ? 'Saving…' : 'Save'}
       </button>
+      <p className="text-xs mt-sm" style={{ color: '#5C6F65' }}>
+        Used as extra context (&quot;User focus: …&quot;) the next time the repeated-problem detector runs.
+      </p>
       <div className="border-t my-xl" style={{ borderColor: '#D8E2DC' }} />
       <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
         GENERATION SCHEDULE
@@ -394,7 +441,6 @@ function IntegrationCard({
 function IntegrationsSection({ workspaceName }: { workspaceName: string }) {
   const [notionConnected, setNotionConnected] = useState(false)
   const [gdriveConnected, setGdriveConnected] = useState(false)
-  const [mdStatus, setMdStatus] = useState('Import from local folder or .zip')
 
   return (
     <SectionShell title="Integrations" desc="Bring notes in from where you already write.">
@@ -417,50 +463,20 @@ function IntegrationsSection({ workspaceName }: { workspaceName: string }) {
           connectedAsLabel={workspaceName}
           onToggle={() => setGdriveConnected((v) => !v)}
         />
-        <div className="rounded-xl p-md flex items-center justify-between gap-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-          <div className="flex items-center gap-sm min-w-0">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: '#EEF2F0' }}>
-              <span className="material-symbols-outlined text-[20px]" style={{ color: '#5C6F65' }}>
-                folder_zip
-              </span>
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
-                Markdown folder
-              </p>
-              <p className="text-xs" style={{ color: '#5C6F65' }}>
-                {mdStatus}
-              </p>
-            </div>
-          </div>
-          <div className="shrink-0">
-            <input
-              className="hidden"
-              id="settings-md-file-input"
-              multiple
-              type="file"
-              onChange={(e) => {
-                const count = e.target.files?.length ?? 0
-                setMdStatus(count > 0 ? `${count} file${count === 1 ? '' : 's'} selected (demo, not uploaded)` : 'Import from local folder or .zip')
-              }}
-            />
-            <button
-              className="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors"
-              style={{ background: '#FFFFFF', border: '1.5px solid #D8E2DC', color: '#1A2620' }}
-              type="button"
-              onClick={() => document.getElementById('settings-md-file-input')?.click()}
-            >
-              Import files
-            </button>
-          </div>
-        </div>
       </div>
     </SectionShell>
   )
 }
 
-function NotificationsSection() {
-  const [digestOn, setDigestOn] = useState(true)
+function NotificationsSection({
+  digestEnabled,
+  digestLoading,
+  onToggleDigest,
+}: {
+  digestEnabled: boolean
+  digestLoading: boolean
+  onToggleDigest: (next: boolean) => void
+}) {
   const [digestDay, setDigestDay] = useState('Monday')
   const [digestTime, setDigestTime] = useState('09:00')
   const [notifyNewInsight, setNotifyNewInsight] = useState(true)
@@ -471,19 +487,23 @@ function NotificationsSection() {
     <SectionShell title="Notifications">
       <div className="divide-y" style={{ borderColor: '#D8E2DC' }}>
         <ToggleRow
-          label="Weekly email digest"
-          desc="A summary of new insights, sent once a week."
-          on={digestOn}
-          onToggle={() => setDigestOn((v) => !v)}
+          label="Email digest"
+          desc="A daily summary of new insights, sent every morning."
+          on={digestEnabled}
+          onToggle={() => !digestLoading && onToggleDigest(!digestEnabled)}
         />
-        {digestOn && (
+        {digestEnabled && (
           <div className="pb-sm">
-            <div className="flex items-center gap-2 pl-0">
+            <p className="text-xs mb-1.5" style={{ color: '#5C6F65' }}>
+              Day &amp; time (coming soon) — the digest currently always sends at 08:00 UTC.
+            </p>
+            <div className="flex items-center gap-2 pl-0 opacity-50 pointer-events-none">
               <select
                 className="px-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
                 style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
                 value={digestDay}
                 onChange={(e) => setDigestDay(e.target.value)}
+                disabled
               >
                 {DAYS.map((d) => (
                   <option key={d} value={d}>
@@ -496,6 +516,7 @@ function NotificationsSection() {
                 style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
                 value={digestTime}
                 onChange={(e) => setDigestTime(e.target.value)}
+                disabled
               >
                 {times.map((t) => (
                   <option key={t} value={t}>
@@ -514,19 +535,40 @@ function NotificationsSection() {
 }
 
 function ExportSection() {
+  const workspace = useWorkspace()
+  const showToast = useToast()
   const [exporting, setExporting] = useState(false)
 
+  async function handleExport() {
+    setExporting(true)
+    try {
+      const res = await fetch(`/api/v1/settings/export?workspaceId=${workspace.id}`)
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to export')
+
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `${workspace.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'flare'}-export.zip`
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to export', 'error')
+    } finally {
+      setExporting(false)
+    }
+  }
+
   return (
-    <SectionShell title="Export" desc="Download all your notes and insights as Markdown files.">
+    <SectionShell title="Export" desc="Download all your notes as Markdown files.">
       <button
-        className="text-sm font-ui-semibold px-5 py-3 rounded-lg transition-colors active:scale-95 hover:bg-[#D1FAE5]"
+        className="text-sm font-ui-semibold px-5 py-3 rounded-lg transition-colors active:scale-95 hover:bg-[#D1FAE5] disabled:opacity-60"
         style={{ background: '#FFFFFF', border: '1.5px solid #0D9F6E', color: '#0D9F6E' }}
         type="button"
         disabled={exporting}
-        onClick={() => {
-          setExporting(true)
-          setTimeout(() => setExporting(false), 1400)
-        }}
+        onClick={handleExport}
       >
         <span className="material-symbols-outlined text-[18px] align-middle mr-1">
           {exporting ? 'hourglass_top' : 'download'}
@@ -534,7 +576,8 @@ function ExportSection() {
         {exporting ? 'Preparing export…' : 'Export as Markdown .zip'}
       </button>
       <p className="text-xs mt-sm" style={{ color: '#5C6F65' }}>
-        Includes all notes, sources, and generated insights. Does not include AI embeddings.
+        Includes all notes and sources, each as a Markdown file with folder/tags/date frontmatter. Does not include
+        AI embeddings or generated insights.
       </p>
     </SectionShell>
   )
@@ -569,12 +612,45 @@ function MembersSection() {
   )
 }
 
-function DangerSection() {
+function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
   const showToast = useToast()
+  const { deleteWorkspace, id: workspaceId } = useWorkspace()
+  const [deleting, setDeleting] = useState(false)
+  const [deletingData, setDeletingData] = useState(false)
 
-  function confirmAndRun(message: string, onConfirm: () => void) {
+  function confirmAndRun(message: string, onConfirm: (confirmation: string) => void) {
     const confirmation = window.prompt(message)
-    if (confirmation === 'DELETE') onConfirm()
+    if (confirmation === 'DELETE') onConfirm(confirmation)
+  }
+
+  async function handleDeleteWorkspace() {
+    setDeleting(true)
+    try {
+      await deleteWorkspace(workspaceId)
+      showToast('Workspace deleted', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to delete workspace', 'error')
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  async function handleDeleteAllData(confirmation: string) {
+    setDeletingData(true)
+    try {
+      const res = await fetch('/api/v1/settings/delete-all-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workspaceId, confirm: confirmation }),
+      })
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to delete data')
+      onDataDeleted()
+      showToast('All data deleted', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to delete data', 'error')
+    } finally {
+      setDeletingData(false)
+    }
   }
 
   return (
@@ -590,16 +666,18 @@ function DangerSection() {
             </p>
           </div>
           <button
-            className="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors"
+            className="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-60"
             style={{ background: '#FFFFFF', border: '1.5px solid #ba1a1a', color: '#ba1a1a' }}
             type="button"
+            disabled={deletingData}
             onClick={() =>
-              confirmAndRun('Type DELETE to confirm you want to permanently delete all data in this workspace.', () =>
-                showToast('Deleting all data is not available yet.', 'error')
+              confirmAndRun(
+                'Type DELETE to confirm you want to permanently delete all data in this workspace.',
+                handleDeleteAllData
               )
             }
           >
-            Delete all data
+            {deletingData ? 'Deleting…' : 'Delete all data'}
           </button>
         </div>
         <div className="border-t my-sm" style={{ borderColor: '#FCA5A5' }} />
@@ -613,16 +691,15 @@ function DangerSection() {
             </p>
           </div>
           <button
-            className="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors text-white"
+            className="shrink-0 text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors text-white disabled:opacity-60"
             style={{ background: '#ba1a1a' }}
             type="button"
+            disabled={deleting}
             onClick={() =>
-              confirmAndRun('Type DELETE to confirm you want to permanently delete this workspace.', () =>
-                showToast('Deleting a workspace is not available yet.', 'error')
-              )
+              confirmAndRun('Type DELETE to confirm you want to permanently delete this workspace.', handleDeleteWorkspace)
             }
           >
-            Delete workspace
+            {deleting ? 'Deleting…' : 'Delete workspace'}
           </button>
         </div>
       </div>
@@ -639,23 +716,30 @@ function FolderEditorOverlay({
   open: boolean
   folder: Folder | null
   onClose: () => void
-  onSave: (folder: Folder) => void
+  onSave: (folder: Folder) => Promise<void>
 }) {
   const [name, setName] = useState(folder?.name ?? '')
   const [description, setDescription] = useState(folder?.description ?? '')
+  const [saving, setSaving] = useState(false)
 
   function handleClose() {
+    if (saving) return
     setName('')
     setDescription('')
     onClose()
   }
 
-  function handleSave() {
+  async function handleSave() {
     const trimmedName = name.trim()
-    if (!trimmedName) return
-    onSave({ name: trimmedName, description: description.trim() })
-    setName('')
-    setDescription('')
+    if (!trimmedName || saving) return
+    setSaving(true)
+    try {
+      await onSave({ id: folder?.id ?? '', isDefault: folder?.isDefault ?? false, name: trimmedName, description: description.trim() })
+      setName('')
+      setDescription('')
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (!open) return null
@@ -714,20 +798,22 @@ function FolderEditorOverlay({
         </div>
         <div className="flex items-center justify-end gap-2 px-lg py-md" style={{ borderTop: '1px solid #D8E2DC' }}>
           <button
-            className="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors hover:bg-[#1A2620] hover:text-white"
+            className="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors hover:bg-[#1A2620] hover:text-white disabled:opacity-60"
             style={{ background: '#ffffff', border: '1.5px solid #1A2620', color: '#1A2620' }}
             type="button"
+            disabled={saving}
             onClick={handleClose}
           >
             Cancel
           </button>
           <button
-            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 hover:bg-[#0b8a5f]"
+            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 hover:bg-[#0b8a5f] disabled:opacity-60"
             style={{ background: '#0D9F6E' }}
             type="button"
+            disabled={saving}
             onClick={handleSave}
           >
-            Save
+            {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>
@@ -737,13 +823,136 @@ function FolderEditorOverlay({
 
 export function SettingsClient() {
   const workspace = useWorkspace()
-  const [workspaceLabel, setWorkspaceLabel] = useState(workspace.name)
+  const showToast = useToast()
   const [activeSection, setActiveSection] = useState<SectionKey>('general')
   const [mobileShowContent, setMobileShowContent] = useState(false)
-  const [folders, setFolders] = useState<Folder[]>(DEFAULT_FOLDERS)
+  const [folders, setFolders] = useState<Folder[]>([])
+  const [foldersLoading, setFoldersLoading] = useState(true)
   const [editingIndex, setEditingIndex] = useState<number | null | undefined>(undefined)
+  const [digestEnabled, setDigestEnabled] = useState(true)
+  const [digestLoading, setDigestLoading] = useState(false)
+  const [insightsInstructions, setInsightsInstructions] = useState('')
 
-  const editingFolder = editingIndex === null ? { name: '', description: '' } : editingIndex !== undefined ? folders[editingIndex] : null
+  const editingFolder =
+    editingIndex === null
+      ? { id: '', name: '', description: '', isDefault: false }
+      : editingIndex !== undefined
+        ? folders[editingIndex]
+        : null
+
+  async function loadSettings(): Promise<void> {
+    const res = await fetch(`/api/v1/settings?workspaceId=${workspace.id}`)
+    if (!res.ok) return
+    const data: {
+      folders?: { id: string; name: string; isDefault: boolean; description: string | null }[]
+      digestEnabled?: boolean
+      insightsInstructions?: string
+    } = await res.json()
+    if (data.folders) {
+      setFolders(data.folders.map((f) => ({ id: f.id, name: f.name, isDefault: f.isDefault, description: f.description ?? '' })))
+    }
+    if (typeof data.digestEnabled === 'boolean') setDigestEnabled(data.digestEnabled)
+    if (typeof data.insightsInstructions === 'string') setInsightsInstructions(data.insightsInstructions)
+  }
+
+  useEffect(() => {
+    let cancelled = false
+    const frame = requestAnimationFrame(() => {
+      setFoldersLoading(true)
+      loadSettings()
+        .catch(() => {})
+        .finally(() => {
+          if (!cancelled) setFoldersLoading(false)
+        })
+    })
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(frame)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the workspace changes, not on every loadSettings identity change
+  }, [workspace.id])
+
+  async function handleFolderSave(folder: Folder) {
+    try {
+      if (editingIndex === null || editingIndex === undefined) {
+        const res = await fetch('/api/v1/settings/folders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ workspaceId: workspace.id, name: folder.name, description: folder.description }),
+        })
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to create folder')
+        const created: { id: string; name: string; isDefault: boolean; description: string | null } = await res.json()
+        setFolders((prev) => [
+          ...prev,
+          { id: created.id, name: created.name, isDefault: created.isDefault, description: created.description ?? '' },
+        ])
+      } else {
+        const target = folders[editingIndex]
+        const res = await fetch(`/api/v1/settings/folders/${target.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: folder.name, description: folder.description }),
+        })
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to rename folder')
+        const updated: { id: string; name: string; isDefault: boolean; description: string | null } = await res.json()
+        setFolders((prev) =>
+          prev.map((f, i) => (i === editingIndex ? { ...f, name: updated.name, description: updated.description ?? '' } : f))
+        )
+      }
+      setEditingIndex(undefined)
+      showToast('Saved', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to save folder', 'error')
+    }
+  }
+
+  async function handleDigestToggle(next: boolean) {
+    const previous = digestEnabled
+    setDigestEnabled(next)
+    setDigestLoading(true)
+    try {
+      const res = await fetch('/api/v1/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workspaceId: workspace.id, digest_enabled: next }),
+      })
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to save')
+      showToast('Saved', 'success')
+    } catch (err) {
+      setDigestEnabled(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    } finally {
+      setDigestLoading(false)
+    }
+  }
+
+  async function handleSaveInstructions(instructions: string) {
+    try {
+      const res = await fetch('/api/v1/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workspaceId: workspace.id, insights_instructions: instructions }),
+      })
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to save')
+      const updated: { insightsInstructions?: string } = await res.json()
+      setInsightsInstructions(updated.insightsInstructions ?? instructions)
+      showToast('Saved', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
+
+  async function handleFolderDelete(index: number) {
+    const target = folders[index]
+    try {
+      const res = await fetch(`/api/v1/settings/folders/${target.id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to delete folder')
+      setFolders((prev) => prev.filter((_, i) => i !== index))
+      showToast('Folder deleted', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Failed to delete folder', 'error')
+    }
+  }
 
   return (
     <div className="flex-1 h-screen overflow-hidden relative flex flex-col">
@@ -763,7 +972,7 @@ export function SettingsClient() {
               Settings
             </h1>
             <p className="text-sm mt-1" style={{ color: '#5C6F65' }}>
-              {workspaceLabel}
+              {workspace.name}
             </p>
           </div>
           <ul className="flex flex-col gap-xs px-sm pb-md font-ui-semibold text-ui-semibold">
@@ -804,21 +1013,30 @@ export function SettingsClient() {
             <span className="material-symbols-outlined text-[18px]">arrow_back</span> Settings
           </button>
           <div className="flex-1 overflow-y-auto">
-            {activeSection === 'general' && <GeneralSection workspaceName={workspaceLabel} onLabelChange={setWorkspaceLabel} />}
+            {activeSection === 'general' && <GeneralSection workspaceName={workspace.name} />}
             {activeSection === 'folders' && (
               <FoldersSection
                 folders={folders}
+                loading={foldersLoading}
                 onEdit={(i) => setEditingIndex(i)}
-                onDelete={(i) => setFolders((prev) => prev.filter((_, idx) => idx !== i))}
+                onDelete={handleFolderDelete}
                 onAdd={() => setEditingIndex(null)}
               />
             )}
-            {activeSection === 'insights' && <InsightsSection />}
-            {activeSection === 'integrations' && <IntegrationsSection workspaceName={workspaceLabel} />}
-            {activeSection === 'notifications' && <NotificationsSection />}
+            {activeSection === 'insights' && (
+              <InsightsSection
+                key={foldersLoading ? 'loading' : 'loaded'}
+                initialInstructions={insightsInstructions}
+                onSaveInstructions={handleSaveInstructions}
+              />
+            )}
+            {activeSection === 'integrations' && <IntegrationsSection workspaceName={workspace.name} />}
+            {activeSection === 'notifications' && (
+              <NotificationsSection digestEnabled={digestEnabled} digestLoading={digestLoading} onToggleDigest={handleDigestToggle} />
+            )}
             {activeSection === 'export' && <ExportSection />}
             {activeSection === 'members' && <MembersSection />}
-            {activeSection === 'danger' && <DangerSection />}
+            {activeSection === 'danger' && <DangerSection onDataDeleted={() => loadSettings().catch(() => {})} />}
           </div>
         </div>
       </div>
@@ -828,15 +1046,7 @@ export function SettingsClient() {
         open={editingIndex !== undefined}
         folder={editingFolder}
         onClose={() => setEditingIndex(undefined)}
-        onSave={(folder) => {
-          setFolders((prev) => {
-            if (editingIndex === null || editingIndex === undefined) return [...prev, folder]
-            const next = [...prev]
-            next[editingIndex] = folder
-            return next
-          })
-          setEditingIndex(undefined)
-        }}
+        onSave={handleFolderSave}
       />
     </div>
   )

@@ -5,15 +5,24 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { db } from '@/lib/db'
 import { workspaces } from '@/lib/db/schema'
 
-const AUDIO_MIME_TYPES = new Set(['audio/mpeg', 'audio/mp4', 'audio/wav', 'audio/webm', 'audio/ogg', 'audio/x-m4a'])
-const AUDIO_EXTENSIONS = new Set(['.mp3', '.mp4', '.m4a', '.wav', '.webm', '.ogg'])
-const MAX_AUDIO_SIZE_BYTES = 25 * 1024 * 1024 // Groq Whisper's file-size limit
+const ALLOWED_TYPES = new Set([
+  'text/plain', // .txt
+  'text/markdown', // .md
+  'application/pdf', // .pdf
+  'audio/mpeg', // .mp3
+  'audio/wav', // .wav
+  'audio/mp4', // .m4a
+  'audio/x-m4a',
+])
+const ALLOWED_EXTENSIONS = new Set(['.txt', '.md', '.pdf', '.mp3', '.wav', '.m4a'])
+const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.m4a'])
 
-function isAudioFile(file: File): boolean {
-  if (AUDIO_MIME_TYPES.has(file.type)) return true
-  const dotIndex = file.name.lastIndexOf('.')
-  if (dotIndex === -1) return false
-  return AUDIO_EXTENSIONS.has(file.name.slice(dotIndex).toLowerCase())
+const MAX_AUDIO_SIZE_BYTES = 25 * 1024 * 1024 // Groq Whisper's file-size limit
+const MAX_FILE_SIZE_BYTES = 20 * 1024 * 1024 // non-audio cap
+
+function getExtension(fileName: string): string | null {
+  const dotIndex = fileName.lastIndexOf('.')
+  return dotIndex === -1 ? null : fileName.slice(dotIndex).toLowerCase()
 }
 
 export async function POST(req: NextRequest) {
@@ -31,8 +40,21 @@ export async function POST(req: NextRequest) {
   if (typeof workspaceId !== 'string' || !workspaceId) {
     return NextResponse.json({ error: 'workspaceId is required' }, { status: 400 })
   }
-  if (isAudioFile(file) && file.size > MAX_AUDIO_SIZE_BYTES) {
+
+  const extension = getExtension(file.name)
+  if (!ALLOWED_TYPES.has(file.type) || !extension || !ALLOWED_EXTENSIONS.has(extension)) {
+    return NextResponse.json(
+      { error: 'Unsupported file type. Allowed: .txt, .md, .pdf, .mp3, .wav, .m4a' },
+      { status: 400 }
+    )
+  }
+
+  const isAudio = AUDIO_EXTENSIONS.has(extension)
+  if (isAudio && file.size > MAX_AUDIO_SIZE_BYTES) {
     return NextResponse.json({ error: 'Audio files must be 25MB or smaller' }, { status: 400 })
+  }
+  if (!isAudio && file.size > MAX_FILE_SIZE_BYTES) {
+    return NextResponse.json({ error: 'Files must be 20MB or smaller' }, { status: 400 })
   }
 
   const [workspace] = await db

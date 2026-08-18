@@ -1,13 +1,20 @@
+import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { workspaces } from '@/lib/db/schema'
+import { workspaces, workspaceSettings } from '@/lib/db/schema'
 import { inngest } from '@/lib/inngest/client'
 import { sendDigestForWorkspace, type DigestResult } from '@/lib/insights/digest'
 
 export const dailyDigest = inngest.createFunction(
   { id: 'daily-digest', triggers: [{ cron: '0 8 * * *' }] },
   async ({ step }) => {
+    // LEFT JOIN so a workspace with no settings row (never touched the Notifications
+    // section) still gets digestEnabled=true by default — only an explicit false skips it.
     const allWorkspaces = await step.run('list-workspaces', async () => {
-      return db.select({ id: workspaces.id }).from(workspaces)
+      const rows = await db
+        .select({ id: workspaces.id, digestEnabled: workspaceSettings.digestEnabled })
+        .from(workspaces)
+        .leftJoin(workspaceSettings, eq(workspaceSettings.workspaceId, workspaces.id))
+      return rows.filter((row) => row.digestEnabled !== false).map((row) => ({ id: row.id }))
     })
 
     for (const workspace of allWorkspaces) {

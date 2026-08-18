@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { eq } from 'drizzle-orm'
 import { createClient } from '@/lib/supabase/server'
 import { db } from '@/lib/db'
-import { workspaces } from '@/lib/db/schema'
+import { folders, workspaces } from '@/lib/db/schema'
 import { applyCors, preflightResponse } from '@/lib/http/cors'
+import { DEFAULT_FOLDERS } from '@/lib/vault/default-folders'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -20,6 +21,10 @@ export async function POST(req: NextRequest) {
     .insert(workspaces)
     .values({ ownerId: user.id, name })
     .returning()
+
+  await db.insert(folders).values(
+    DEFAULT_FOLDERS.map((folderName) => ({ workspaceId: workspace.id, name: folderName, isDefault: true }))
+  )
 
   return NextResponse.json(workspace, { status: 201 })
 }
