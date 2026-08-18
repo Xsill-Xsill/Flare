@@ -33,6 +33,12 @@ export function Sidebar({
   const { collapsed, width, iconOnly, setWidth } = useSidebarUI()
   const resizeHandleRef = useRef<HTMLDivElement>(null)
   const sidebarRef = useRef<HTMLElement>(null)
+  const collapsedRef = useRef(collapsed)
+  const widthRef = useRef(width)
+  const setWidthRef = useRef(setWidth)
+  collapsedRef.current = collapsed
+  widthRef.current = width
+  setWidthRef.current = setWidth
 
   useEffect(() => {
     const handle = resizeHandleRef.current
@@ -44,10 +50,10 @@ export function Sidebar({
     let startWidth = 0
 
     function onMouseDown(e: MouseEvent) {
-      if (collapsed) return
+      if (collapsedRef.current) return
       dragging = true
       startX = e.clientX
-      startWidth = width
+      startWidth = widthRef.current
       sidebar!.style.transition = 'none'
       document.body.style.cursor = 'col-resize'
       document.body.style.userSelect = 'none'
@@ -55,7 +61,7 @@ export function Sidebar({
     }
     function onMouseMove(e: MouseEvent) {
       if (!dragging) return
-      setWidth(startWidth + (e.clientX - startX))
+      setWidthRef.current(startWidth + (e.clientX - startX))
     }
     function onMouseUp() {
       if (!dragging) return
@@ -73,7 +79,7 @@ export function Sidebar({
       document.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseup', onMouseUp)
     }
-  }, [collapsed, width, setWidth])
+  }, [])
 
   const renderedWidth = collapsed ? 0 : width
 
@@ -170,9 +176,11 @@ export function Sidebar({
       </div>
       <div
         ref={resizeHandleRef}
-        className="hidden md:block absolute top-0 right-0 h-full"
+        className="hidden md:flex items-center justify-center absolute top-0 right-0 h-full group/resize"
         style={{ width: 6, cursor: 'col-resize', zIndex: 60 }}
-      />
+      >
+        <div className="w-[2px] h-full bg-transparent group-hover/resize:bg-primary/40 group-active/resize:bg-primary/70 transition-colors duration-150" />
+      </div>
     </nav>
   )
 }
