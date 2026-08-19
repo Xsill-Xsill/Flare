@@ -25,7 +25,7 @@ export const TYPE_ICON: Record<Item['type'], string> = {
 
 export function itemTitle(item: Item) {
   const text = item.type === 'text' ? item.rawContent : item.sourceUrl
-  if (!text) return 'Без названия'
+  if (!text) return 'Untitled'
   return text.length > 60 ? `${text.slice(0, 60)}…` : text
 }
 
@@ -74,10 +74,10 @@ function getFileExtension(fileName: string): string {
 
 function validateUploadFile(file: File): string | null {
   const extension = getFileExtension(file.name)
-  if (!UPLOAD_ALLOWED_EXTENSIONS.has(extension)) return 'Формат не поддерживается'
+  if (!UPLOAD_ALLOWED_EXTENSIONS.has(extension)) return 'Unsupported format'
   const isAudio = UPLOAD_AUDIO_EXTENSIONS.has(extension)
   const maxSize = isAudio ? UPLOAD_MAX_AUDIO_SIZE_BYTES : UPLOAD_MAX_FILE_SIZE_BYTES
-  if (file.size > maxSize) return 'Файл слишком большой'
+  if (file.size > maxSize) return 'File too large'
   return null
 }
 
@@ -249,7 +249,7 @@ export function DashboardClient() {
     const failedCount = uploadQueueRef.current.filter((item) => item.status === 'failed').length
     if (doneCount > 0) await loadItems()
     if (doneCount > 0 && failedCount === 0) {
-      showToast(`Загружено файлов: ${doneCount}`, 'success')
+      showToast(`${doneCount} file${doneCount === 1 ? '' : 's'} uploaded`, 'success')
       uploadQueueRef.current = []
       syncUploadQueue()
     }
@@ -439,7 +439,7 @@ export function DashboardClient() {
             <span className="material-symbols-outlined text-[18px]">search</span>
             <input
               className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none p-0 text-sm placeholder:text-on-surface-variant"
-              placeholder="Поиск по заметкам..."
+              placeholder="Search your brain..."
               type="text"
               value={globalSearch}
               onChange={(e) => setGlobalSearch(e.target.value)}
@@ -449,7 +449,7 @@ export function DashboardClient() {
             {globalSearchFocused && globalSearch.trim() !== '' && (
               <div className="absolute left-0 top-[calc(100%+8px)] w-full max-w-[28rem] bg-white border border-outline-variant/60 rounded-lg shadow-lg px-3 py-2 z-50 max-h-80 overflow-y-auto">
                 {globalMatches.length === 0 ? (
-                  <span className="text-sm text-on-surface-variant">Ничего не найдено</span>
+                  <span className="text-sm text-on-surface-variant">Not Found</span>
                 ) : (
                   globalMatches.map((item) => (
                     <div
@@ -465,7 +465,7 @@ export function DashboardClient() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <div className="text-sm text-on-surface truncate">{itemTitle(item)}</div>
-                        <div className="text-xs text-outline truncate">Входящие</div>
+                        <div className="text-xs text-outline truncate">Inbox</div>
                       </div>
                     </div>
                   ))
@@ -484,7 +484,7 @@ export function DashboardClient() {
 
       {/* Quick capture */}
       <section className="w-full">
-        <span className="font-label-caps text-label-caps text-outline mb-sm block">БЫСТРЫЙ ЗАХВАТ</span>
+        <span className="font-label-caps text-label-caps text-outline mb-sm block">QUICK CAPTURE</span>
         <form
           onSubmit={submitQuickCapture}
           className="rounded-xl flex flex-col p-sm group bg-white border border-outline-variant/60 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-[#0D9F6E] transition-colors"
@@ -496,7 +496,7 @@ export function DashboardClient() {
             <textarea
               ref={textareaRef}
               className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none resize-none font-body-md text-on-surface placeholder:text-outline py-1"
-              placeholder="Запишите мысль, URL или идею..."
+              placeholder="Capture a thought, URL, or idea..."
               rows={1}
               style={{ boxShadow: 'none' }}
               value={text}
@@ -525,7 +525,7 @@ export function DashboardClient() {
                   </span>
                   <span className="max-w-[160px] truncate">{file.name}</span>
                   <button
-                    aria-label="Удалить"
+                    aria-label="Remove"
                     className="material-symbols-outlined text-[14px] rounded-full flex items-center justify-center"
                     style={{ color: '#5C6F65', width: 16, height: 16 }}
                     type="button"
@@ -585,7 +585,7 @@ export function DashboardClient() {
                 }}
               />
               <button
-                aria-label="Прикрепить файл"
+                aria-label="Add file"
                 className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-[#EEF2F0]"
                 style={{ color: '#3d4a42' }}
                 type="button"
@@ -621,7 +621,7 @@ export function DashboardClient() {
               type="submit"
               disabled={submitting}
             >
-              <span>{submitting ? 'Сохраняем...' : 'Добавить'}</span>
+              <span>{submitting ? 'Saving...' : 'Add'}</span>
             </button>
           </div>
         </form>
@@ -629,7 +629,7 @@ export function DashboardClient() {
 
       {/* Bulk upload */}
       <section className="w-full">
-        <span className="font-label-caps text-label-caps text-outline mb-sm block">МАССОВАЯ ЗАГРУЗКА</span>
+        <span className="font-label-caps text-label-caps text-outline mb-sm block">BULK UPLOAD</span>
         <div
           className="rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 py-lg px-md cursor-pointer transition-colors"
           style={{
@@ -669,7 +669,7 @@ export function DashboardClient() {
             upload_file
           </span>
           <p className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
-            Перетащите файлы сюда или кликните, чтобы выбрать
+            Drop files here or click to browse
           </p>
           <p className="text-xs" style={{ color: '#5C6F65' }}>
             .txt, .md, .pdf, .mp3, .wav, .m4a
@@ -681,10 +681,10 @@ export function DashboardClient() {
             <div className="flex items-center justify-between gap-sm px-md py-sm border-b" style={{ borderColor: '#D8E2DC' }}>
               <span className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
                 {bulkUploading
-                  ? `Загрузка ${uploadCurrentIndex} из ${uploadTotal}...`
+                  ? `Uploading ${uploadCurrentIndex} of ${uploadTotal}...`
                   : uploadFailedCount > 0
-                    ? `Загружено ${uploadDoneCount} из ${uploadTotal}. Ошибок: ${uploadFailedCount}.`
-                    : `Загружено ${uploadDoneCount} из ${uploadTotal}`}
+                    ? `${uploadDoneCount} of ${uploadTotal} uploaded. ${uploadFailedCount} failed.`
+                    : `${uploadDoneCount} of ${uploadTotal} uploaded`}
               </span>
               {!bulkUploading && (
                 <div className="flex items-center gap-sm shrink-0">
@@ -695,7 +695,7 @@ export function DashboardClient() {
                       style={{ color: '#0D9F6E' }}
                       onClick={retryFailedUploads}
                     >
-                      Повторить неудачные
+                      Retry failed
                     </button>
                   )}
                   <button
@@ -704,7 +704,7 @@ export function DashboardClient() {
                     style={{ color: '#5C6F65' }}
                     onClick={clearUploadQueue}
                   >
-                    Очистить
+                    Clear
                   </button>
                 </div>
               )}
@@ -765,7 +765,7 @@ export function DashboardClient() {
         <section>
           <div className="flex justify-between items-center mb-md px-xs">
             <div className="flex items-center gap-2">
-              <span className="font-label-caps text-label-caps text-outline">НАЙДЕНЫ ПАТТЕРНЫ</span>
+              <span className="font-label-caps text-label-caps text-outline">PATTERNS FOUND</span>
               {!insightsLoading && insights.length > 0 && (
                 <span className="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold">
                   {insights.length}
@@ -777,7 +777,7 @@ export function DashboardClient() {
                 href="/insights"
                 className="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1"
               >
-                Все инсайты <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                View all insights <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
               </Link>
             )}
           </div>
@@ -794,7 +794,7 @@ export function DashboardClient() {
               ))}
             </div>
           ) : previewInsights.length === 0 ? (
-            <p className="text-sm text-outline px-xs">Добавьте больше заметок, и Flare начнёт находить паттерны.</p>
+            <p className="text-sm text-outline px-xs">Add more notes and Flare will start finding patterns.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
               {previewInsights.map((insight) => {
@@ -814,7 +814,7 @@ export function DashboardClient() {
                     </p>
                     {noteCount > 0 && (
                       <p className="mt-md font-metadata-mono text-[11px] text-on-surface-variant">
-                        На основе заметок: {noteCount}
+                        Based on {noteCount} note{noteCount === 1 ? '' : 's'}
                       </p>
                     )}
                   </Link>
@@ -838,13 +838,13 @@ export function DashboardClient() {
         <div className="max-w-sm w-full">
           <div className="card-flat rounded-xl p-md flex flex-col h-full">
             <div className="flex justify-between items-center mb-md">
-              <span className="font-label-caps text-label-caps text-outline">ВХОДЯЩИЕ</span>
+              <span className="font-label-caps text-label-caps text-outline">INBOX</span>
               <button
                 className="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1"
                 type="button"
                 onClick={() => setInboxOpen(true)}
               >
-                Открыть <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                Open <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
               </button>
             </div>
             <div className="flex items-baseline gap-2 mb-lg">
@@ -854,11 +854,11 @@ export function DashboardClient() {
               >
                 {inboxItems.length}
               </span>
-              <span className="font-ui-semibold text-on-surface-variant text-sm">заметок ждут разбора</span>
+              <span className="font-ui-semibold text-on-surface-variant text-sm">items to sort</span>
             </div>
             <div className="flex flex-col gap-sm flex-1 justify-end">
               {inboxItems.length === 0 ? (
-                <p className="text-sm text-outline">Пока пусто — запишите мысль выше.</p>
+                <p className="text-sm text-outline">Nothing here yet — capture a thought above.</p>
               ) : (
                 inboxItems.slice(0, 4).map((item) => (
                   <div
@@ -888,7 +888,7 @@ export function DashboardClient() {
       {/* Recent */}
       <section className="mt-md">
         <div className="flex justify-between items-center mb-md px-xs">
-          <span className="font-label-caps text-label-caps text-outline">НЕДАВНИЕ</span>
+          <span className="font-label-caps text-label-caps text-outline">RECENT</span>
         </div>
         {itemsError ? (
           <div className="flex items-center justify-between px-xs">
@@ -902,7 +902,7 @@ export function DashboardClient() {
             </button>
           </div>
         ) : recentItems.length === 0 ? (
-          <p className="text-sm text-outline px-xs">Пока ничего не захвачено.</p>
+          <p className="text-sm text-outline px-xs">No captures yet.</p>
         ) : (
           <div className="flex flex-col gap-xs">
             {recentItems.map((item) => (
@@ -952,15 +952,15 @@ export function DashboardClient() {
                 </div>
                 <div className="min-w-0">
                   <h2 className="font-ui-semibold truncate" style={{ color: '#1A2620', fontSize: 16 }}>
-                    Входящие
+                    Inbox
                   </h2>
                   <p className="text-xs truncate" style={{ color: '#5C6F65' }}>
-                    Заметок: {inboxItems.length} · Нужно разобрать
+                    {inboxItems.length} items · Needs sorting
                   </p>
                 </div>
               </div>
               <button
-                aria-label="Закрыть"
+                aria-label="Close"
                 className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 hover:bg-[#EEF2F0]"
                 style={{ color: '#5C6F65' }}
                 onClick={() => setInboxOpen(false)}
@@ -978,7 +978,7 @@ export function DashboardClient() {
                 </span>
                 <input
                   className="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
-                  placeholder="Поиск во входящих..."
+                  placeholder="Search in Inbox..."
                   style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
                   type="text"
                   value={inboxSearch}
@@ -988,7 +988,7 @@ export function DashboardClient() {
             </div>
             <div className="flex-1 overflow-y-auto">
               {filteredInboxItems.length === 0 ? (
-                <p className="text-sm text-outline px-lg py-md">Ничего не найдено.</p>
+                <p className="text-sm text-outline px-lg py-md">Nothing found.</p>
               ) : (
                 filteredInboxItems.map((item, i) => (
                   <div

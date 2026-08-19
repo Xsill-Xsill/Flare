@@ -8,10 +8,10 @@ import { useSidebarUI } from './SidebarUIContext'
 import { WorkspaceSwitcher } from './WorkspaceSwitcher'
 
 const NAV_ITEMS = [
-  { key: 'home', href: '/dashboard', label: 'Главная', icon: '/assets/images/nav-home.png' },
+  { key: 'home', href: '/dashboard', label: 'Home', icon: '/assets/images/nav-home.png' },
   { key: 'vault', href: '/vault', label: 'Vault', icon: '/assets/images/nav-vault.png' },
-  { key: 'insights', href: '/insights', label: 'Инсайты', icon: '/assets/images/nav-insights.svg' },
-  { key: 'settings', href: '/settings', label: 'Настройки', icon: '/assets/images/nav-settings.png' },
+  { key: 'insights', href: '/insights', label: 'Insights', icon: '/assets/images/nav-insights.svg' },
+  { key: 'settings', href: '/settings', label: 'Settings', icon: '/assets/images/nav-settings.png' },
 ]
 
 function activeKeyForPath(pathname: string) {
@@ -36,12 +36,9 @@ export function Sidebar({
   const collapsedRef = useRef(collapsed)
   const widthRef = useRef(width)
   const setWidthRef = useRef(setWidth)
-
-  useEffect(() => {
-    collapsedRef.current = collapsed
-    widthRef.current = width
-    setWidthRef.current = setWidth
-  }, [collapsed, width, setWidth])
+  collapsedRef.current = collapsed
+  widthRef.current = width
+  setWidthRef.current = setWidth
 
   useEffect(() => {
     const handle = resizeHandleRef.current
