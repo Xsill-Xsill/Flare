@@ -69,7 +69,7 @@ export function InsightsClient() {
         <div className="flex items-center gap-1">
           <SidebarToggleButton />
           <h1 className="font-display-sm text-on-surface pl-1" style={{ fontSize: 22, fontWeight: 800 }}>
-            Insights
+            Инсайты
           </h1>
         </div>
         <span className="hidden sm:inline font-metadata-mono text-metadata-mono text-on-surface-variant">
@@ -84,7 +84,7 @@ export function InsightsClient() {
           style={{ borderColor: '#D8E2DC' }}
         >
           <div className="flex items-center justify-between px-md pt-md pb-sm shrink-0">
-            <span className="font-label-caps text-label-caps text-outline">ALL INSIGHTS</span>
+            <span className="font-label-caps text-label-caps text-outline">ВСЕ ИНСАЙТЫ</span>
             <span className="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold">
               {insights.length}
             </span>
@@ -99,7 +99,7 @@ export function InsightsClient() {
               </span>
               <input
                 className="w-full pl-8 pr-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
-                placeholder="Search insights..."
+                placeholder="Поиск по инсайтам..."
                 style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
                 type="text"
                 value={search}
@@ -117,7 +117,7 @@ export function InsightsClient() {
             ) : visibleInsights.length === 0 ? (
               <div className="h-full flex items-center justify-center">
                 <p className="text-center text-sm px-md py-md" style={{ color: '#5C6F65' }}>
-                  No insights yet.
+                  Пока нет инсайтов.
                 </p>
               </div>
             ) : (
@@ -165,7 +165,7 @@ export function InsightsClient() {
                 </p>
                 {selectedInsight.evidence && selectedInsight.evidence.length > 0 && (
                   <section className="mt-xl">
-                    <h3 className="font-label-caps text-label-caps text-outline">EVIDENCE</h3>
+                    <h3 className="font-label-caps text-label-caps text-outline">ПОДТВЕРЖДЕНИЯ</h3>
                     <ul className="mt-sm space-y-2">
                       {selectedInsight.evidence.map((evidence) => (
                         <li key={evidence.claimId} className="rounded-lg border px-md py-sm text-sm" style={{ borderColor: '#D8E2DC', color: '#1A2620' }}>
@@ -183,9 +183,9 @@ export function InsightsClient() {
                 <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-md" style={{ background: '#EEF2F0' }}>
                   <span className="material-symbols-outlined text-[26px]" style={{ color: '#0D9F6E' }}>auto_awesome</span>
                 </div>
-                <h2 className="font-display-sm mb-2" style={{ fontSize: 20, fontWeight: 700, color: '#1A2620' }}>No insights yet</h2>
+                <h2 className="font-display-sm mb-2" style={{ fontSize: 20, fontWeight: 700, color: '#1A2620' }}>Пока нет инсайтов</h2>
                 <p className="text-sm leading-relaxed" style={{ color: '#5C6F65' }}>
-                  Check back after your next daily review — Flare surfaces patterns across your captures once there&apos;s enough to work with.
+                  Загляните после следующего ежедневного обзора — Flare находит паттерны в ваших заметках, когда их накапливается достаточно.
                 </p>
               </div>
             </div>
