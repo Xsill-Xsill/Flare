@@ -19,6 +19,11 @@ export function InsightsClient() {
   const workspace = useWorkspace()
   const [insights, setInsights] = useState<Insight[]>([])
   const [selectedInsightId, setSelectedInsightId] = useState<string | null>(null)
+  // Tracks whether the reader pane should take over the screen on mobile —
+  // separate from selectedInsightId, which also gets auto-set on load for
+  // the desktop two-column layout and shouldn't jump straight to the reader
+  // on a phone before the user has picked anything.
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
 
@@ -75,7 +80,7 @@ export function InsightsClient() {
 
       <div className="flex-1 flex min-h-0 border-t" style={{ borderColor: '#D8E2DC' }}>
         <div
-          className="w-full md:w-[280px] shrink-0 md:border-r flex flex-col min-h-0 relative"
+          className={`w-full md:w-[280px] shrink-0 md:border-r ${mobileDetailOpen ? 'hidden md:flex' : 'flex'} flex-col min-h-0 relative`}
           style={{ borderColor: '#D8E2DC' }}
         >
           <div className="flex items-center justify-between px-md pt-md pb-sm shrink-0">
@@ -124,7 +129,10 @@ export function InsightsClient() {
                       key={insight.id}
                       className={`w-full text-left rounded-lg px-sm py-2.5 transition-colors ${selected ? 'bg-surface-container-highest' : 'hover:bg-surface-container-highest/70'}`}
                       type="button"
-                      onClick={() => setSelectedInsightId(insight.id)}
+                      onClick={() => {
+                        setSelectedInsightId(insight.id)
+                        setMobileDetailOpen(true)
+                      }}
                     >
                       <p className="truncate text-sm font-ui-semibold" style={{ color: '#1A2620' }}>{insight.title}</p>
                       <p className="mt-1 text-[11px] font-metadata-mono" style={{ color: '#5C6F65' }}>{relativeTime(insight.createdAt)}</p>
@@ -136,10 +144,18 @@ export function InsightsClient() {
           </div>
         </div>
 
-        <div className="hidden md:flex flex-1 flex-col min-h-0 relative">
+        <div className={`${mobileDetailOpen ? 'flex' : 'hidden'} md:flex flex-1 flex-col min-h-0 relative`}>
           {selectedInsight ? (
             <div className="flex-1 overflow-y-auto">
               <article className="mx-auto px-lg py-xl" style={{ maxWidth: 'var(--content-width)' }}>
+                <button
+                  type="button"
+                  className="md:hidden flex items-center gap-1 text-sm font-ui-semibold mb-md text-on-surface-variant hover:text-on-surface transition-colors"
+                  onClick={() => setMobileDetailOpen(false)}
+                >
+                  <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+                  Назад
+                </button>
                 <span className="font-label-caps text-label-caps text-[#0D9F6E]">{selectedInsight.detectorType.replace('-', ' ')}</span>
                 <h2 className="mt-sm font-display-sm" style={{ fontSize: 28, fontWeight: 800, color: '#1A2620' }}>
                   {selectedInsight.title}
