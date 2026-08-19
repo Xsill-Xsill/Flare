@@ -197,8 +197,20 @@ export function VaultClient() {
 
   function closeNewNote() {
     if (creatingNote) return
+    const hasDraft = newNoteTitle.trim() !== '' || newNoteText.trim() !== '' || newNoteFile !== null
+    if (hasDraft && !window.confirm('Закрыть без сохранения? Введённый текст будет потерян.')) return
     resetNewNoteState()
   }
+
+  useEffect(() => {
+    if (!newNoteOpen) return
+    function onKeyDown(e: globalThis.KeyboardEvent) {
+      if (e.key === 'Escape') closeNewNote()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newNoteOpen, newNoteTitle, newNoteText, newNoteFile, creatingNote])
 
   function formatDuration(totalSeconds: number) {
     const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0')
