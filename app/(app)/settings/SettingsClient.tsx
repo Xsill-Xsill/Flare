@@ -21,17 +21,17 @@ type SectionKey =
 type Folder = { id: string; name: string; description: string; isDefault: boolean }
 
 const SECTIONS: { id: SectionKey; label: string; icon: string }[] = [
-  { id: 'general', label: 'General', icon: 'tune' },
-  { id: 'folders', label: 'Folders', icon: 'folder' },
-  { id: 'insights', label: 'Insights', icon: 'insights' },
-  { id: 'integrations', label: 'Integrations', icon: 'extension' },
-  { id: 'notifications', label: 'Notifications', icon: 'notifications' },
-  { id: 'export', label: 'Export', icon: 'download' },
-  { id: 'members', label: 'Members', icon: 'group' },
-  { id: 'danger', label: 'Danger Zone', icon: 'warning' },
+  { id: 'general', label: 'Общее', icon: 'tune' },
+  { id: 'folders', label: 'Папки', icon: 'folder' },
+  { id: 'insights', label: 'Инсайты', icon: 'insights' },
+  { id: 'integrations', label: 'Интеграции', icon: 'extension' },
+  { id: 'notifications', label: 'Уведомления', icon: 'notifications' },
+  { id: 'export', label: 'Экспорт', icon: 'download' },
+  { id: 'members', label: 'Участники', icon: 'group' },
+  { id: 'danger', label: 'Опасная зона', icon: 'warning' },
 ]
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
 
 function SectionShell({ title, desc, children }: { title: string; desc?: string | null; children: React.ReactNode }) {
   return (
@@ -102,19 +102,19 @@ function GeneralSection({ workspaceName }: { workspaceName: string }) {
     setSaving(true)
     try {
       await renameWorkspace(workspaceId, trimmed)
-      showToast('Saved', 'success')
+      showToast('Сохранено', 'success')
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to save workspace name', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось сохранить название workspace', 'error')
     } finally {
       setSaving(false)
     }
   }
 
   return (
-    <SectionShell title="General">
+    <SectionShell title="Общее">
       <div className="mb-xl">
         <label className="block text-xs font-ui-semibold mb-1" style={{ color: '#5C6F65' }}>
-          Workspace name
+          Название workspace
         </label>
         <div className="flex items-center gap-2">
           <input
@@ -131,13 +131,13 @@ function GeneralSection({ workspaceName }: { workspaceName: string }) {
             disabled={saving}
             onClick={handleSave}
           >
-            {saving ? 'Saving…' : 'Save'}
+            {saving ? 'Сохраняем…' : 'Сохранить'}
           </button>
         </div>
       </div>
       <div>
         <label className="block text-xs font-ui-semibold mb-1" style={{ color: '#5C6F65' }}>
-          Insights language
+          Язык инсайтов
         </label>
         <select
           className="px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
@@ -145,9 +145,9 @@ function GeneralSection({ workspaceName }: { workspaceName: string }) {
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
         >
-          <option value="auto">Auto (detect from notes)</option>
-          <option value="en">English</option>
-          <option value="ru">Russian</option>
+          <option value="auto">Авто (определять по заметкам)</option>
+          <option value="en">Английский</option>
+          <option value="ru">Русский</option>
         </select>
       </div>
     </SectionShell>
@@ -171,25 +171,25 @@ function FoldersSection({
 
   return (
     <SectionShell
-      title="Folders"
-      desc="Manage the folders your notes get organized into. Click a folder to rename it or write AI instructions for it."
+      title="Папки"
+      desc="Управляйте папками, по которым распределяются заметки. Кликните по папке, чтобы переименовать её или задать AI-инструкции."
     >
       <div className="rounded-xl p-sm" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
         {loading && (
           <p className="text-sm p-sm" style={{ color: '#5C6F65' }}>
-            Loading…
+            Загрузка…
           </p>
         )}
         {!loading && folders.length === 0 && (
           <p className="text-sm p-sm" style={{ color: '#5C6F65' }}>
-            No folders yet — add one to start organizing your Vault.
+            Папок пока нет — добавьте первую, чтобы начать организовывать Vault.
           </p>
         )}
         {folders.map((folder, i) =>
           confirmingIndex === i ? (
             <div className="flex items-center justify-between gap-sm w-full p-sm" key={`${folder.name}-${i}`}>
               <span className="text-sm" style={{ color: '#1A2620' }}>
-                Delete <strong>{folder.name}</strong>? This can&apos;t be undone.
+                Удалить <strong>{folder.name}</strong>? Это действие нельзя отменить.
               </span>
               <div className="flex items-center gap-2 shrink-0">
                 <button
@@ -198,7 +198,7 @@ function FoldersSection({
                   type="button"
                   onClick={() => setConfirmingIndex(null)}
                 >
-                  Cancel
+                  Отмена
                 </button>
                 <button
                   className="text-sm font-ui-semibold px-3 py-1.5 rounded-lg transition-colors text-white"
@@ -209,7 +209,7 @@ function FoldersSection({
                     setConfirmingIndex(null)
                   }}
                 >
-                  Delete
+                  Удалить
                 </button>
               </div>
             </div>
@@ -235,18 +235,18 @@ function FoldersSection({
                         className="text-[10px] font-ui-semibold uppercase tracking-wider px-1.5 py-[1px] rounded-full shrink-0"
                         style={{ background: '#EEF2F0', color: '#5C6F65' }}
                       >
-                        Default
+                        По умолчанию
                       </span>
                     )}
                   </div>
                   <div className="text-xs" style={{ color: '#5C6F65', overflowWrap: 'break-word' }}>
-                    {folder.description || 'No AI description yet'}
+                    {folder.description || 'AI-описание пока не задано'}
                   </div>
                 </div>
               </div>
               {!folder.isDefault && (
               <button
-                aria-label="Delete folder"
+                aria-label="Удалить папку"
                 className="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg transition-colors hover:text-[#ba1a1a]"
                 style={{ color: '#5C6F65' }}
                 type="button"
@@ -268,7 +268,7 @@ function FoldersSection({
         type="button"
         onClick={onAdd}
       >
-        <span className="material-symbols-outlined text-[18px]">add</span> Add folder
+        <span className="material-symbols-outlined text-[18px]">add</span> Добавить папку
       </button>
     </SectionShell>
   )
@@ -283,13 +283,13 @@ function InsightsSection({
 }) {
   const [instructions, setInstructions] = useState(initialInstructions)
   const [schedule, setSchedule] = useState<'daily' | 'weekly' | 'threshold'>('daily')
-  const [scheduleDay, setScheduleDay] = useState('Monday')
+  const [scheduleDay, setScheduleDay] = useState('Понедельник')
   const [saving, setSaving] = useState(false)
 
   const scheduleOptions: { id: typeof schedule; label: string }[] = [
-    { id: 'daily', label: 'Daily' },
-    { id: 'weekly', label: 'Weekly' },
-    { id: 'threshold', label: 'When 10+ new notes added' },
+    { id: 'daily', label: 'Каждый день' },
+    { id: 'weekly', label: 'Каждую неделю' },
+    { id: 'threshold', label: 'При 10+ новых заметках' },
   ]
 
   async function handleSave() {
@@ -302,10 +302,10 @@ function InsightsSection({
   }
 
   return (
-    <SectionShell title="Insights" desc="Tell the AI what to focus on when generating insights for this workspace.">
+    <SectionShell title="Инсайты" desc="Подскажите AI, на чём фокусироваться при генерации инсайтов для этого workspace.">
       <textarea
         className="w-full rounded-lg text-sm p-3 focus:outline-none focus:ring-2 transition-all mb-sm"
-        placeholder="e.g. Focus more on customer feedback. Highlight recurring blockers. Prioritize insights about growth and retention."
+        placeholder="Например: больше внимания к отзывам клиентов. Выделять повторяющиеся блокеры. В приоритете — инсайты о росте и удержании."
         rows={6}
         style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620', resize: 'none' }}
         value={instructions}
@@ -318,14 +318,14 @@ function InsightsSection({
         disabled={saving}
         onClick={handleSave}
       >
-        {saving ? 'Saving…' : 'Save'}
+        {saving ? 'Сохраняем…' : 'Сохранить'}
       </button>
       <p className="text-xs mt-sm" style={{ color: '#5C6F65' }}>
-        Used as extra context (&quot;User focus: …&quot;) the next time the repeated-problem detector runs.
+        Используется как дополнительный контекст («User focus: …») при следующем запуске детектора повторяющихся проблем.
       </p>
       <div className="border-t my-xl" style={{ borderColor: '#D8E2DC' }} />
       <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
-        GENERATION SCHEDULE
+        РАСПИСАНИЕ ГЕНЕРАЦИИ
       </p>
       <div className="flex items-center gap-2 flex-wrap">
         {scheduleOptions.map((o) => {
@@ -404,11 +404,11 @@ function IntegrationCard({
             {connected ? (
               <span className="flex items-center gap-1 text-xs" style={{ color: '#0D9F6E' }}>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#0D9F6E' }} />
-                Connected as {connectedAsLabel}
+                Подключено как {connectedAsLabel}
               </span>
             ) : (
               <span className="text-xs" style={{ color: '#5C6F65' }}>
-                Not connected
+                Не подключено
               </span>
             )}
           </div>
@@ -422,7 +422,7 @@ function IntegrationCard({
             type="button"
             onClick={onToggle}
           >
-            Disconnect
+            Отключить
           </button>
         ) : (
           <button
@@ -431,7 +431,7 @@ function IntegrationCard({
             type="button"
             onClick={onToggle}
           >
-            Connect
+            Подключить
           </button>
         )}
       </div>
@@ -444,11 +444,11 @@ function IntegrationsSection({ workspaceName }: { workspaceName: string }) {
   const [gdriveConnected, setGdriveConnected] = useState(false)
 
   return (
-    <SectionShell title="Integrations" desc="Bring notes in from where you already write.">
+    <SectionShell title="Интеграции" desc="Забирайте заметки оттуда, где вы уже пишете.">
       <div className="flex flex-col gap-sm">
         <IntegrationCard
           title="Notion"
-          desc="Import pages and databases"
+          desc="Импорт страниц и баз данных"
           iconBg="#000000"
           iconLabel="N"
           connected={notionConnected}
@@ -457,7 +457,7 @@ function IntegrationsSection({ workspaceName }: { workspaceName: string }) {
         />
         <IntegrationCard
           title="Google Drive"
-          desc="Import Docs and files"
+          desc="Импорт документов и файлов"
           iconBg="#0D9F6E"
           iconLabel="G"
           connected={gdriveConnected}
@@ -478,25 +478,25 @@ function NotificationsSection({
   digestLoading: boolean
   onToggleDigest: (next: boolean) => void
 }) {
-  const [digestDay, setDigestDay] = useState('Monday')
+  const [digestDay, setDigestDay] = useState('Понедельник')
   const [digestTime, setDigestTime] = useState('09:00')
   const [notifyNewInsight, setNotifyNewInsight] = useState(true)
   const [notifyProcessing, setNotifyProcessing] = useState(false)
   const times = ['08:00', '09:00', '10:00', '12:00']
 
   return (
-    <SectionShell title="Notifications">
+    <SectionShell title="Уведомления">
       <div className="divide-y" style={{ borderColor: '#D8E2DC' }}>
         <ToggleRow
-          label="Email digest"
-          desc="A daily summary of new insights, sent every morning."
+          label="Email-дайджест"
+          desc="Ежедневная сводка новых инсайтов, отправляется каждое утро."
           on={digestEnabled}
           onToggle={() => !digestLoading && onToggleDigest(!digestEnabled)}
         />
         {digestEnabled && (
           <div className="pb-sm">
             <p className="text-xs mb-1.5" style={{ color: '#5C6F65' }}>
-              Day &amp; time (coming soon) — the digest currently always sends at 08:00 UTC.
+              День и время (скоро) — сейчас дайджест всегда отправляется в 08:00 UTC.
             </p>
             <div className="flex items-center gap-2 pl-0 opacity-50 pointer-events-none">
               <select
@@ -528,8 +528,8 @@ function NotificationsSection({
             </div>
           </div>
         )}
-        <ToggleRow label="Notify when new insight is ready" on={notifyNewInsight} onToggle={() => setNotifyNewInsight((v) => !v)} />
-        <ToggleRow label="Notify when notes finish processing" on={notifyProcessing} onToggle={() => setNotifyProcessing((v) => !v)} />
+        <ToggleRow label="Уведомлять о новом инсайте" on={notifyNewInsight} onToggle={() => setNotifyNewInsight((v) => !v)} />
+        <ToggleRow label="Уведомлять о завершении обработки заметок" on={notifyProcessing} onToggle={() => setNotifyProcessing((v) => !v)} />
       </div>
     </SectionShell>
   )
@@ -544,7 +544,7 @@ function ExportSection() {
     setExporting(true)
     try {
       const res = await fetch(`/api/v1/settings/export?workspaceId=${workspace.id}`)
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to export')
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось экспортировать')
 
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
@@ -556,14 +556,14 @@ function ExportSection() {
       link.remove()
       URL.revokeObjectURL(url)
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to export', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось экспортировать', 'error')
     } finally {
       setExporting(false)
     }
   }
 
   return (
-    <SectionShell title="Export" desc="Download all your notes as Markdown files.">
+    <SectionShell title="Экспорт" desc="Скачайте все заметки в виде Markdown-файлов.">
       <button
         className="text-sm font-ui-semibold px-5 py-3 rounded-lg transition-colors active:scale-95 hover:bg-[#D1FAE5] disabled:opacity-60"
         style={{ background: '#FFFFFF', border: '1.5px solid #0D9F6E', color: '#0D9F6E' }}
@@ -574,11 +574,11 @@ function ExportSection() {
         <span className="material-symbols-outlined text-[18px] align-middle mr-1">
           {exporting ? 'hourglass_top' : 'download'}
         </span>
-        {exporting ? 'Preparing export…' : 'Export as Markdown .zip'}
+        {exporting ? 'Готовим экспорт…' : 'Экспортировать как Markdown .zip'}
       </button>
       <p className="text-xs mt-sm" style={{ color: '#5C6F65' }}>
-        Includes all notes and sources, each as a Markdown file with folder/tags/date frontmatter. Does not include
-        AI embeddings or generated insights.
+        Включает все заметки и источники, каждый как Markdown-файл с frontmatter (папка/теги/дата). Не включает
+        AI-эмбеддинги и сгенерированные инсайты.
       </p>
     </SectionShell>
   )
@@ -594,10 +594,10 @@ function MembersSection() {
           group
         </span>
         <h2 className="font-display-sm mb-1" style={{ fontSize: 20, fontWeight: 800, color: '#1A2620' }}>
-          Team workspaces are coming
+          Командные workspace скоро появятся
         </h2>
         <p className="text-sm mb-lg" style={{ color: '#5C6F65', maxWidth: 320 }}>
-          Invite teammates to collaborate on shared notes and insights.
+          Приглашайте коллег для совместной работы над заметками и инсайтами.
         </p>
         <button
           className="text-sm font-ui-semibold px-5 py-2.5 rounded-lg transition-colors active:scale-95"
@@ -606,7 +606,7 @@ function MembersSection() {
           disabled={notified}
           onClick={() => setNotified(true)}
         >
-          {notified ? "You're on the list ✓" : "Notify me when it's ready"}
+          {notified ? 'Вы в списке ✓' : 'Сообщить, когда будет готово'}
         </button>
       </div>
     </div>
@@ -625,10 +625,10 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
     setDeleting(true)
     try {
       await deleteWorkspace(workspaceId)
-      showToast('Workspace deleted', 'success')
+      showToast('Workspace удалён', 'success')
       setConfirmingWorkspace(false)
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to delete workspace', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось удалить workspace', 'error')
     } finally {
       setDeleting(false)
     }
@@ -642,27 +642,27 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workspaceId, confirm: 'DELETE' }),
       })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to delete data')
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось удалить данные')
       onDataDeleted()
-      showToast('All data deleted', 'success')
+      showToast('Все данные удалены', 'success')
       setConfirmingData(false)
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to delete data', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось удалить данные', 'error')
     } finally {
       setDeletingData(false)
     }
   }
 
   return (
-    <SectionShell title="Danger Zone">
+    <SectionShell title="Опасная зона">
       <div className="rounded-xl p-md" style={{ border: '1px solid #FCA5A5' }}>
         <div className="flex items-center justify-between gap-md py-sm">
           <div className="min-w-0">
             <p className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
-              Delete all data
+              Удалить все данные
             </p>
             <p className="text-xs" style={{ color: '#5C6F65' }}>
-              Permanently delete all notes, sources, and insights in this workspace. The workspace itself will remain.
+              Безвозвратно удалить все заметки, источники и инсайты в этом workspace. Сам workspace останется.
             </p>
           </div>
           <button
@@ -672,17 +672,17 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
             disabled={deletingData}
             onClick={() => setConfirmingData(true)}
           >
-            {deletingData ? 'Deleting…' : 'Delete all data'}
+            {deletingData ? 'Удаляем…' : 'Удалить все данные'}
           </button>
         </div>
         <div className="border-t my-sm" style={{ borderColor: '#FCA5A5' }} />
         <div className="flex items-center justify-between gap-md py-sm">
           <div className="min-w-0">
             <p className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
-              Delete workspace
+              Удалить workspace
             </p>
             <p className="text-xs" style={{ color: '#5C6F65' }}>
-              Permanently delete this workspace and everything in it. This cannot be undone.
+              Безвозвратно удалить этот workspace и всё его содержимое. Отменить это действие нельзя.
             </p>
           </div>
           <button
@@ -692,7 +692,7 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
             disabled={deleting}
             onClick={() => setConfirmingWorkspace(true)}
           >
-            {deleting ? 'Deleting…' : 'Delete workspace'}
+            {deleting ? 'Удаляем…' : 'Удалить workspace'}
           </button>
         </div>
       </div>
@@ -776,7 +776,7 @@ function FolderEditorOverlay({
             </div>
             <input
               className="flex-1 min-w-0 bg-transparent border-none focus:outline-none focus:ring-0 p-0 font-ui-semibold"
-              placeholder="Folder name"
+              placeholder="Название папки"
               style={{ color: '#1A2620', fontSize: 16 }}
               type="text"
               value={name}
@@ -785,7 +785,7 @@ function FolderEditorOverlay({
             />
           </div>
           <button
-            aria-label="Close"
+            aria-label="Закрыть"
             className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 shrink-0 hover:bg-[#EEF2F0]"
             style={{ color: '#5C6F65' }}
             type="button"
@@ -796,14 +796,14 @@ function FolderEditorOverlay({
         </div>
         <div className="flex-1 overflow-y-auto px-lg py-md">
           <label className="block text-xs font-ui-semibold mb-1" style={{ color: '#5C6F65' }}>
-            AI description
+            AI-описание
           </label>
           <p className="text-xs mb-sm" style={{ color: '#5C6F65' }}>
-            Tell the AI what belongs in this folder and how to treat notes filed here.
+            Подскажите AI, что относится к этой папке и как обращаться с заметками в ней.
           </p>
           <textarea
             className="w-full rounded-lg text-sm p-3 focus:outline-none focus:ring-2 transition-all"
-            placeholder="e.g. Early-stage product ideas, not yet validated. Route anything speculative or half-formed here."
+            placeholder="Например: ранние продуктовые идеи, ещё не проверенные. Сюда — всё спекулятивное и незавершённое."
             rows={8}
             style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620', resize: 'none' }}
             value={description}
@@ -818,7 +818,7 @@ function FolderEditorOverlay({
             disabled={saving}
             onClick={handleClose}
           >
-            Cancel
+            Отмена
           </button>
           <button
             className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 hover:bg-[#0b8a5f] disabled:opacity-60"
@@ -827,7 +827,7 @@ function FolderEditorOverlay({
             disabled={saving}
             onClick={handleSave}
           >
-            {saving ? 'Saving…' : 'Save'}
+            {saving ? 'Сохраняем…' : 'Сохранить'}
           </button>
         </div>
       </div>
@@ -894,7 +894,7 @@ export function SettingsClient() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ workspaceId: workspace.id, name: folder.name, description: folder.description }),
         })
-        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to create folder')
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось создать папку')
         const created: { id: string; name: string; isDefault: boolean; description: string | null } = await res.json()
         setFolders((prev) => [
           ...prev,
@@ -907,16 +907,16 @@ export function SettingsClient() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: folder.name, description: folder.description }),
         })
-        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to rename folder')
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось переименовать папку')
         const updated: { id: string; name: string; isDefault: boolean; description: string | null } = await res.json()
         setFolders((prev) =>
           prev.map((f, i) => (i === editingIndex ? { ...f, name: updated.name, description: updated.description ?? '' } : f))
         )
       }
       setEditingIndex(undefined)
-      showToast('Saved', 'success')
+      showToast('Сохранено', 'success')
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to save folder', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось сохранить папку', 'error')
     }
   }
 
@@ -930,11 +930,11 @@ export function SettingsClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workspaceId: workspace.id, digest_enabled: next }),
       })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to save')
-      showToast('Saved', 'success')
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось сохранить')
+      showToast('Сохранено', 'success')
     } catch (err) {
       setDigestEnabled(previous)
-      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось сохранить', 'error')
     } finally {
       setDigestLoading(false)
     }
@@ -947,12 +947,12 @@ export function SettingsClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workspaceId: workspace.id, insights_instructions: instructions }),
       })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to save')
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось сохранить')
       const updated: { insightsInstructions?: string } = await res.json()
       setInsightsInstructions(updated.insightsInstructions ?? instructions)
-      showToast('Saved', 'success')
+      showToast('Сохранено', 'success')
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось сохранить', 'error')
     }
   }
 
@@ -960,11 +960,11 @@ export function SettingsClient() {
     const target = folders[index]
     try {
       const res = await fetch(`/api/v1/settings/folders/${target.id}`, { method: 'DELETE' })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to delete folder')
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Не удалось удалить папку')
       setFolders((prev) => prev.filter((_, i) => i !== index))
-      showToast('Folder deleted', 'success')
+      showToast('Папка удалена', 'success')
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to delete folder', 'error')
+      showToast(err instanceof Error ? err.message : 'Не удалось удалить папку', 'error')
     }
   }
 
@@ -983,7 +983,7 @@ export function SettingsClient() {
         >
           <div className="px-md pt-lg pb-md">
             <h1 className="font-display-sm" style={{ fontSize: 24, fontWeight: 800, color: '#1A2620' }}>
-              Settings
+              Настройки
             </h1>
             <p className="text-sm mt-1" style={{ color: '#5C6F65' }}>
               {workspace.name}
@@ -1024,7 +1024,7 @@ export function SettingsClient() {
             type="button"
             onClick={() => setMobileShowContent(false)}
           >
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span> Settings
+            <span className="material-symbols-outlined text-[18px]">arrow_back</span> Настройки
           </button>
           <div className="flex-1 overflow-y-auto">
             {activeSection === 'general' && <GeneralSection workspaceName={workspace.name} />}
