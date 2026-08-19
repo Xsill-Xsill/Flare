@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const NAV_ITEMS = [
-  { key: 'home', href: '/dashboard', label: 'Home', icon: '/assets/images/nav-home.png' },
+  { key: 'home', href: '/dashboard', label: 'Главная', icon: '/assets/images/nav-home.png' },
   { key: 'vault', href: '/vault', label: 'Vault', icon: '/assets/images/nav-vault.png' },
-  { key: 'insights', href: '/insights', label: 'Insights', icon: '/assets/images/nav-insights.svg' },
-  { key: 'settings', href: '/settings', label: 'Settings', icon: '/assets/images/nav-settings.png' },
+  { key: 'insights', href: '/insights', label: 'Инсайты', icon: '/assets/images/nav-insights.svg' },
+  { key: 'settings', href: '/settings', label: 'Настройки', icon: '/assets/images/nav-settings.png' },
 ]
 
 function activeKeyForPath(pathname: string) {
