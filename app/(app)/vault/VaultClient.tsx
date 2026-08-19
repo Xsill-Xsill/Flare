@@ -443,14 +443,6 @@ export function VaultClient() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           <SidebarToggleButton />
-          <div className="relative flex items-center gap-2 text-on-surface-variant w-full max-w-[20rem] min-w-0 pl-1">
-            <span className="material-symbols-outlined text-[18px]">search</span>
-            <input
-              className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none p-0 text-sm placeholder:text-on-surface-variant"
-              placeholder="Search your brain..."
-              type="text"
-            />
-          </div>
         </div>
         <div className="flex items-center gap-md shrink-0">
           <span className="hidden sm:inline font-metadata-mono text-metadata-mono text-on-surface-variant">

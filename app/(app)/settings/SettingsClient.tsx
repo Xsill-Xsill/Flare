@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useWorkspace } from '@/components/shell/WorkspaceContext'
 import { SidebarToggleButton } from '@/components/shell/SidebarToggleButton'
 import { useToast } from '@/components/shell/ToastProvider'
+import { ConfirmDialog } from '@/components/shell/ConfirmDialog'
 
 type SectionKey =
   | 'general'
@@ -617,17 +618,15 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
   const { deleteWorkspace, id: workspaceId } = useWorkspace()
   const [deleting, setDeleting] = useState(false)
   const [deletingData, setDeletingData] = useState(false)
-
-  function confirmAndRun(message: string, onConfirm: (confirmation: string) => void) {
-    const confirmation = window.prompt(message)
-    if (confirmation === 'DELETE') onConfirm(confirmation)
-  }
+  const [confirmingWorkspace, setConfirmingWorkspace] = useState(false)
+  const [confirmingData, setConfirmingData] = useState(false)
 
   async function handleDeleteWorkspace() {
     setDeleting(true)
     try {
       await deleteWorkspace(workspaceId)
       showToast('Workspace deleted', 'success')
+      setConfirmingWorkspace(false)
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Failed to delete workspace', 'error')
     } finally {
@@ -635,17 +634,18 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
     }
   }
 
-  async function handleDeleteAllData(confirmation: string) {
+  async function handleDeleteAllData() {
     setDeletingData(true)
     try {
       const res = await fetch('/api/v1/settings/delete-all-data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId, confirm: confirmation }),
+        body: JSON.stringify({ workspaceId, confirm: 'DELETE' }),
       })
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to delete data')
       onDataDeleted()
       showToast('All data deleted', 'success')
+      setConfirmingData(false)
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Failed to delete data', 'error')
     } finally {
@@ -670,12 +670,7 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
             style={{ background: '#FFFFFF', border: '1.5px solid #ba1a1a', color: '#ba1a1a' }}
             type="button"
             disabled={deletingData}
-            onClick={() =>
-              confirmAndRun(
-                'Type DELETE to confirm you want to permanently delete all data in this workspace.',
-                handleDeleteAllData
-              )
-            }
+            onClick={() => setConfirmingData(true)}
           >
             {deletingData ? 'Deleting…' : 'Delete all data'}
           </button>
@@ -695,14 +690,33 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
             style={{ background: '#ba1a1a' }}
             type="button"
             disabled={deleting}
-            onClick={() =>
-              confirmAndRun('Type DELETE to confirm you want to permanently delete this workspace.', handleDeleteWorkspace)
-            }
+            onClick={() => setConfirmingWorkspace(true)}
           >
             {deleting ? 'Deleting…' : 'Delete workspace'}
           </button>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={confirmingData}
+        title="Удалить все данные workspace?"
+        description="Все заметки, источники и инсайты в этом workspace будут удалены навсегда. Сам workspace останется."
+        requireTypedConfirmation="DELETE"
+        confirmLabel="Удалить всё"
+        loading={deletingData}
+        onConfirm={handleDeleteAllData}
+        onCancel={() => setConfirmingData(false)}
+      />
+      <ConfirmDialog
+        open={confirmingWorkspace}
+        title="Удалить workspace?"
+        description="Этот workspace и всё его содержимое будут удалены навсегда. Отменить это действие нельзя."
+        requireTypedConfirmation="DELETE"
+        confirmLabel="Удалить workspace"
+        loading={deleting}
+        onConfirm={handleDeleteWorkspace}
+        onCancel={() => setConfirmingWorkspace(false)}
+      />
     </SectionShell>
   )
 }

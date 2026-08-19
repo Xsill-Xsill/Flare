@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { signOut } from '@/lib/actions/auth'
+import { createClient } from '@/lib/supabase/client'
 
 type Tab = 'account' | 'plan' | 'billing'
 type Plan = 'basic' | 'plus'
@@ -113,7 +115,7 @@ export function AccountModal({
           <div className="flex-1 overflow-y-auto px-lg py-lg">
             {activeTab === 'account' && <AccountTab userName={userName} userEmail={userEmail} />}
             {activeTab === 'plan' && <PlanTab plan={plan} onSwitch={switchPlan} />}
-            {activeTab === 'billing' && <BillingTab plan={plan} />}
+            {activeTab === 'billing' && <BillingTab />}
           </div>
         </div>
       </div>
@@ -122,8 +124,28 @@ export function AccountModal({
 }
 
 function AccountTab({ userName, userEmail }: { userName: string; userEmail: string }) {
+  const router = useRouter()
   const [name, setName] = useState(userName)
   const [saved, setSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSave() {
+    const trimmed = name.trim()
+    if (!trimmed || trimmed === userName) return
+    setSaving(true)
+    setError(null)
+    const supabase = createClient()
+    const { error: updateError } = await supabase.auth.updateUser({ data: { full_name: trimmed } })
+    setSaving(false)
+    if (updateError) {
+      setError('Не удалось сохранить имя, попробуйте снова')
+      return
+    }
+    setSaved(true)
+    router.refresh()
+    setTimeout(() => setSaved(false), 1200)
+  }
 
   return (
     <div>
@@ -164,17 +186,20 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
             onChange={(e) => setName(e.target.value)}
           />
           <button
-            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0 hover:bg-[#0b8a5f]"
+            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 shrink-0 hover:bg-[#0b8a5f] disabled:opacity-60"
             style={{ background: '#0D9F6E' }}
             type="button"
-            onClick={() => {
-              setSaved(true)
-              setTimeout(() => setSaved(false), 1200)
-            }}
+            disabled={saving || !name.trim() || name.trim() === userName}
+            onClick={handleSave}
           >
-            {saved ? 'Saved' : 'Save'}
+            {saving ? 'Saving…' : saved ? 'Saved' : 'Save'}
           </button>
         </div>
+        {error && (
+          <p className="text-xs mt-1.5" style={{ color: '#ba1a1a' }}>
+            {error}
+          </p>
+        )}
       </div>
       <div className="mb-xl">
         <label className="block text-xs font-ui-semibold mb-1" style={{ color: '#5C6F65' }}>
@@ -206,6 +231,7 @@ function PlanCard({
   priceSuffix,
   highlight,
   actionLabel,
+  actionDisabled,
   features,
   onSelect,
 }: {
@@ -215,6 +241,7 @@ function PlanCard({
   priceSuffix: string
   highlight: boolean
   actionLabel: string
+  actionDisabled?: boolean
   features: string[]
   onSelect: () => void
 }) {
@@ -260,9 +287,10 @@ function PlanCard({
           </span>
         ) : (
           <button
-            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full hover:bg-[#0b8a5f]"
+            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors active:scale-95 w-full hover:bg-[#0b8a5f] disabled:opacity-50 disabled:pointer-events-none"
             style={{ background: '#0D9F6E' }}
             type="button"
+            disabled={actionDisabled}
             onClick={onSelect}
           >
             {actionLabel}
@@ -302,7 +330,8 @@ function PlanTab({ plan, onSwitch }: { plan: Plan; onSwitch: (plan: Plan) => voi
           price="$10"
           priceSuffix="/mo"
           highlight
-          actionLabel="Upgrade to Plus"
+          actionLabel="Coming soon"
+          actionDisabled
           features={[
             'Unlimited notes',
             'Unlimited workspaces',
@@ -317,8 +346,7 @@ function PlanTab({ plan, onSwitch }: { plan: Plan; onSwitch: (plan: Plan) => voi
   )
 }
 
-function BillingTab({ plan }: { plan: Plan }) {
-  const isPlus = plan === 'plus'
+function BillingTab() {
   return (
     <div>
       <h3 className="font-display-sm mb-lg" style={{ fontSize: 20, fontWeight: 800, color: '#1A2620' }}>
@@ -328,50 +356,21 @@ function BillingTab({ plan }: { plan: Plan }) {
         <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
           PAYMENT METHOD
         </p>
-        {isPlus ? (
-          <div className="rounded-xl p-md flex items-center justify-between" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-            <div className="flex items-center gap-sm">
-              <span className="material-symbols-outlined text-[20px]" style={{ color: '#5C6F65' }}>
-                credit_card
-              </span>
-              <span className="text-sm" style={{ color: '#1A2620' }}>
-                Visa •••• 4242
-              </span>
-            </div>
-            <span className="text-xs" style={{ color: '#5C6F65' }}>
-              Next charge Sep 4, 2026
-            </span>
-          </div>
-        ) : (
-          <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-            <p className="text-sm" style={{ color: '#5C6F65' }}>
-              No payment method on file — you&apos;re on the Free plan.
-            </p>
-          </div>
-        )}
+        <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
+          <p className="text-sm" style={{ color: '#5C6F65' }}>
+            No payment method on file — you&apos;re on the Free plan.
+          </p>
+        </div>
       </div>
       <div>
         <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
           BILLING HISTORY
         </p>
-        {isPlus ? (
-          <div className="rounded-xl" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-            <div className="flex items-center justify-between px-md py-sm">
-              <span className="text-sm" style={{ color: '#1A2620' }}>
-                Aug 4, 2026 — Plus plan
-              </span>
-              <span className="text-sm font-ui-semibold" style={{ color: '#1A2620' }}>
-                $10.00
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
-            <p className="text-sm" style={{ color: '#5C6F65' }}>
-              No invoices yet.
-            </p>
-          </div>
-        )}
+        <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
+          <p className="text-sm" style={{ color: '#5C6F65' }}>
+            No invoices yet.
+          </p>
+        </div>
       </div>
     </div>
   )
