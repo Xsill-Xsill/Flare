@@ -60,7 +60,7 @@ export async function transcribeAudio(audioBuffer: Buffer, mimeType: string): Pr
   )
 
   if (!text || looksLikeHallucination(text)) {
-    throw new Error('Аудио не содержит распознаваемой речи')
+    throw new Error('No recognizable speech found in the audio')
   }
 
   return text

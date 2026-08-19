@@ -217,9 +217,9 @@ export function WorkspaceSwitcher() {
             onClick={() => (!deleting ? setDeleteTarget(null) : undefined)}
           />
           <div className="relative bg-white rounded-xl w-full max-w-[420px] p-lg shadow-lg flex flex-col gap-3">
-            <h3 className="font-ui-semibold text-base text-on-surface">Удалить workspace?</h3>
+            <h3 className="font-ui-semibold text-base text-on-surface">Delete workspace?</h3>
             <p className="text-sm text-on-surface-variant">
-              Удалить workspace «{deleteTarget.name}»? Все данные будут удалены безвозвратно.
+              Delete workspace &ldquo;{deleteTarget.name}&rdquo;? All data will be permanently deleted.
             </p>
             <div className="flex items-center justify-end gap-2 mt-2">
               <button
@@ -228,7 +228,7 @@ export function WorkspaceSwitcher() {
                 disabled={deleting}
                 onClick={() => setDeleteTarget(null)}
               >
-                Отмена
+                Cancel
               </button>
               <button
                 type="button"
@@ -236,7 +236,7 @@ export function WorkspaceSwitcher() {
                 disabled={deleting}
                 onClick={confirmDelete}
               >
-                {deleting ? 'Удаление…' : 'Удалить'}
+                {deleting ? 'Deleting…' : 'Delete'}
               </button>
             </div>
           </div>

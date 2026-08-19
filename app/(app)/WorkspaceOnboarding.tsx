@@ -20,10 +20,10 @@ export function WorkspaceOnboarding() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim() }),
       })
-      if (!res.ok) throw new Error((await res.json()).error ?? 'Не удалось создать workspace')
+      if (!res.ok) throw new Error((await res.json()).error ?? 'Failed to create workspace')
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка')
+      setError(err instanceof Error ? err.message : 'Something went wrong')
       setBusy(false)
     }
   }
@@ -35,10 +35,10 @@ export function WorkspaceOnboarding() {
         className="w-full max-w-[24rem] rounded-xl border border-border bg-white p-6"
       >
         <h2 className="font-headline-lg text-headline-lg text-foreground mb-3">
-          Создай свой первый workspace
+          Create your first workspace
         </h2>
         <p className="text-sm text-muted mb-6">
-          Здесь будут собираться твои заметки, ссылки и файлы.
+          This is where your notes, links, and files will live.
         </p>
         <input
           type="text"
@@ -52,7 +52,7 @@ export function WorkspaceOnboarding() {
           disabled={busy || !name.trim()}
           className="mt-6 w-full rounded-lg bg-accent px-4 py-2 text-sm font-ui-semibold text-white transition-colors hover:bg-accent/90 disabled:opacity-50"
         >
-          {busy ? 'Создаём...' : 'Create'}
+          {busy ? 'Creating...' : 'Create'}
         </button>
         {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
       </form>

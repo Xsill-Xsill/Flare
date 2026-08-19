@@ -45,7 +45,7 @@ function renderInsightBlock(insight: DigestInsight): string {
 }
 
 export function renderDigestEmail(insights: DigestInsight[]): { subject: string; html: string } {
-  const subject = `${insights.length} новых инсайта в Flare`
+  const subject = `${insights.length} new insight${insights.length === 1 ? '' : 's'} in Flare`
   const insightBlocks = insights.map(renderInsightBlock).join('')
 
   const html = `<!doctype html>
@@ -58,7 +58,7 @@ export function renderDigestEmail(insights: DigestInsight[]): { subject: string;
             <tr>
               <td style="padding: 0 0 24px 0;">
                 <p style="margin: 0; font-size: 20px; font-weight: 800; color: #1A2620; font-family: ${FONT_STACK};">
-                  Flare &middot; Инсайты за сегодня
+                  Flare &middot; Today&rsquo;s insights
                 </p>
               </td>
             </tr>
@@ -66,9 +66,9 @@ export function renderDigestEmail(insights: DigestInsight[]): { subject: string;
             <tr>
               <td style="padding-top: 8px; border-top: 1px solid #D8E2DC;">
                 <p style="margin: 16px 0 0 0; font-size: 13px; font-family: ${FONT_STACK};">
-                  <a href="${APP_URL}/insights" style="color: #0D9F6E; text-decoration: none; font-weight: 600;">Открыть Flare</a>
+                  <a href="${APP_URL}/insights" style="color: #0D9F6E; text-decoration: none; font-weight: 600;">Open Flare</a>
                   &nbsp;&middot;&nbsp;
-                  <a href="mailto:unsubscribe@in.flare.app?subject=Unsubscribe" style="color: #5C6F65; text-decoration: none;">Отписаться</a>
+                  <a href="mailto:unsubscribe@in.flare.app?subject=Unsubscribe" style="color: #5C6F65; text-decoration: none;">Unsubscribe</a>
                 </p>
               </td>
             </tr>
