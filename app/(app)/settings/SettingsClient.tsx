@@ -699,20 +699,20 @@ function DangerSection({ onDataDeleted }: { onDataDeleted: () => void }) {
 
       <ConfirmDialog
         open={confirmingData}
-        title="Удалить все данные workspace?"
-        description="Все заметки, источники и инсайты в этом workspace будут удалены навсегда. Сам workspace останется."
+        title="Delete all workspace data?"
+        description="All notes, sources, and insights in this workspace will be permanently deleted. The workspace itself will remain."
         requireTypedConfirmation="DELETE"
-        confirmLabel="Удалить всё"
+        confirmLabel="Delete all data"
         loading={deletingData}
         onConfirm={handleDeleteAllData}
         onCancel={() => setConfirmingData(false)}
       />
       <ConfirmDialog
         open={confirmingWorkspace}
-        title="Удалить workspace?"
-        description="Этот workspace и всё его содержимое будут удалены навсегда. Отменить это действие нельзя."
+        title="Delete workspace?"
+        description="This workspace and everything in it will be permanently deleted. This can't be undone."
         requireTypedConfirmation="DELETE"
-        confirmLabel="Удалить workspace"
+        confirmLabel="Delete workspace"
         loading={deleting}
         onConfirm={handleDeleteWorkspace}
         onCancel={() => setConfirmingWorkspace(false)}

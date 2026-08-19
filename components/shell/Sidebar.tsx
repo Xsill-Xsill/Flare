@@ -36,9 +36,12 @@ export function Sidebar({
   const collapsedRef = useRef(collapsed)
   const widthRef = useRef(width)
   const setWidthRef = useRef(setWidth)
-  collapsedRef.current = collapsed
-  widthRef.current = width
-  setWidthRef.current = setWidth
+
+  useEffect(() => {
+    collapsedRef.current = collapsed
+    widthRef.current = width
+    setWidthRef.current = setWidth
+  }, [collapsed, width, setWidth])
 
   useEffect(() => {
     const handle = resizeHandleRef.current

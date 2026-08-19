@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   async function handleForgotPassword() {
     if (!email) {
-      setError('Введите email, чтобы восстановить пароль')
+      setError('Enter your email to reset your password')
       return
     }
     setResetting(true)
@@ -54,8 +54,8 @@ export default function LoginPage() {
       <div className="w-full max-w-[24rem]">
         <div className="flex flex-col items-center mb-8">
           <Image alt="Flare" src="/logo.png" width={48} height={48} className="w-12 h-12 rounded-lg object-contain mb-4" />
-          <h1 className="text-2xl font-bold text-foreground">Войти в Flare</h1>
-          <p className="text-sm text-muted mt-1">С возвращением</p>
+          <h1 className="text-2xl font-bold text-foreground">Log in to Flare</h1>
+          <p className="text-sm text-muted mt-1">Welcome back</p>
         </div>
 
         <div className="bg-white border border-border rounded-xl shadow-sm p-6">
@@ -77,7 +77,7 @@ export default function LoginPage() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label htmlFor="login-password" className="block text-xs font-semibold uppercase tracking-wide text-muted">
-                  Пароль
+                  Password
                 </label>
                 <button
                   type="button"
@@ -85,7 +85,7 @@ export default function LoginPage() {
                   disabled={resetting}
                   className="text-xs font-medium text-accent hover:underline disabled:opacity-50"
                 >
-                  Забыли пароль?
+                  Forgot password?
                 </button>
               </div>
               <div className="relative">
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 />
                 <button
                   type="button"
-                  aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   onClick={() => setShowPassword(v => !v)}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                 >
@@ -113,7 +113,7 @@ export default function LoginPage() {
 
             {resetSent && (
               <p className="text-sm rounded-lg px-3 py-2 bg-accent-soft text-accent border border-accent/20">
-                Если такой аккаунт существует, письмо со ссылкой для сброса пароля уже отправлено
+                If an account exists for that email, a password reset link is on its way
               </p>
             )}
 
@@ -128,15 +128,15 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full bg-accent hover:opacity-90 active:scale-[0.99] transition text-white rounded-lg px-4 py-2.5 text-sm font-semibold disabled:opacity-50 disabled:pointer-events-none"
             >
-              {loading ? 'Входим…' : 'Войти'}
+              {loading ? 'Logging in…' : 'Log in'}
             </button>
           </form>
         </div>
 
         <p className="text-sm text-center text-muted mt-6">
-          Нет аккаунта?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/register" className="text-accent font-medium hover:underline">
-            Зарегистрироваться
+            Sign up
           </Link>
         </p>
       </div>

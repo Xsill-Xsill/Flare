@@ -37,8 +37,8 @@ export default function RegisterPage() {
       <div className="w-full max-w-[24rem]">
         <div className="flex flex-col items-center mb-8">
           <Image alt="Flare" src="/logo.png" width={48} height={48} className="w-12 h-12 rounded-lg object-contain mb-4" />
-          <h1 className="text-2xl font-bold text-foreground">Создать аккаунт</h1>
-          <p className="text-sm text-muted mt-1">Начните собирать свой второй мозг</p>
+          <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
+          <p className="text-sm text-muted mt-1">Start building your second brain</p>
         </div>
 
         <div className="bg-white border border-border rounded-xl shadow-sm p-6">
@@ -59,7 +59,7 @@ export default function RegisterPage() {
             </div>
             <div>
               <label htmlFor="register-password" className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1.5">
-                Пароль
+                Password
               </label>
               <div className="relative">
                 <input
@@ -74,7 +74,7 @@ export default function RegisterPage() {
                 />
                 <button
                   type="button"
-                  aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   onClick={() => setShowPassword(v => !v)}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                 >
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                   </span>
                 </button>
               </div>
-              <p className="text-xs text-muted mt-1.5">Минимум 6 символов</p>
+              <p className="text-xs text-muted mt-1.5">At least 6 characters</p>
             </div>
 
             {error && (
@@ -97,15 +97,15 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full bg-accent hover:opacity-90 active:scale-[0.99] transition text-white rounded-lg px-4 py-2.5 text-sm font-semibold disabled:opacity-50 disabled:pointer-events-none"
             >
-              {loading ? 'Регистрируем…' : 'Создать аккаунт'}
+              {loading ? 'Creating account…' : 'Create account'}
             </button>
           </form>
         </div>
 
         <p className="text-sm text-center text-muted mt-6">
-          Уже есть аккаунт?{' '}
+          Already have an account?{' '}
           <Link href="/login" className="text-accent font-medium hover:underline">
-            Войти
+            Log in
           </Link>
         </p>
       </div>

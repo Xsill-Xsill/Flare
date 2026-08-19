@@ -154,7 +154,7 @@ export function InsightsClient() {
                   onClick={() => setMobileDetailOpen(false)}
                 >
                   <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-                  Назад
+                  Back
                 </button>
                 <span className="font-label-caps text-label-caps text-[#0D9F6E]">{selectedInsight.detectorType.replace('-', ' ')}</span>
                 <h2 className="mt-sm font-display-sm" style={{ fontSize: 28, fontWeight: 800, color: '#1A2620' }}>

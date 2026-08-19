@@ -292,7 +292,7 @@ export function DashboardClient() {
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     } catch {
-      showToast('Не удалось получить доступ к микрофону — проверь разрешения браузера.', 'error')
+      showToast('Could not access the microphone — check your browser permissions.', 'error')
       return
     }
 
@@ -360,10 +360,10 @@ export function DashboardClient() {
       setRecordingSeconds(0)
       setAudioState('idle')
       await loadItems()
-      showToast('Транскрибируется…', 'success')
+      showToast('Transcribing…', 'success')
     } catch (err) {
       setAudioState('recorded')
-      showToast(err instanceof Error ? err.message : 'Не удалось отправить запись', 'error')
+      showToast(err instanceof Error ? err.message : 'Failed to send recording', 'error')
     }
   }
 
@@ -542,7 +542,7 @@ export function DashboardClient() {
             <div className="flex items-center gap-2 pl-lg pt-sm">
               <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
               <span className="font-metadata-mono text-xs text-on-surface">{formatDuration(recordingSeconds)}</span>
-              <span className="text-xs text-on-surface-variant">Запись идёт…</span>
+              <span className="text-xs text-on-surface-variant">Recording…</span>
             </div>
           )}
 
@@ -556,7 +556,7 @@ export function DashboardClient() {
                   disabled={audioState === 'sending'}
                   onClick={sendRecording}
                 >
-                  {audioState === 'sending' ? 'Транскрибируется…' : 'Отправить'}
+                  {audioState === 'sending' ? 'Transcribing…' : 'Send'}
                 </button>
                 <button
                   type="button"
@@ -564,7 +564,7 @@ export function DashboardClient() {
                   disabled={audioState === 'sending'}
                   onClick={reRecordAudio}
                 >
-                  Перезаписать
+                  Re-record
                 </button>
               </div>
             </div>
@@ -595,7 +595,7 @@ export function DashboardClient() {
               </button>
               {audioState === 'idle' && (
                 <button
-                  aria-label="Записать"
+                  aria-label="Record"
                   className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-[#EEF2F0]"
                   style={{ color: '#3d4a42' }}
                   type="button"
@@ -606,7 +606,7 @@ export function DashboardClient() {
               )}
               {audioState === 'recording' && (
                 <button
-                  aria-label="Стоп"
+                  aria-label="Stop"
                   className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-red-50"
                   style={{ color: '#dc2626' }}
                   type="button"
@@ -892,13 +892,13 @@ export function DashboardClient() {
         </div>
         {itemsError ? (
           <div className="flex items-center justify-between px-xs">
-            <p className="text-sm" style={{ color: '#ba1a1a' }}>Не удалось загрузить заметки</p>
+            <p className="text-sm" style={{ color: '#ba1a1a' }}>Couldn&apos;t load notes</p>
             <button
               type="button"
               className="text-sm font-ui-semibold text-primary hover:underline"
               onClick={() => loadItems()}
             >
-              Повторить
+              Retry
             </button>
           </div>
         ) : recentItems.length === 0 ? (

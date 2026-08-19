@@ -127,7 +127,7 @@ export function VaultClient() {
       setInboxItems(Array.isArray(data) ? data : [])
     } catch {
       setInboxItems([])
-      showToast('Не удалось загрузить Inbox', 'error')
+      showToast('Failed to load Inbox', 'error')
     }
   }
 
@@ -200,7 +200,7 @@ export function VaultClient() {
   function closeNewNote() {
     if (creatingNote) return
     const hasDraft = newNoteTitle.trim() !== '' || newNoteText.trim() !== '' || newNoteFile !== null
-    if (hasDraft && !window.confirm('Закрыть без сохранения? Введённый текст будет потерян.')) return
+    if (hasDraft && !window.confirm('Discard without saving? The text you entered will be lost.')) return
     resetNewNoteState()
   }
 
@@ -230,7 +230,7 @@ export function VaultClient() {
       if (!res.ok) throw new Error(body.error ?? 'Failed to transcribe')
       setNewNoteText((prev) => (prev.trim() ? `${prev.trim()}\n\n${body.text}` : body.text))
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Не удалось распознать речь', 'error')
+      showToast(err instanceof Error ? err.message : 'Failed to transcribe', 'error')
     } finally {
       setTranscribing(false)
     }
@@ -246,7 +246,7 @@ export function VaultClient() {
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     } catch {
-      showToast('Не удалось получить доступ к микрофону — проверь разрешения браузера.', 'error')
+      showToast('Could not access the microphone — check your browser permissions.', 'error')
       return
     }
 
@@ -1127,7 +1127,7 @@ export function VaultClient() {
                     style={{ borderTopColor: '#0D9F6E' }}
                   />
                   <span className="text-xs font-metadata-mono" style={{ color: '#5C6F65' }}>
-                    Распознаём речь…
+                    Transcribing…
                   </span>
                 </span>
               )}

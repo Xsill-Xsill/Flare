@@ -6,8 +6,8 @@ export function ConfirmDialog({
   open,
   title,
   description,
-  confirmLabel = 'Удалить',
-  cancelLabel = 'Отмена',
+  confirmLabel = 'Delete',
+  cancelLabel = 'Cancel',
   requireTypedConfirmation,
   loading,
   onConfirm,
@@ -48,8 +48,8 @@ export function ConfirmDialog({
         {requireTypedConfirmation && (
           <div>
             <label className="block text-xs text-on-surface-variant mb-1">
-              Введите <span className="font-ui-semibold text-on-surface">{requireTypedConfirmation}</span>, чтобы
-              подтвердить
+              Type <span className="font-ui-semibold text-on-surface">{requireTypedConfirmation}</span> to
+              confirm
             </label>
             <input
               className="w-full px-3 py-2 rounded-lg text-sm border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
@@ -76,7 +76,7 @@ export function ConfirmDialog({
             disabled={loading || locked}
             onClick={onConfirm}
           >
-            {loading ? 'Удаление…' : confirmLabel}
+            {loading ? 'Deleting…' : confirmLabel}
           </button>
         </div>
       </div>

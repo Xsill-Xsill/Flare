@@ -53,24 +53,24 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-[24rem]">
         <div className="flex flex-col items-center mb-8">
           <Image alt="Flare" src="/logo.png" width={48} height={48} className="w-12 h-12 rounded-lg object-contain mb-4" />
-          <h1 className="text-2xl font-bold text-foreground">Новый пароль</h1>
-          <p className="text-sm text-muted mt-1">Придумайте новый пароль для входа</p>
+          <h1 className="text-2xl font-bold text-foreground">Set a new password</h1>
+          <p className="text-sm text-muted mt-1">Choose a new password for your account</p>
         </div>
 
         <div className="bg-white border border-border rounded-xl shadow-sm p-6">
           {!ready ? (
             <p className="text-sm text-muted text-center py-4">
-              Открываем ссылку восстановления…
+              Opening your reset link…
             </p>
           ) : done ? (
             <p className="text-sm rounded-lg px-3 py-2 bg-accent-soft text-accent border border-accent/20">
-              Пароль обновлён, переходим в приложение…
+              Password updated, taking you to the app…
             </p>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="new-password" className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1.5">
-                  Новый пароль
+                  New password
                 </label>
                 <div className="relative">
                   <input
@@ -85,7 +85,7 @@ export default function ResetPasswordPage() {
                   />
                   <button
                     type="button"
-                    aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     onClick={() => setShowPassword(v => !v)}
                     className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                   >
@@ -94,7 +94,7 @@ export default function ResetPasswordPage() {
                     </span>
                   </button>
                 </div>
-                <p className="text-xs text-muted mt-1.5">Минимум 6 символов</p>
+                <p className="text-xs text-muted mt-1.5">At least 6 characters</p>
               </div>
 
               {error && (
@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
                 disabled={loading}
                 className="w-full bg-accent hover:opacity-90 active:scale-[0.99] transition text-white rounded-lg px-4 py-2.5 text-sm font-semibold disabled:opacity-50 disabled:pointer-events-none"
               >
-                {loading ? 'Сохраняем…' : 'Сохранить пароль'}
+                {loading ? 'Saving…' : 'Save password'}
               </button>
             </form>
           )}

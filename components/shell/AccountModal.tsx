@@ -139,7 +139,7 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
     const { error: updateError } = await supabase.auth.updateUser({ data: { full_name: trimmed } })
     setSaving(false)
     if (updateError) {
-      setError('Не удалось сохранить имя, попробуйте снова')
+      setError('Failed to save name, try again')
       return
     }
     setSaved(true)
