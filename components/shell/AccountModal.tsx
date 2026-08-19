@@ -9,9 +9,9 @@ type Tab = 'account' | 'plan' | 'billing'
 type Plan = 'basic' | 'plus'
 
 const TABS: { key: Tab; label: string; icon: string }[] = [
-  { key: 'account', label: 'Account', icon: 'person' },
-  { key: 'plan', label: 'Plan', icon: 'workspace_premium' },
-  { key: 'billing', label: 'Billing', icon: 'receipt_long' },
+  { key: 'account', label: 'Аккаунт', icon: 'person' },
+  { key: 'plan', label: 'Тариф', icon: 'workspace_premium' },
+  { key: 'billing', label: 'Оплата', icon: 'receipt_long' },
 ]
 
 export function AccountModal({
@@ -80,10 +80,10 @@ export function AccountModal({
       >
         <div className="flex items-center justify-between px-lg py-md shrink-0 border-b border-[#D8E2DC]">
           <h2 className="font-ui-semibold" style={{ fontSize: 15, color: '#1A2620' }}>
-            Account
+            Аккаунт
           </h2>
           <button
-            aria-label="Close"
+            aria-label="Закрыть"
             className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors active:scale-95 hover:bg-[#EEF2F0]"
             style={{ color: '#5C6F65' }}
             type="button"
@@ -150,7 +150,7 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
   return (
     <div>
       <h3 className="font-display-sm mb-lg" style={{ fontSize: 20, fontWeight: 800, color: '#1A2620' }}>
-        Account
+        Аккаунт
       </h3>
       <div className="flex items-center gap-md mb-xl">
         <div
@@ -166,16 +166,16 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
             type="button"
             disabled
           >
-            Upload photo
+            Загрузить фото
           </button>
           <p className="text-xs mt-1" style={{ color: '#5C6F65' }}>
-            JPG or PNG, up to 5MB
+            JPG или PNG, до 5MB
           </p>
         </div>
       </div>
       <div className="mb-lg">
         <label className="block text-xs font-ui-semibold mb-1" style={{ color: '#5C6F65' }}>
-          Name
+          Имя
         </label>
         <div className="flex items-center gap-2">
           <input
@@ -192,7 +192,7 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
             disabled={saving || !name.trim() || name.trim() === userName}
             onClick={handleSave}
           >
-            {saving ? 'Saving…' : saved ? 'Saved' : 'Save'}
+            {saving ? 'Сохраняем…' : saved ? 'Сохранено' : 'Сохранить'}
           </button>
         </div>
         {error && (
@@ -216,7 +216,7 @@ function AccountTab({ userName, userEmail }: { userName: string; userEmail: stri
             style={{ color: '#ba1a1a' }}
             type="submit"
           >
-            <span className="material-symbols-outlined text-[18px]">logout</span> Sign out
+            <span className="material-symbols-outlined text-[18px]">logout</span> Выйти
           </button>
         </form>
       </div>
@@ -255,7 +255,7 @@ function PlanCard({
           className="inline-block text-[10px] font-ui-semibold uppercase tracking-wider px-2 py-[2px] rounded-full mb-2 self-start"
           style={{ background: '#D1FAE5', color: '#0D9F6E' }}
         >
-          Recommended
+          Рекомендуем
         </span>
       )}
       <p className="text-sm font-ui-semibold mb-1" style={{ color: '#1A2620' }}>
@@ -283,7 +283,7 @@ function PlanCard({
             className="inline-block text-xs font-ui-semibold px-3 py-1.5 rounded-lg"
             style={{ background: '#EEF2F0', color: '#5C6F65' }}
           >
-            Current plan
+            Текущий тариф
           </span>
         ) : (
           <button
@@ -305,22 +305,22 @@ function PlanTab({ plan, onSwitch }: { plan: Plan; onSwitch: (plan: Plan) => voi
   return (
     <div>
       <h3 className="font-display-sm mb-lg" style={{ fontSize: 20, fontWeight: 800, color: '#1A2620' }}>
-        Plan
+        Тариф
       </h3>
       <div className="flex gap-md" style={{ alignItems: 'stretch' }}>
         <PlanCard
           isCurrent={plan === 'basic'}
           title="Basic"
           price="$0"
-          priceSuffix="/mo"
+          priceSuffix="/мес"
           highlight={false}
-          actionLabel="Downgrade"
+          actionLabel="Понизить"
           features={[
-            'Up to 200 notes',
+            'До 200 заметок',
             '1 workspace',
-            'Weekly insights',
-            'Chat scoped to one insight at a time',
-            'Community support',
+            'Еженедельные инсайты',
+            'Чат в рамках одного инсайта за раз',
+            'Поддержка сообщества',
           ]}
           onSelect={() => onSwitch('basic')}
         />
@@ -328,16 +328,16 @@ function PlanTab({ plan, onSwitch }: { plan: Plan; onSwitch: (plan: Plan) => voi
           isCurrent={plan === 'plus'}
           title="Plus"
           price="$10"
-          priceSuffix="/mo"
+          priceSuffix="/мес"
           highlight
-          actionLabel="Coming soon"
+          actionLabel="Скоро"
           actionDisabled
           features={[
-            'Unlimited notes',
-            'Unlimited workspaces',
-            'Daily insights, custom schedule',
-            'Ask across your entire vault',
-            'Priority support',
+            'Заметки без ограничений',
+            'Workspace без ограничений',
+            'Ежедневные инсайты, свой график',
+            'Вопросы по всему vault сразу',
+            'Приоритетная поддержка',
           ]}
           onSelect={() => onSwitch('plus')}
         />
@@ -350,25 +350,25 @@ function BillingTab() {
   return (
     <div>
       <h3 className="font-display-sm mb-lg" style={{ fontSize: 20, fontWeight: 800, color: '#1A2620' }}>
-        Billing
+        Оплата
       </h3>
       <div className="mb-xl">
         <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
-          PAYMENT METHOD
+          СПОСОБ ОПЛАТЫ
         </p>
         <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
           <p className="text-sm" style={{ color: '#5C6F65' }}>
-            No payment method on file — you&apos;re on the Free plan.
+            Способ оплаты не указан — вы на бесплатном тарифе.
           </p>
         </div>
       </div>
       <div>
         <p className="font-label-caps text-label-caps mb-sm" style={{ color: '#5C6F65' }}>
-          BILLING HISTORY
+          ИСТОРИЯ ПЛАТЕЖЕЙ
         </p>
         <div className="rounded-xl p-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
           <p className="text-sm" style={{ color: '#5C6F65' }}>
-            No invoices yet.
+            Платежей пока нет.
           </p>
         </div>
       </div>
