@@ -122,10 +122,12 @@ export function VaultClient() {
   async function loadInboxItems() {
     try {
       const res = await fetch(`/api/v1/items?workspaceId=${workspace.id}&limit=100`)
-      const data = res.ok ? await res.json() : []
+      if (!res.ok) throw new Error('Failed to load inbox')
+      const data = await res.json()
       setInboxItems(Array.isArray(data) ? data : [])
     } catch {
       setInboxItems([])
+      showToast('Не удалось загрузить Inbox', 'error')
     }
   }
 

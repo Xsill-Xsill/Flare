@@ -93,6 +93,7 @@ export function DashboardClient() {
 
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
+  const [itemsError, setItemsError] = useState(false)
 
   const [insights, setInsights] = useState<Insight[]>([])
   const [insightsLoading, setInsightsLoading] = useState(true)
@@ -148,9 +149,16 @@ export function DashboardClient() {
 
   async function loadItems() {
     setLoading(true)
-    const res = await fetch(`/api/v1/items?workspaceId=${workspace.id}&limit=50`)
-    if (res.ok) setItems(await res.json())
-    setLoading(false)
+    try {
+      const res = await fetch(`/api/v1/items?workspaceId=${workspace.id}&limit=50`)
+      if (!res.ok) throw new Error('Failed to load items')
+      setItems(await res.json())
+      setItemsError(false)
+    } catch {
+      setItemsError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function loadInsights() {
@@ -882,7 +890,18 @@ export function DashboardClient() {
         <div className="flex justify-between items-center mb-md px-xs">
           <span className="font-label-caps text-label-caps text-outline">RECENT</span>
         </div>
-        {recentItems.length === 0 ? (
+        {itemsError ? (
+          <div className="flex items-center justify-between px-xs">
+            <p className="text-sm" style={{ color: '#ba1a1a' }}>Не удалось загрузить заметки</p>
+            <button
+              type="button"
+              className="text-sm font-ui-semibold text-primary hover:underline"
+              onClick={() => loadItems()}
+            >
+              Повторить
+            </button>
+          </div>
+        ) : recentItems.length === 0 ? (
           <p className="text-sm text-outline px-xs">No captures yet.</p>
         ) : (
           <div className="flex flex-col gap-xs">
