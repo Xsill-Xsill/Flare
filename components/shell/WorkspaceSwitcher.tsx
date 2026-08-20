@@ -112,7 +112,7 @@ export function WorkspaceSwitcher() {
         className="flex items-center gap-1 min-w-0 max-w-full text-left rounded-md hover:bg-surface-container-highest transition-colors px-1 -mx-1 py-0.5"
         onClick={() => setOpen((v) => !v)}
       >
-        <p className="font-metadata-mono text-metadata-mono text-on-surface-variant text-[10px] uppercase tracking-wider truncate">
+        <p className="font-ui-semibold text-on-surface text-sm truncate">
           {name}
         </p>
         <span className="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">expand_more</span>

@@ -819,7 +819,7 @@ export function DashboardClient() {
 
       {/* Inbox */}
       {loading ? (
-        <div className="rounded-xl p-md max-w-sm w-full" style={{ background: '#EEF2F0', minHeight: 220 }}>
+        <div className="rounded-xl p-md w-full" style={{ background: '#EEF2F0', minHeight: 220 }}>
           <div className="h-3 w-16 rounded-full animate-pulse" style={{ background: '#D8E2DC' }} />
           <div className="h-9 w-20 rounded-lg animate-pulse mt-md" style={{ background: '#D8E2DC' }} />
           <div className="h-10 w-full rounded-lg animate-pulse mt-lg" style={{ background: '#D8E2DC' }} />
@@ -827,7 +827,7 @@ export function DashboardClient() {
           <div className="h-10 w-full rounded-lg animate-pulse mt-2" style={{ background: '#D8E2DC' }} />
         </div>
       ) : (
-        <div className="max-w-sm w-full">
+        <div className="w-full">
           <div className="card-flat rounded-xl p-md flex flex-col h-full">
             <div className="flex justify-between items-center mb-md">
               <span className="font-label-caps text-label-caps text-outline">INBOX</span>

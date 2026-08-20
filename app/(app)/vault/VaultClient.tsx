@@ -170,6 +170,12 @@ export function VaultClient() {
     return inboxItems.filter((item) => itemTitle(item).toLowerCase().includes(q))
   }, [inboxItems, inboxSearch])
 
+  const displayedVaultItems = useMemo(() => {
+    if (activeChip === 'folders') return vaultItems.filter((item) => item.folder)
+    if (activeChip === 'notes') return vaultItems.filter((item) => !item.folder)
+    return vaultItems
+  }, [vaultItems, activeChip])
+
   function stopRecordingTimer() {
     if (recordingTimerRef.current) {
       window.clearInterval(recordingTimerRef.current)
@@ -560,7 +566,40 @@ export function VaultClient() {
         </div>
       </div>
 
-      {/* 3. FOLDER GRID (empty state when there's nothing to show) */}
+      {/* 3. FOLDER GRID */}
+      {folders.length > 0 && (
+        <section>
+          <div className="flex justify-between items-center mb-md px-xs">
+            <span className="font-label-caps text-label-caps text-outline">FOLDERS</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {folders.map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => {
+                  setSelectedFolder((current) => (current === f ? '' : f))
+                  setActiveChip('folders')
+                }}
+                className={`flex items-center gap-2 rounded-xl border px-md py-3 text-left transition-colors ${
+                  selectedFolder === f
+                    ? 'border-[#0D9F6E] bg-[#0D9F6E]/5'
+                    : 'border-outline-variant/60 bg-white hover:border-[#0D9F6E]/50'
+                }`}
+              >
+                <span
+                  className="material-symbols-outlined text-on-surface-variant shrink-0"
+                  style={{ fontVariationSettings: '"FILL" 1' }}
+                >
+                  folder
+                </span>
+                <span className="font-ui-semibold text-sm text-on-surface truncate">{f}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       {!vaultLoading && vaultItems.length === 0 && (
         <div className="rounded-xl border border-dashed border-outline-variant/60 py-xl px-md flex flex-col items-center justify-center text-center gap-2">
           <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
@@ -586,11 +625,11 @@ export function VaultClient() {
               <div key={row} className="h-[72px] rounded-xl animate-pulse bg-surface-container-highest" />
             ))}
           </div>
-        ) : vaultItems.length === 0 ? (
+        ) : displayedVaultItems.length === 0 ? (
           <p className="text-sm text-outline px-xs">No items yet.</p>
         ) : (
           <div className="space-y-2 px-xs">
-            {vaultItems.map((item) => (
+            {displayedVaultItems.map((item) => (
               <article
                 key={item.id}
                 className="rounded-xl border border-outline-variant/60 bg-white px-md py-3 cursor-pointer hover:border-[#0D9F6E]/50 transition-colors"
