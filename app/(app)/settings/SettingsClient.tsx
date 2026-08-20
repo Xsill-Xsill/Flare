@@ -371,23 +371,17 @@ function IntegrationCard({
   desc,
   iconBg,
   iconLabel,
-  connected,
-  connectedAsLabel,
-  onToggle,
 }: {
   title: string
   desc: string
   iconBg: string
   iconLabel: string
-  connected: boolean
-  connectedAsLabel: string
-  onToggle: () => void
 }) {
   return (
     <div className="rounded-xl p-md flex items-center justify-between gap-md" style={{ background: '#FFFFFF', border: '1px solid #D8E2DC' }}>
       <div className="flex items-center gap-sm min-w-0">
         <div
-          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-white font-ui-semibold"
+          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-white font-ui-semibold opacity-50"
           style={{ background: iconBg }}
         >
           {iconLabel}
@@ -399,70 +393,26 @@ function IntegrationCard({
           <p className="text-xs" style={{ color: '#5C6F65' }}>
             {desc}
           </p>
-          <div className="mt-1">
-            {connected ? (
-              <span className="flex items-center gap-1 text-xs" style={{ color: '#0D9F6E' }}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#0D9F6E' }} />
-                Connected as {connectedAsLabel}
-              </span>
-            ) : (
-              <span className="text-xs" style={{ color: '#5C6F65' }}>
-                Not connected
-              </span>
-            )}
-          </div>
         </div>
       </div>
       <div className="shrink-0">
-        {connected ? (
-          <button
-            className="text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors"
-            style={{ background: '#FFFFFF', border: '1.5px solid #D8E2DC', color: '#1A2620' }}
-            type="button"
-            onClick={onToggle}
-          >
-            Disconnect
-          </button>
-        ) : (
-          <button
-            className="text-white text-sm font-ui-semibold px-4 py-2 rounded-lg transition-colors hover:bg-[#0b8a5f]"
-            style={{ background: '#0D9F6E' }}
-            type="button"
-            onClick={onToggle}
-          >
-            Connect
-          </button>
-        )}
+        <span
+          className="text-xs font-ui-semibold px-3 py-1.5 rounded-full"
+          style={{ background: '#EEF2F0', color: '#5C6F65' }}
+        >
+          Coming soon
+        </span>
       </div>
     </div>
   )
 }
 
-function IntegrationsSection({ workspaceName }: { workspaceName: string }) {
-  const [notionConnected, setNotionConnected] = useState(false)
-  const [gdriveConnected, setGdriveConnected] = useState(false)
-
+function IntegrationsSection() {
   return (
     <SectionShell title="Integrations" desc="Bring notes in from where you already write.">
       <div className="flex flex-col gap-sm">
-        <IntegrationCard
-          title="Notion"
-          desc="Import pages and databases"
-          iconBg="#000000"
-          iconLabel="N"
-          connected={notionConnected}
-          connectedAsLabel={workspaceName}
-          onToggle={() => setNotionConnected((v) => !v)}
-        />
-        <IntegrationCard
-          title="Google Drive"
-          desc="Import Docs and files"
-          iconBg="#0D9F6E"
-          iconLabel="G"
-          connected={gdriveConnected}
-          connectedAsLabel={workspaceName}
-          onToggle={() => setGdriveConnected((v) => !v)}
-        />
+        <IntegrationCard title="Notion" desc="Import pages and databases" iconBg="#000000" iconLabel="N" />
+        <IntegrationCard title="Google Drive" desc="Import Docs and files" iconBg="#0D9F6E" iconLabel="G" />
       </div>
     </SectionShell>
   )
@@ -1030,7 +980,7 @@ export function SettingsClient() {
                 onSaveInstructions={handleSaveInstructions}
               />
             )}
-            {activeSection === 'integrations' && <IntegrationsSection workspaceName={workspace.name} />}
+            {activeSection === 'integrations' && <IntegrationsSection />}
             {activeSection === 'notifications' && (
               <NotificationsSection digestEnabled={digestEnabled} digestLoading={digestLoading} onToggleDigest={handleDigestToggle} />
             )}
