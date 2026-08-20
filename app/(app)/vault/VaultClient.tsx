@@ -600,16 +600,26 @@ export function VaultClient() {
         </section>
       )}
 
-      {!vaultLoading && vaultItems.length === 0 && (
+      {!vaultLoading && displayedVaultItems.length === 0 && (
         <div className="rounded-xl border border-dashed border-outline-variant/60 py-xl px-md flex flex-col items-center justify-center text-center gap-2">
           <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
             <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
               folder
             </span>
           </div>
-          <p className="font-ui-semibold text-sm text-on-surface">Nothing in your Vault yet</p>
+          <p className="font-ui-semibold text-sm text-on-surface">
+            {selectedFolder
+              ? `Nothing in "${selectedFolder}" yet`
+              : activeChip === 'folders'
+                ? 'No items filed into a folder yet'
+                : activeChip === 'notes'
+                  ? 'No unfiled notes yet'
+                  : 'Nothing in your Vault yet'}
+          </p>
           <p className="text-xs text-outline w-full max-w-[24rem]">
-            Items land here once they&apos;ve been sorted out of your Inbox.
+            {selectedFolder
+              ? 'Open a note and set its folder to file it here.'
+              : "Capture something on Home, then it'll show up here."}
           </p>
         </div>
       )}
