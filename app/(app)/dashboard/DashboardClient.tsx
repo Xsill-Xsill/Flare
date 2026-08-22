@@ -29,6 +29,13 @@ export function itemTitle(item: Item) {
   return text.length > 60 ? `${text.slice(0, 60)}…` : text
 }
 
+const INSIGHT_SUMMARY_MAX_LENGTH = 120
+
+function truncateSummary(summary: string): string {
+  if (summary.length <= INSIGHT_SUMMARY_MAX_LENGTH) return summary
+  return `${summary.slice(0, INSIGHT_SUMMARY_MAX_LENGTH).trimEnd()}…`
+}
+
 function isUrl(value: string) {
   try {
     const u = new URL(value)
@@ -156,7 +163,7 @@ export function DashboardClient() {
   async function loadInsights() {
     setInsightsLoading(true)
     try {
-      const res = await fetch(`/api/v1/insights?workspaceId=${workspace.id}`)
+      const res = await fetch(`/api/v1/insights?workspaceId=${workspace.id}&limit=3`)
       if (!res.ok) throw new Error('Failed to load insights')
       setInsights(await res.json())
       setInsightsError(false)
@@ -752,71 +759,6 @@ export function DashboardClient() {
         )}
       </section>
 
-      {/* Insights preview — the primary value, shown above Inbox */}
-      {!insightsError && (
-        <section>
-          <div className="flex justify-between items-center mb-md px-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-label-caps text-label-caps text-outline">PATTERNS FOUND</span>
-              {!insightsLoading && insights.length > 0 && (
-                <span className="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold">
-                  {insights.length}
-                </span>
-              )}
-            </div>
-            {!insightsLoading && insights.length > 0 && (
-              <Link
-                href="/insights"
-                className="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1"
-              >
-                View all insights <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </Link>
-            )}
-          </div>
-
-          {insightsLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="rounded-xl p-md" style={{ background: '#EEF2F0', minHeight: 132 }}>
-                  <div className="h-3 w-20 rounded-full animate-pulse" style={{ background: '#D8E2DC' }} />
-                  <div className="h-4 w-full rounded-lg animate-pulse mt-md" style={{ background: '#D8E2DC' }} />
-                  <div className="h-4 w-3/4 rounded-lg animate-pulse mt-2" style={{ background: '#D8E2DC' }} />
-                  <div className="h-3 w-24 rounded-full animate-pulse mt-lg" style={{ background: '#D8E2DC' }} />
-                </div>
-              ))}
-            </div>
-          ) : previewInsights.length === 0 ? (
-            <p className="text-sm text-outline px-xs">Add more notes and Flare will start finding patterns.</p>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-              {previewInsights.map((insight) => {
-                const noteCount = new Set((insight.evidence ?? []).map((ref) => ref.itemId)).size
-                return (
-                  <Link
-                    key={insight.id}
-                    href="/insights"
-                    className="insight-card-accent rounded-xl p-md flex flex-col hover:shadow-lg transition-all duration-300"
-                  >
-                    <h3 className="font-ui-semibold text-on-surface text-sm">{insight.title}</h3>
-                    <p
-                      className="font-body-md text-sm text-on-surface-variant mt-sm flex-1"
-                      style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                    >
-                      {insight.summary}
-                    </p>
-                    {noteCount > 0 && (
-                      <p className="mt-md font-metadata-mono text-[11px] text-on-surface-variant">
-                        Based on {noteCount} note{noteCount === 1 ? '' : 's'}
-                      </p>
-                    )}
-                  </Link>
-                )
-              })}
-            </div>
-          )}
-        </section>
-      )}
-
       {/* Inbox */}
       {loading ? (
         <div className="rounded-xl p-md w-full" style={{ background: '#EEF2F0', minHeight: 220 }}>
@@ -875,6 +817,68 @@ export function DashboardClient() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Insights preview — below Inbox, still above the fold */}
+      {!insightsError && (
+        <section>
+          <div className="flex justify-between items-center mb-md px-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-label-caps text-label-caps text-outline">PATTERNS FOUND</span>
+              {!insightsLoading && insights.length > 0 && (
+                <span className="bg-surface-container-highest text-on-surface-variant px-2 py-[2px] rounded-full text-xs font-bold">
+                  {insights.length}
+                </span>
+              )}
+            </div>
+            {!insightsLoading && insights.length > 0 && (
+              <Link
+                href="/insights"
+                className="font-ui-semibold text-sm text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1"
+              >
+                View all insights <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </Link>
+            )}
+          </div>
+
+          {insightsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="rounded-xl p-md" style={{ background: '#EEF2F0', minHeight: 132 }}>
+                  <div className="h-3 w-20 rounded-full animate-pulse" style={{ background: '#D8E2DC' }} />
+                  <div className="h-4 w-full rounded-lg animate-pulse mt-md" style={{ background: '#D8E2DC' }} />
+                  <div className="h-4 w-3/4 rounded-lg animate-pulse mt-2" style={{ background: '#D8E2DC' }} />
+                  <div className="h-3 w-24 rounded-full animate-pulse mt-lg" style={{ background: '#D8E2DC' }} />
+                </div>
+              ))}
+            </div>
+          ) : previewInsights.length === 0 ? (
+            <p className="text-sm text-outline px-xs">No insights yet — keep adding notes.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+              {previewInsights.map((insight) => {
+                const noteCount = new Set((insight.evidence ?? []).map((ref) => ref.itemId)).size
+                return (
+                  <Link
+                    key={insight.id}
+                    href="/insights"
+                    className="insight-card-accent rounded-xl p-md flex flex-col hover:shadow-lg transition-all duration-300"
+                  >
+                    <h3 className="font-ui-semibold text-on-surface text-sm">{insight.title}</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant mt-sm flex-1">
+                      {truncateSummary(insight.summary)}
+                    </p>
+                    {noteCount > 0 && (
+                      <p className="mt-md font-metadata-mono text-[11px] text-on-surface-variant">
+                        Based on {noteCount} note{noteCount === 1 ? '' : 's'}
+                      </p>
+                    )}
+                  </Link>
+                )
+              })}
+            </div>
+          )}
+        </section>
       )}
 
       {/* Recent */}

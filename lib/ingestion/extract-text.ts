@@ -26,14 +26,23 @@ function isPdf(storagePath: string, blobType: string): boolean {
   return blobType === 'application/pdf' || storagePath.toLowerCase().endsWith('.pdf')
 }
 
+const MIN_PDF_TEXT_LENGTH = 10
+
 // pdf-parse v2 has no default function export (that was v1's API) — it exports the PDFParse
 // class. `data` accepts a Buffer directly and converts it to a Uint8Array internally.
 async function extractPdfText(buffer: Buffer): Promise<string> {
   const parser = new PDFParse({ data: buffer })
   try {
-    const result = await parser.getText()
-    if (!result.text.trim()) {
-      throw new Error('PDF contains no extractable text (image-only or encrypted).')
+    let result: Awaited<ReturnType<typeof parser.getText>>
+    try {
+      result = await parser.getText()
+    } catch (err) {
+      throw new Error('PDF text extraction failed', { cause: err })
+    }
+    // Catches both empty (image-only/encrypted PDFs) and near-empty extractions (e.g. a
+    // scanned page whose only "text" is a page number) — neither is worth feeding downstream.
+    if (result.text.trim().length < MIN_PDF_TEXT_LENGTH) {
+      throw new Error('PDF text extraction failed')
     }
     return result.text
   } finally {
@@ -63,7 +72,10 @@ function isPrivateOrLinkLocalIp(ip: string): boolean {
   if (isIP(ip) === 6) {
     const lower = ip.toLowerCase()
     if (lower === '::1') return true // loopback
-    if (lower.startsWith('fe80:')) return true // link-local
+    // fe80::/10 spans first-hextet fe80 through febf, not just the fe80 literal prefix —
+    // compare the top 10 bits directly rather than string-matching "fe80:".
+    const firstHextet = parseInt(lower.split(':')[0] || '', 16)
+    if (!Number.isNaN(firstHextet) && firstHextet >> 6 === 0b1111111010) return true // fe80::/10 link-local
     if (lower.startsWith('fc') || lower.startsWith('fd')) return true // fc00::/7 unique local
     if (lower.startsWith('::ffff:')) {
       const mapped = lower.slice('::ffff:'.length)

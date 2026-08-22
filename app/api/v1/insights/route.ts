@@ -31,12 +31,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'workspace not found' }, { status: 404 })
   }
 
+  const DEFAULT_LIMIT = 20
+  const MAX_LIMIT = 50
+  const requestedLimit = Number(req.nextUrl.searchParams.get('limit'))
+  const limit =
+    Number.isInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, MAX_LIMIT) : DEFAULT_LIMIT
+
   const rows = await db
     .select()
     .from(insights)
     .where(eq(insights.workspaceId, workspaceId))
     .orderBy(desc(insights.createdAt))
-    .limit(20)
+    .limit(limit)
 
   return NextResponse.json(
     rows.map((insight) => ({
