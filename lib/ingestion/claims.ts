@@ -1,3 +1,10 @@
+import { z } from 'zod'
+import { CLAIMS_EXTRACTION_SYSTEM_PROMPT, claimsExtractionUserPrompt } from '@/lib/prompts/claims-extraction'
+
+const ClaimsSchema = z.object({
+  claims: z.array(z.string().min(10).max(300)).max(8),
+})
+
 export async function extractClaims(chunkText: string): Promise<string[]> {
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
@@ -8,25 +15,11 @@ export async function extractClaims(chunkText: string): Promise<string[]> {
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [
-        {
-          role: 'system',
-          content: `Extract up to 2-5 factual claims from the text below, but ONLY claims that are
-            explicitly stated or directly implied by that exact text. Each claim must be
-            traceable to specific words in the text — never invent, assume, or reuse claims
-            from anywhere else, including this instruction.
-            Each claim should be a single sentence stating something the founder believes,
-            experienced, or observed.
-            If the text is incoherent, gibberish, unintelligible, unrelated fragments, or
-            otherwise contains no clear factual statement, return {"claims": []} — an empty
-            list is a valid and expected answer, do not force claims that aren't there.
-            Return a JSON object of the shape {"claims": string[]}, e.g. {"claims":
-            ["<short factual statement 1>", "<short factual statement 2>"]} — that example
-            shows the JSON shape only, not real content to copy.`,
-        },
-        { role: 'user', content: chunkText },
+        { role: 'system', content: CLAIMS_EXTRACTION_SYSTEM_PROMPT },
+        { role: 'user', content: claimsExtractionUserPrompt(chunkText) },
       ],
       response_format: { type: 'json_object' },
-      temperature: 0.2,
+      temperature: 0.0,
     }),
   })
 
@@ -35,6 +28,20 @@ export async function extractClaims(chunkText: string): Promise<string[]> {
   }
 
   const data = await response.json()
-  const parsed = JSON.parse(data.choices[0].message.content)
-  return parsed.claims ?? []
+
+  let raw: unknown
+  try {
+    raw = JSON.parse(data.choices[0].message.content)
+  } catch (err) {
+    console.warn('extractClaims: Groq response was not valid JSON', err)
+    return []
+  }
+
+  const result = ClaimsSchema.safeParse(raw)
+  if (!result.success) {
+    console.warn('extractClaims: response failed schema validation', result.error.flatten())
+    return []
+  }
+
+  return result.data.claims
 }

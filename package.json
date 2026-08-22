@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "eval:claims": "npx tsx lib/eval/claims-eval.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",
@@ -20,7 +21,8 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "resend": "^6.19.0",
-    "undici": "^6.28.0"
+    "undici": "^6.28.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -32,6 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }
