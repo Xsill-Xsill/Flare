@@ -56,8 +56,8 @@ export const workspaceSettings = pgTable('workspace_settings', {
   notifyNewInsight: boolean('notify_new_insight').default(true).notNull(),
   notifyProcessingDone: boolean('notify_processing_done').default(false).notNull(),
   insightsInstructions: text('insights_instructions'),
-  // Persisted, but not yet consumed — daily-digest.ts still runs a single global 08:00 UTC
-  // cron for everyone regardless of this value.
+  // Read by daily-digest.ts to filter which workspaces are eligible on each daily tick — the
+  // underlying Inngest trigger is still a single global 08:00 UTC cron, not a per-workspace one.
   insightsSchedule: text('insights_schedule').default('daily').notNull(),
   insightsLanguage: text('insights_language').default('auto').notNull(),
   insightsScheduleDay: text('insights_schedule_day'),

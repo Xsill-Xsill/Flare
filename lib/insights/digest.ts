@@ -7,7 +7,7 @@ import { sendEmail } from '@/lib/email/resend'
 import type { EvidenceRef } from '@/lib/insights/types'
 
 const DIGEST_INSIGHT_LIMIT = 3
-const DIGEST_WINDOW_HOURS = 24
+export const DIGEST_WINDOW_HOURS = 24
 
 export type DigestResult = {
   sent: boolean
@@ -31,13 +31,16 @@ function evidenceItemTitle(item: { rawContent: string | null; sourceUrl: string 
   return text.length > 80 ? `${text.slice(0, 80)}…` : text
 }
 
-export async function sendDigestForWorkspace(workspaceId: string): Promise<DigestResult> {
+// windowHours defaults to the daily cadence (last 24h). A workspace on the "weekly" insights
+// schedule gets called with 24*7 instead, so its digest actually covers the week since its
+// last send rather than showing only whatever happened to land in the final 24h.
+export async function sendDigestForWorkspace(workspaceId: string, windowHours: number = DIGEST_WINDOW_HOURS): Promise<DigestResult> {
   const [workspace] = await db.select().from(workspaces).where(eq(workspaces.id, workspaceId)).limit(1)
   if (!workspace) {
     return { sent: false, insightsCount: 0, reason: 'workspace not found' }
   }
 
-  const since = new Date(Date.now() - DIGEST_WINDOW_HOURS * 60 * 60 * 1000)
+  const since = new Date(Date.now() - windowHours * 60 * 60 * 1000)
 
   const recentInsights = await db
     .select()
@@ -47,7 +50,7 @@ export async function sendDigestForWorkspace(workspaceId: string): Promise<Diges
     .limit(DIGEST_INSIGHT_LIMIT)
 
   if (recentInsights.length === 0) {
-    return { sent: false, insightsCount: 0, reason: 'no insights in the last 24h' }
+    return { sent: false, insightsCount: 0, reason: `no insights in the last ${windowHours}h` }
   }
 
   const evidenceItemIds = new Set<string>()

@@ -30,8 +30,8 @@ async function getOwnedWorkspace(workspaceId: string, userId: string) {
 }
 
 // GET/PATCH aggregate the settings page's current data: workspace name, folder list, and
-// notification/insight preferences. insightsSchedule/insightsScheduleDay are persisted here
-// but not yet consumed by daily-digest.ts, which still runs a single global 08:00 UTC cron.
+// notification/insight preferences. insightsSchedule/insightsScheduleDay are read by
+// daily-digest.ts to decide which workspaces are eligible on each daily tick.
 export async function GET(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

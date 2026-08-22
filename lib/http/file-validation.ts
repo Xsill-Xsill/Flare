@@ -16,7 +16,10 @@ export const ALLOWED_MIME_TYPES = new Set([
 
 const AUDIO_MIME_TYPES = new Set(['audio/mpeg', 'audio/mp4', 'audio/wav', 'audio/x-wav', 'audio/webm', 'audio/ogg'])
 
-export const MAX_AUDIO_SIZE_BYTES = 50 * 1024 * 1024
+// Capped at Groq Whisper's own hard limit, not a rounder/larger number — anything bigger would
+// pass upload validation only to fail later in the async transcription step with no reprocess
+// path (see lib/ingestion/transcribe-audio.ts), so it's better to reject it here, up front.
+export const MAX_AUDIO_SIZE_BYTES = 25 * 1024 * 1024
 export const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
 
 export function isAudioMimeType(mimeType: string): boolean {
