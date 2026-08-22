@@ -6,6 +6,19 @@ import { folders, workspaces, workspaceSettings } from '@/lib/db/schema'
 
 const MAX_NAME_LENGTH = 50
 const MAX_INSTRUCTIONS_LENGTH = 2000
+const INSIGHTS_SCHEDULES = new Set(['daily', 'weekly', 'threshold'])
+const INSIGHTS_LANGUAGES = new Set(['auto', 'en', 'ru'])
+const WEEKDAYS = new Set(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+
+const SETTINGS_COLUMNS = {
+  digestEnabled: workspaceSettings.digestEnabled,
+  insightsInstructions: workspaceSettings.insightsInstructions,
+  notifyNewInsight: workspaceSettings.notifyNewInsight,
+  notifyProcessingDone: workspaceSettings.notifyProcessingDone,
+  insightsSchedule: workspaceSettings.insightsSchedule,
+  insightsScheduleDay: workspaceSettings.insightsScheduleDay,
+  insightsLanguage: workspaceSettings.insightsLanguage,
+} as const
 
 async function getOwnedWorkspace(workspaceId: string, userId: string) {
   const [row] = await db
@@ -17,8 +30,8 @@ async function getOwnedWorkspace(workspaceId: string, userId: string) {
 }
 
 // GET/PATCH aggregate the settings page's current data: workspace name, folder list, and
-// notification/insight preferences. Schedule pickers aren't wired into any backend yet even
-// though the column exists — see SettingsClient.tsx's Insights section.
+// notification/insight preferences. insightsSchedule/insightsScheduleDay are persisted here
+// but not yet consumed by daily-digest.ts, which still runs a single global 08:00 UTC cron.
 export async function GET(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -38,11 +51,7 @@ export async function GET(req: NextRequest) {
       .from(folders)
       .where(eq(folders.workspaceId, workspaceId))
       .orderBy(desc(folders.isDefault), asc(folders.name)),
-    db
-      .select({ digestEnabled: workspaceSettings.digestEnabled, insightsInstructions: workspaceSettings.insightsInstructions })
-      .from(workspaceSettings)
-      .where(eq(workspaceSettings.workspaceId, workspaceId))
-      .limit(1),
+    db.select(SETTINGS_COLUMNS).from(workspaceSettings).where(eq(workspaceSettings.workspaceId, workspaceId)).limit(1),
   ])
 
   return NextResponse.json({
@@ -52,6 +61,11 @@ export async function GET(req: NextRequest) {
     // No settings row yet == user never touched Notifications/Insights == defaults apply.
     digestEnabled: settings?.digestEnabled ?? true,
     insightsInstructions: settings?.insightsInstructions ?? '',
+    notifyNewInsight: settings?.notifyNewInsight ?? true,
+    notifyProcessingDone: settings?.notifyProcessingDone ?? false,
+    insightsSchedule: settings?.insightsSchedule ?? 'daily',
+    insightsScheduleDay: settings?.insightsScheduleDay ?? 'Monday',
+    insightsLanguage: settings?.insightsLanguage ?? 'auto',
   })
 }
 
@@ -85,7 +99,15 @@ export async function PATCH(req: NextRequest) {
     await db.update(workspaces).set({ name }).where(eq(workspaces.id, workspaceId))
   }
 
-  const settingsUpdate: { digestEnabled?: boolean; insightsInstructions?: string | null } = {}
+  const settingsUpdate: {
+    digestEnabled?: boolean
+    insightsInstructions?: string | null
+    notifyNewInsight?: boolean
+    notifyProcessingDone?: boolean
+    insightsSchedule?: string
+    insightsScheduleDay?: string | null
+    insightsLanguage?: string
+  } = {}
 
   if (body.digest_enabled !== undefined) {
     if (typeof body.digest_enabled !== 'boolean') {
@@ -108,6 +130,41 @@ export async function PATCH(req: NextRequest) {
     settingsUpdate.insightsInstructions = trimmed || null
   }
 
+  if (body.notify_new_insight !== undefined) {
+    if (typeof body.notify_new_insight !== 'boolean') {
+      return NextResponse.json({ error: 'notify_new_insight must be a boolean' }, { status: 400 })
+    }
+    settingsUpdate.notifyNewInsight = body.notify_new_insight
+  }
+
+  if (body.notify_processing_done !== undefined) {
+    if (typeof body.notify_processing_done !== 'boolean') {
+      return NextResponse.json({ error: 'notify_processing_done must be a boolean' }, { status: 400 })
+    }
+    settingsUpdate.notifyProcessingDone = body.notify_processing_done
+  }
+
+  if (body.insights_schedule !== undefined) {
+    if (typeof body.insights_schedule !== 'string' || !INSIGHTS_SCHEDULES.has(body.insights_schedule)) {
+      return NextResponse.json({ error: 'insights_schedule must be one of daily, weekly, threshold' }, { status: 400 })
+    }
+    settingsUpdate.insightsSchedule = body.insights_schedule
+  }
+
+  if (body.insights_schedule_day !== undefined) {
+    if (body.insights_schedule_day !== null && (typeof body.insights_schedule_day !== 'string' || !WEEKDAYS.has(body.insights_schedule_day))) {
+      return NextResponse.json({ error: 'insights_schedule_day must be a valid weekday or null' }, { status: 400 })
+    }
+    settingsUpdate.insightsScheduleDay = body.insights_schedule_day
+  }
+
+  if (body.insights_language !== undefined) {
+    if (typeof body.insights_language !== 'string' || !INSIGHTS_LANGUAGES.has(body.insights_language)) {
+      return NextResponse.json({ error: 'insights_language must be one of auto, en, ru' }, { status: 400 })
+    }
+    settingsUpdate.insightsLanguage = body.insights_language
+  }
+
   if (Object.keys(settingsUpdate).length > 0) {
     await db
       .insert(workspaceSettings)
@@ -115,16 +172,17 @@ export async function PATCH(req: NextRequest) {
       .onConflictDoUpdate({ target: workspaceSettings.workspaceId, set: settingsUpdate })
   }
 
-  const [settings] = await db
-    .select({ digestEnabled: workspaceSettings.digestEnabled, insightsInstructions: workspaceSettings.insightsInstructions })
-    .from(workspaceSettings)
-    .where(eq(workspaceSettings.workspaceId, workspaceId))
-    .limit(1)
+  const [settings] = await db.select(SETTINGS_COLUMNS).from(workspaceSettings).where(eq(workspaceSettings.workspaceId, workspaceId)).limit(1)
 
   return NextResponse.json({
     workspaceId,
     name,
     digestEnabled: settings?.digestEnabled ?? true,
     insightsInstructions: settings?.insightsInstructions ?? '',
+    notifyNewInsight: settings?.notifyNewInsight ?? true,
+    notifyProcessingDone: settings?.notifyProcessingDone ?? false,
+    insightsSchedule: settings?.insightsSchedule ?? 'daily',
+    insightsScheduleDay: settings?.insightsScheduleDay ?? 'Monday',
+    insightsLanguage: settings?.insightsLanguage ?? 'auto',
   })
 }

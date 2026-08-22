@@ -112,7 +112,9 @@ export async function fetchUrlText(url: string): Promise<string> {
   try {
     let response: Response
     try {
-      response = await fetch(url, { dispatcher, signal: controller.signal })
+      // redirect: 'manual' so a same-origin-looking redirect can't be used to bounce the
+      // already-pinned connection to a private IP without going back through the safety check.
+      response = await fetch(url, { dispatcher, signal: controller.signal, redirect: 'manual' })
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         throw new Error(`Fetching URL ${url} timed out after ${FETCH_TIMEOUT_MS}ms`)

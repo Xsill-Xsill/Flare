@@ -15,8 +15,6 @@ type SectionKey =
   | 'members'
   | 'danger'
 
-// `description` is UI-only for now — there's no column to persist it to yet
-// (see the folders table). Everything else round-trips through /api/v1/settings.
 type Folder = { id: string; name: string; description: string; isDefault: boolean }
 
 const SECTIONS: { id: SectionKey; label: string; icon: string }[] = [
@@ -85,12 +83,31 @@ function ToggleRow({ label, desc, on, onToggle }: { label: string; desc?: string
   )
 }
 
-function GeneralSection({ workspaceName }: { workspaceName: string }) {
+function GeneralSection({
+  workspaceName,
+  initialLanguage,
+  onSaveLanguage,
+}: {
+  workspaceName: string
+  initialLanguage: string
+  onSaveLanguage: (language: string) => Promise<void>
+}) {
   const { id: workspaceId, renameWorkspace } = useWorkspace()
   const showToast = useToast()
   const [name, setName] = useState(workspaceName)
-  const [language, setLanguage] = useState('auto')
+  const [language, setLanguage] = useState(initialLanguage)
   const [saving, setSaving] = useState(false)
+
+  async function handleLanguageChange(next: string) {
+    const previous = language
+    setLanguage(next)
+    try {
+      await onSaveLanguage(next)
+    } catch (err) {
+      setLanguage(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
 
   async function handleSave() {
     const trimmed = name.trim()
@@ -142,7 +159,7 @@ function GeneralSection({ workspaceName }: { workspaceName: string }) {
           className="px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
           style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
           value={language}
-          onChange={(e) => setLanguage(e.target.value)}
+          onChange={(e) => handleLanguageChange(e.target.value)}
         >
           <option value="auto">Auto (detect from notes)</option>
           <option value="en">English</option>
@@ -276,14 +293,43 @@ function FoldersSection({
 function InsightsSection({
   initialInstructions,
   onSaveInstructions,
+  initialSchedule,
+  initialScheduleDay,
+  onSaveSchedule,
 }: {
   initialInstructions: string
   onSaveInstructions: (instructions: string) => Promise<void>
+  initialSchedule: 'daily' | 'weekly' | 'threshold'
+  initialScheduleDay: string
+  onSaveSchedule: (schedule: string, scheduleDay: string | null) => Promise<void>
 }) {
+  const showToast = useToast()
   const [instructions, setInstructions] = useState(initialInstructions)
-  const [schedule, setSchedule] = useState<'daily' | 'weekly' | 'threshold'>('daily')
-  const [scheduleDay, setScheduleDay] = useState('Monday')
+  const [schedule, setSchedule] = useState<'daily' | 'weekly' | 'threshold'>(initialSchedule)
+  const [scheduleDay, setScheduleDay] = useState(initialScheduleDay)
   const [saving, setSaving] = useState(false)
+
+  async function handleScheduleChange(next: 'daily' | 'weekly' | 'threshold') {
+    const previous = schedule
+    setSchedule(next)
+    try {
+      await onSaveSchedule(next, next === 'weekly' ? scheduleDay : null)
+    } catch (err) {
+      setSchedule(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
+
+  async function handleScheduleDayChange(next: string) {
+    const previous = scheduleDay
+    setScheduleDay(next)
+    try {
+      await onSaveSchedule(schedule, next)
+    } catch (err) {
+      setScheduleDay(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
 
   const scheduleOptions: { id: typeof schedule; label: string }[] = [
     { id: 'daily', label: 'Daily' },
@@ -339,7 +385,7 @@ function InsightsSection({
                 border: `1px solid ${isActive ? '#0D9F6E' : '#D8E2DC'}`,
               }}
               type="button"
-              onClick={() => setSchedule(o.id)}
+              onClick={() => handleScheduleChange(o.id)}
             >
               {o.label}
             </button>
@@ -352,7 +398,7 @@ function InsightsSection({
             className="px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 transition-all"
             style={{ background: '#EEF2F0', border: '1px solid #D8E2DC', color: '#1A2620' }}
             value={scheduleDay}
-            onChange={(e) => setScheduleDay(e.target.value)}
+            onChange={(e) => handleScheduleDayChange(e.target.value)}
           >
             {DAYS.map((d) => (
               <option key={d} value={d}>
@@ -422,15 +468,21 @@ function NotificationsSection({
   digestEnabled,
   digestLoading,
   onToggleDigest,
+  notifyNewInsight,
+  notifyProcessing,
+  onToggleNotifyNewInsight,
+  onToggleNotifyProcessing,
 }: {
   digestEnabled: boolean
   digestLoading: boolean
   onToggleDigest: (next: boolean) => void
+  notifyNewInsight: boolean
+  notifyProcessing: boolean
+  onToggleNotifyNewInsight: (next: boolean) => void
+  onToggleNotifyProcessing: (next: boolean) => void
 }) {
   const [digestDay, setDigestDay] = useState('Monday')
   const [digestTime, setDigestTime] = useState('09:00')
-  const [notifyNewInsight, setNotifyNewInsight] = useState(true)
-  const [notifyProcessing, setNotifyProcessing] = useState(false)
   const times = ['08:00', '09:00', '10:00', '12:00']
 
   return (
@@ -477,8 +529,16 @@ function NotificationsSection({
             </div>
           </div>
         )}
-        <ToggleRow label="Notify when new insight is ready" on={notifyNewInsight} onToggle={() => setNotifyNewInsight((v) => !v)} />
-        <ToggleRow label="Notify when notes finish processing" on={notifyProcessing} onToggle={() => setNotifyProcessing((v) => !v)} />
+        <ToggleRow
+          label="Notify when new insight is ready"
+          on={notifyNewInsight}
+          onToggle={() => onToggleNotifyNewInsight(!notifyNewInsight)}
+        />
+        <ToggleRow
+          label="Notify when notes finish processing"
+          on={notifyProcessing}
+          onToggle={() => onToggleNotifyProcessing(!notifyProcessing)}
+        />
       </div>
     </SectionShell>
   )
@@ -782,6 +842,11 @@ export function SettingsClient() {
   const [digestEnabled, setDigestEnabled] = useState(true)
   const [digestLoading, setDigestLoading] = useState(false)
   const [insightsInstructions, setInsightsInstructions] = useState('')
+  const [notifyNewInsight, setNotifyNewInsight] = useState(true)
+  const [notifyProcessingDone, setNotifyProcessingDone] = useState(false)
+  const [insightsSchedule, setInsightsSchedule] = useState<'daily' | 'weekly' | 'threshold'>('daily')
+  const [insightsScheduleDay, setInsightsScheduleDay] = useState('Monday')
+  const [insightsLanguage, setInsightsLanguage] = useState('auto')
 
   const editingFolder =
     editingIndex === null
@@ -797,12 +862,22 @@ export function SettingsClient() {
       folders?: { id: string; name: string; isDefault: boolean; description: string | null }[]
       digestEnabled?: boolean
       insightsInstructions?: string
+      notifyNewInsight?: boolean
+      notifyProcessingDone?: boolean
+      insightsSchedule?: 'daily' | 'weekly' | 'threshold'
+      insightsScheduleDay?: string
+      insightsLanguage?: string
     } = await res.json()
     if (data.folders) {
       setFolders(data.folders.map((f) => ({ id: f.id, name: f.name, isDefault: f.isDefault, description: f.description ?? '' })))
     }
     if (typeof data.digestEnabled === 'boolean') setDigestEnabled(data.digestEnabled)
     if (typeof data.insightsInstructions === 'string') setInsightsInstructions(data.insightsInstructions)
+    if (typeof data.notifyNewInsight === 'boolean') setNotifyNewInsight(data.notifyNewInsight)
+    if (typeof data.notifyProcessingDone === 'boolean') setNotifyProcessingDone(data.notifyProcessingDone)
+    if (data.insightsSchedule) setInsightsSchedule(data.insightsSchedule)
+    if (typeof data.insightsScheduleDay === 'string') setInsightsScheduleDay(data.insightsScheduleDay)
+    if (typeof data.insightsLanguage === 'string') setInsightsLanguage(data.insightsLanguage)
   }
 
   useEffect(() => {
@@ -892,6 +967,49 @@ export function SettingsClient() {
     }
   }
 
+  async function patchSettings(body: Record<string, unknown>) {
+    const res = await fetch('/api/v1/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ workspaceId: workspace.id, ...body }),
+    })
+    if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? 'Failed to save')
+    showToast('Saved', 'success')
+  }
+
+  async function handleSaveLanguage(language: string) {
+    await patchSettings({ insights_language: language })
+    setInsightsLanguage(language)
+  }
+
+  async function handleSaveSchedule(schedule: string, scheduleDay: string | null) {
+    await patchSettings({ insights_schedule: schedule, insights_schedule_day: scheduleDay })
+    setInsightsSchedule(schedule as 'daily' | 'weekly' | 'threshold')
+    if (scheduleDay) setInsightsScheduleDay(scheduleDay)
+  }
+
+  async function handleToggleNotifyNewInsight(next: boolean) {
+    const previous = notifyNewInsight
+    setNotifyNewInsight(next)
+    try {
+      await patchSettings({ notify_new_insight: next })
+    } catch (err) {
+      setNotifyNewInsight(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
+
+  async function handleToggleNotifyProcessing(next: boolean) {
+    const previous = notifyProcessingDone
+    setNotifyProcessingDone(next)
+    try {
+      await patchSettings({ notify_processing_done: next })
+    } catch (err) {
+      setNotifyProcessingDone(previous)
+      showToast(err instanceof Error ? err.message : 'Failed to save', 'error')
+    }
+  }
+
   async function handleFolderDelete(index: number) {
     const target = folders[index]
     try {
@@ -963,7 +1081,14 @@ export function SettingsClient() {
             <span className="material-symbols-outlined text-[18px]">arrow_back</span> Settings
           </button>
           <div className="flex-1 overflow-y-auto">
-            {activeSection === 'general' && <GeneralSection workspaceName={workspace.name} />}
+            {activeSection === 'general' && (
+              <GeneralSection
+                key={foldersLoading ? 'loading' : 'loaded'}
+                workspaceName={workspace.name}
+                initialLanguage={insightsLanguage}
+                onSaveLanguage={handleSaveLanguage}
+              />
+            )}
             {activeSection === 'folders' && (
               <FoldersSection
                 folders={folders}
@@ -978,11 +1103,22 @@ export function SettingsClient() {
                 key={foldersLoading ? 'loading' : 'loaded'}
                 initialInstructions={insightsInstructions}
                 onSaveInstructions={handleSaveInstructions}
+                initialSchedule={insightsSchedule}
+                initialScheduleDay={insightsScheduleDay}
+                onSaveSchedule={handleSaveSchedule}
               />
             )}
             {activeSection === 'integrations' && <IntegrationsSection />}
             {activeSection === 'notifications' && (
-              <NotificationsSection digestEnabled={digestEnabled} digestLoading={digestLoading} onToggleDigest={handleDigestToggle} />
+              <NotificationsSection
+                digestEnabled={digestEnabled}
+                digestLoading={digestLoading}
+                onToggleDigest={handleDigestToggle}
+                notifyNewInsight={notifyNewInsight}
+                notifyProcessing={notifyProcessingDone}
+                onToggleNotifyNewInsight={handleToggleNotifyNewInsight}
+                onToggleNotifyProcessing={handleToggleNotifyProcessing}
+              />
             )}
             {activeSection === 'export' && <ExportSection />}
             {activeSection === 'members' && <MembersSection />}

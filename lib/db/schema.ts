@@ -56,9 +56,11 @@ export const workspaceSettings = pgTable('workspace_settings', {
   notifyNewInsight: boolean('notify_new_insight').default(true).notNull(),
   notifyProcessingDone: boolean('notify_processing_done').default(false).notNull(),
   insightsInstructions: text('insights_instructions'),
-  // UI-only for now — schedule/time pickers don't change when daily-digest.ts actually runs
-  // (still a single global 08:00 UTC cron for everyone).
+  // Persisted, but not yet consumed — daily-digest.ts still runs a single global 08:00 UTC
+  // cron for everyone regardless of this value.
   insightsSchedule: text('insights_schedule').default('daily').notNull(),
+  insightsLanguage: text('insights_language').default('auto').notNull(),
+  insightsScheduleDay: text('insights_schedule_day'),
 })
 
 export const chunks = pgTable('chunks', {

@@ -15,6 +15,9 @@ const eslintConfig = defineConfig([
     // Standalone vanilla-JS Chrome extension package — not part of the Next.js/TS toolchain
     // this config targets (see apps/extension/README.md for how it's built/loaded).
     "apps/extension/**",
+    // Claude Code skill tooling (CommonJS scripts run standalone by the harness, not bundled
+    // into the app) — not part of the Next.js/TS toolchain this config targets.
+    ".claude/**",
   ]),
 ]);
 

@@ -5,8 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { db } from '@/lib/db'
 import { items, workspaces } from '@/lib/db/schema'
 import { inngest } from '@/lib/inngest/client'
-
-const MAX_AUDIO_SIZE_BYTES = 25 * 1024 * 1024 // Groq Whisper's file-size limit
+import { validateUploadedFile } from '@/lib/http/file-validation'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -23,11 +22,10 @@ export async function POST(req: NextRequest) {
   if (typeof workspaceId !== 'string' || !workspaceId) {
     return NextResponse.json({ error: 'workspaceId is required' }, { status: 400 })
   }
-  if (!audio.type.startsWith('audio/')) {
-    return NextResponse.json({ error: 'audio must be an audio/* file' }, { status: 400 })
-  }
-  if (audio.size > MAX_AUDIO_SIZE_BYTES) {
-    return NextResponse.json({ error: 'Audio files must be 25MB or smaller' }, { status: 400 })
+
+  const validation = await validateUploadedFile(audio)
+  if (!validation.ok) {
+    return NextResponse.json({ error: validation.error }, { status: validation.status })
   }
 
   const [workspace] = await db
